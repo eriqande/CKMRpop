@@ -1,0 +1,151 @@
+---
+title: "Simulation from species 1 life history"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Simulation from species 1 life history}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(CKMRpop)
+```
+
+
+For this first example, we use the hypothetical life history of species 1.
+First we have to set spip up to run with that life history.
+
+## Setting the spip parameters 
+
+### Basic life history parameters 
+
+These parameters are included in the package in the variable `species_1_life_history`.
+It is named list of parameters to send to spip.  The list names are the names of the
+spip options.  It looks like this:
+```{r}
+species_1_life_history
+```
+
+We want to add instructions to those, telling spip how long to run the simulation,
+and what the initial census sizes should be.  
+
+So, first, we copy `species_1_life_history` to a new variable, `SPD`:
+```{r}
+SPD <- species_1_life_history
+```
+Now, we can add things to SPD.
+
+###  Setting Initial Census, New Fish per Year, and Length of Simulation
+
+The number of new fish added each year is called the "cohort-size".  Once we know
+that, we can figure out what the stable age distribution would be given the survival
+rates, and we can use that as our starting point.  There is a function
+in the package that helps with that:
+```{r}
+# before we tell spip what the cohort sizes are, we need to 
+# tell it how long we will be running the simulation
+SPD$`number-of-years` <- 100  # run the sim forward for 100 years
+
+# this is our cohort size
+cohort_size <- 300
+
+# Do some matrix algebra to compute starting values from the
+# stable age distribution:
+L <- leslie_from_spip(SPD, cohort_size)
+
+# then we add those to the spip parameters
+SPD$`initial-males` <- floor(L$stable_age_distro_fem)
+SPD$`initial-females` <- floor(L$stable_age_distro_male)
+
+# tell spip to use the cohort size
+SPD$`cohort-size` <- paste("const", cohort_size, collapse = " ")
+
+
+```
+
+
+### Specifying the fraction of sampled fish, and in different years
+
+Spip let's you specify what fraction of fish of different ages should be
+sampled in different years.  Here we do something simple, and instruct
+spip to sample 1% of the fish every year from 50 to 75.
+```{r}
+samp_frac <- 0.01
+samp_start_year <- 50
+samp_stop_year <- 75
+SPD$`discard-all` <- 0
+SPD$`gtyp-ppn-fem-pre` <- paste(
+  samp_start_year, "-", samp_stop_year, " ", 
+  samp_frac, " ", samp_frac, " ", samp_frac, " ",
+  paste(rep(0, SPD$`max-age` - 3), collapse = " "),
+  sep = ""
+)
+SPD$`gtyp-ppn-male-pre` <- SPD$`gtyp-ppn-fem-pre`
+```
+
+## Running spip
+
+There is a function that does all this for you.  It runs spip in
+a temporary directory.  After running spip, it also processes the output
+with a few shell scripts.  The function returns the path to the temporary
+directory.  You will need that to slurp all the results back in.
+```{r}
+set.seed(5)
+spip_dir <- run_spip(pars = SPD)
+
+# now read that in and find relatives within the grandparental range
+slurped <- slurp_spip(spip_dir, 2)
+```
+
+
+Now we can compile all the related pairs that we found in there.  Let's do a quick
+classification of the types of relationships:
+```{r}
+crel <- compile_related_pairs(slurped$samples)
+```
+
+Now, I just want to plot those shared ancestry matrices to see what we have going on.
+```{r, fig.width=8, fig.height=8}
+anc_mat_counts <- crel %>%
+  count(bit_string, anc_match_matrix) %>%
+  arrange(desc(n)) %>% 
+  slice(1:30) %>%
+  mutate(ID = str_c(sprintf("%03d", 1:n()), " (", n, ")" )) %>%
+  mutate(amm_as_tib = map(anc_match_matrix, amm2tibble)) %>%
+  unnest(amm_as_tib) %>%
+  mutate(
+    ind_1 = factor(ancestor_abbrvs(max(x))[x], levels = ancestor_abbrvs(max(x))),
+    ind_2 = factor(ancestor_abbrvs(max(y))[y], levels = ancestor_abbrvs(max(y)))  
+  ) %>%
+  mutate(amm = as.character(amm))
+  
+
+# now we can plot those
+g <- ggplot(anc_mat_counts, aes(x = ind_1, y = ind_2, fill = amm)) +
+  geom_tile(colour = "black") # put this down to establish a discrete scale
+g <- gg_add_generation_bands(
+  g = g, 
+  L = max(anc_mat_counts$x), 
+  add_impossibles = FALSE,
+  alpha = 0.3
+) + 
+  facet_wrap(~ ID, ncol = 5) +
+  scale_fill_manual(values = c(`FALSE` = NA, Impossible = "white", `TRUE` = "black")) +
+  geom_tile(colour = "black") +  # put it down again to have it on top
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_text(angle = 90, hjust = 1.0, vjust = 0.5)
+  )
+  
+g 
+```
