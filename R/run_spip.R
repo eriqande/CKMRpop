@@ -69,30 +69,16 @@ run_spip <- function(
     " Mb"
   )
 
-  message("Processing output file with sed and awk")
+  message("Processing output file with awk")
 
   # now, use awk to process that large text file into some things that
   # can be read in by R.  For very large output files, I think that
   # awk will almost certainly be faster.
-  get_ped <- system.file("shell/get_pedigree.sh", package = "CKMRpop")
+  single_pass <- system.file("shell/single_pass_cps.sh", package = "CKMRpop")
   system2(
-    command = get_ped,
-    stdout = "spip_pedigree.tsv",
-    stderr = "spip_ped_errors.txt"
-  )
-
-  get_cens <- system.file("shell/get_census.sh", package = "CKMRpop")
-  system2(
-    command = get_cens,
-    stdout = "spip_prekill_census.tsv",
-    stderr = "spip_prekill_errors.txt"
-  )
-
-  get_samp <- system.file("shell/get_samples.sh", package = "CKMRpop")
-  system2(
-    command = get_samp,
-    stdout = "spip_samples.tsv",
-    stderr = "spip_samp_errors.txt"
+    command = single_pass,
+    stdout = "single_pass_stdout.txt",
+    stderr = "single_pass_stderr.txt"
   )
 
   message("Done processing output into spip_pedigree.tsv, spip_prekill_census.tsv, and spip_samples.tsv")
