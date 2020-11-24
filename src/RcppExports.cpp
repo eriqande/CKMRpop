@@ -17,16 +17,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_hello
-List rcpp_hello();
-RcppExport SEXP _CKMRpop_rcpp_hello() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello());
-    return rcpp_result_gen;
-END_RCPP
-}
 // recursive_push_back
 void recursive_push_back(CharacterVector& Boing, int i);
 RcppExport SEXP _CKMRpop_recursive_push_back(SEXP BoingSEXP, SEXP iSEXP) {
@@ -52,7 +42,6 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_CKMRpop_rcpp_ancestors_and_relatives", (DL_FUNC) &_CKMRpop_rcpp_ancestors_and_relatives, 2},
-    {"_CKMRpop_rcpp_hello", (DL_FUNC) &_CKMRpop_rcpp_hello, 0},
     {"_CKMRpop_recursive_push_back", (DL_FUNC) &_CKMRpop_recursive_push_back, 2},
     {"_CKMRpop_rcpp_test", (DL_FUNC) &_CKMRpop_rcpp_test, 1},
     {NULL, NULL, 0}

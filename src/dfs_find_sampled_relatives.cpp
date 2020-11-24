@@ -30,11 +30,13 @@ struct pedigree { // struct to hold all the nodes and info of a pedigree
 };
 
 
-// Depth first search down the pedigree to N generations. When you call this
-// from within search_up(), c should be set at 0,
-// and the algorithm will run down for, n generations from there.
-// Unlike in R, this is 0-based.  So, n = 0 is self, n = 1 is kids,
-// n = 2 is grandkids, and so forth.
+//' Depth first search down the pedigree to N generations.
+//'
+//' When you call this
+//' from within search_up(), c should be set at 0,
+//' and the algorithm will run down for, n generations from there.
+//' Unlike in R, this is 0-based.  So, n = 0 is self, n = 1 is kids,
+//' n = 2 is grandkids, and so forth.
 //' @param i the index of the node to call this on
 //' @param c the current generation level.  0 = the first (i.e. the starting individual).
 //' @param n the number of generations back to down.  1 means go no further than the offspring.
@@ -42,6 +44,7 @@ struct pedigree { // struct to hold all the nodes and info of a pedigree
 //' @param P the pedigree structure
 //' @param C a reference to a character vector to which sampled individuals' IDs will get
 //' pushed on.  At the end, we can unique them.
+//' @keywords internal
 void search_down(
     int i,
     int c,
@@ -72,10 +75,12 @@ void search_down(
 
 
 
-// Depth first search up the pedigree to N generations.  Call this
-// with c = 0 for the original individual, and it will go back, n generations.
-// Unlike in R, this is 0-based.  So, n = 1 is parents, n = 2 is grandparents
-// and so on.
+//' Depth first search up the pedigree to N generations.
+//'
+//' Call this
+//' with c = 0 for the original individual, and it will go back, n generations.
+//' Unlike in R, this is 0-based.  So, n = 1 is parents, n = 2 is grandparents
+//' and so on.
 //' @param i the index of the node to call this on
 //' @param c the current generation level.  0 = the first (i.e. the sampled individual)
 //' @param n the number of generations back to go.  1 means go no further than the parents.
@@ -83,6 +88,7 @@ void search_down(
 //' @param P the pedigree structure
 //' @param C a reference to a character vector to which sampled individuals' IDs will get
 //' pushed on.  At the end, we can unique them.
+//' @keywords internal
 void search_up(
   int i,
   int c,
@@ -191,14 +197,16 @@ struct pedigree *init_ped_graph(
 
 
 
-//' Function to make a vector of all the ancestors of an individual out to
-//' n generations.  This is a replacement for the R implementation of
+//' Function to make a vector of all the ancestors of an individual out to n generations.
+//'
+//' This is a replacement for the R implementation of
 //' `ancestor_vectors()` which was too slow. This will get called
 //' from with a C function in which the pedigree has been assembled.
 //' @param sv vector of sample indexes
 //' @param nv vector of names of all samples
 //' @param Ped pedigree struct
 //' @param n the number of generations.  0 = self, 1 = parent, 2 = grandparent, etc.
+//' @keywords internal
 List ancestor_vectors_cpp(
   IntegerVector sv,
   CharacterVector nv,

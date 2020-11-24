@@ -15,6 +15,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     dplyr,
+    ggforce,
     ggplot2,
     magrittr,
     purrr,
@@ -22,10 +23,12 @@ Imports:
     readr,
     stats,
     stringr,
+    tibble,
     tidyr,
     vroom
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    tidyverse
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1

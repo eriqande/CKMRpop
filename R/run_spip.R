@@ -49,7 +49,7 @@ run_spip <- function(
     )
   })
 
-  args <- paste(" --command-file ", dfile, " --locus-file ", lfile )
+  args <- paste(" --num-pops 1 --command-file ", dfile, " --locus-file ", lfile )
 
 
   message("Running spip in directory ", dir)

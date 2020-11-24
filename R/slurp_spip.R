@@ -26,23 +26,35 @@ slurp_spip <- function(
   ped_file <- file.path(dir, "spip_pedigree.tsv")
   census_file <- file.path(dir, "spip_prekill_census.tsv")
   sample_file <- file.path(dir, "spip_samples.tsv")
+  post_census_file <- file.path(dir, "spip_postkill_census.tsv")
+  deaths_file <- file.path(dir, "spip_deaths.tsv")
 
 
   # read in the files, and do any necessary processing
   ped <- vroom::vroom(
     file = ped_file,
     delim = "\t",
-    col_types = "iccc"
+    col_types = "iiccc"
   )
   census <- vroom::vroom(
     file = census_file,
     delim = "\t",
-    col_types = "iiii"
+    col_types = "iiiii"
+  )
+  post_census <- vroom::vroom(
+    file = post_census_file,
+    delim = "\t",
+    col_types = "iiiii"
+  )
+  death_reports <- vroom::vroom(
+    file = deaths_file,
+    delim = "\t",
+    col_types = "cii"
   )
   samples <- vroom::vroom(
     file = sample_file,
     delim = "\t",
-    col_types = "cc"
+    col_types = "cci"
   ) %>%
     mutate(
       samp_years_list = str_split(syears, "  *"),
@@ -72,8 +84,10 @@ slurp_spip <- function(
 
   list(
     pedigree = ped,
-    census = census,
-    samples = left_join(samples, SAR, by = c("ID" = "sample_id"))
+    census_prekill = census,
+    census_postkill = post_census,
+    samples = left_join(samples, SAR, by = c("ID" = "sample_id")),
+    deaths = death_reports
   )
 
 }
