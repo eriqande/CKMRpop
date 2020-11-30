@@ -55,17 +55,60 @@ compile_related_pairs <- function(S) {
     filter(no_relat == FALSE) %>%
     select(-no_relat)
 
-    # now, we want to make a bit-string to categorize each type of relationship,
-    # so that we can figure out how many different relationship types there are.
+    # now, we want categorize the "dominant relationship" of each pair.  This is done by
+    # cycling over (within a function) relationships from Self to PO to Sib to Aunt, etc
+    # and returning the first one that qualifies.  We also return how many hits are within
+    # each of those relationships zones. Then we pull the list elements type and hits into
+    # their own columns
     pairs_tib_3 <- pairs_tib_2 %>%
       mutate(
-        bit_string = map_chr(
+        dr = map(
           .x = anc_match_matrix,
-          .f = function(x) {paste(as.integer(as.vector(x)), collapse = "")}
+          .f = function(x) {cat_dom_relat(x)}
+        ),
+        dom_relat = map_chr(dr, function(x) x$type),
+        dr_hits = map(dr, function(x) x$hits)
+      ) %>%
+      select(-dr) %>%
+      mutate(
+        upper_member = map2_int(
+          .x = dom_relat,
+          .y = dr_hits,
+          .f = function(x, y) {
+            if(x %in% c("Se", "Si", "FC"))
+              return(NA_integer_)
+            else if(y[1] == y[2])
+              return(0L)
+            else if(y[1] > y[2])
+              return(1L)
+            else if(y[1] < y[2])
+              return(2L)
+            else
+              return(-999L)  # flags that things got through here and should not have
+          }
+        ),
+        max_hit = map_int(
+          .x = dr_hits,
+          .f = function(x) max(x)
         )
       )
 
     # we will return that for now
-
+    pairs_tib_3 %>%
+      rename(times_encountered = n) %>%
+      select(
+        id_1,
+        id_2,
+        dom_relat,
+        max_hit,
+        dr_hits,
+        upper_member,
+        times_encountered,
+        starts_with("pop_"),
+        starts_with("sex_"),
+        starts_with("born_year_"),
+        starts_with("samp_years_list"),
+        everything()
+      )
 
 }

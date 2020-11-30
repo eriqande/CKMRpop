@@ -27,6 +27,29 @@ First we have to set spip up to run with that life history.
 
 ## Setting the spip parameters 
 
+`spip` has a large number of demographic parameters.  Typically `spip` is run as
+a command-line program in Unix.  In CKMRpop, all that action goes on under the
+hood, but you still have to use the `spip` parameters.  This vignette is not about
+using `spip`.  For a short listing of all the `spip` options, do this:
+```r
+library(CKMRpop)
+system(paste0(spip_binary(), " --help"))
+```
+If you want a full, complete, long listing of all the `spip` options, then you
+can do:
+```r
+library(CKMRpop)
+system(paste0(spip_binary(), " --help-full"))
+```
+
+
+All of the "long-form" options to `spip` are given on the Unix command line starting
+with two dashes, like `--fem-surv-probs`.  To set parameters within `CKMRpop` to send
+to spip, you simply make a named list of input values. The names of the items in the
+list are the long-format option names _without the leading two dashes_.  For an example,
+see the package data object `species_1_life_history`, as described below.
+
+
 ### Basic life history parameters 
 
 These parameters are included in the package in the variable `species_1_life_history`.
@@ -228,53 +251,148 @@ The blue vertical lines show the means over all years.
 
 ## Compiling the related pairs from the samples
 
-From the samples that slurped up from the spip output we 
+From the samples that we slurped up from the spip output we 
 compile all the related pairs that we found in there with a single
 function.  It is important to note that this finds all the related pairs
 that share ancestors back within `num_generations` generations. Recall, that
 we ran `slurp_spip()` with `num_generations = 2` which means that we
-check for matching ancestors up to an including the grandparents of the sample.
+check for matching ancestors up to and including the grandparents of the sample.
 ```{r}
 crel <- compile_related_pairs(slurped$samples)
 ```
-The result that comes has a single row in each pair. The individuals appear in
+The result that comes back has a single row for each pair. The individuals appear in
 each pair such that the first name comes before the second name, alphabetically,
 in each pair.  There is information in list columns about the year(s) that each
 member of the pair was sampled in and also years in which they were born, and also
 the indices of the populations they were sampled from.  (Knowing the population
 will become useful when/if we start simulating multiple populations connected
-by gene flow).  Here we show the first 40 pairs in the samples:
+by gene flow).  Here we show the first 10 pairs in the samples:
 ```{r}
 crel %>%
-  slice(1:40)
+  slice(1:10)
 ```
-The crucial piece of information for learning how each pair is related is in
-the `anc_match_matix` column.  This stands for "ancestry match matrix."  It holds a TRUE
-for each shared ancestor in the two individual's ancestry (out to `num_generations`).
-If this seems obtuse, it should become more understandable when we look at some figures.
+Because some pairs might be related in multiple ways (i.e., they might be paternal half-sibs,
+but, through their mother's lineage, they might also be half-first cousins), things can 
+get complicated.  However, `CKMRpop` has an algorithm to categorize pairs according to
+their "most important" relationship.  
 
-Here, we count up the number of pairs in all the possible relationship types:
+The column `dom_relat` gives the "dominant" or "closest" relationship between the pair.
+The possibilities, when considering up to two generations of ancestors are:
+
+- `Se`: self. 
+- `PO`: parent-offspring
+- `Si`: sibling. 
+- `GP`: grandparental
+- `A` : avuncular (aunt-neice)
+- `FC`: first cousin. 
+
+The `max_hit` column can be interpreted as the number of shared ancestors at the
+level of the dominant relationship.  For example a pair of half-siblings are of
+category `Si` and have `max_hit = 1`, because they share one parent. On the other
+hand, a pair with category `Si` and `max_hit = 2` would be full siblings.  
+Likewise, `A` with `max_hit = 1` is a half-aunt-neice or half-uncle-nephew pair,
+while `A` with `max_hit = 2` would be a full-aunt-neice or full-uncle-nephew pair.
+
+The column `dr_hits` gives the number of shared ancestors on the upper vs lower
+diagonals of the ancestry match matrices (see below).  These are meaningful primarily
+for understanding the "directionality" of non-symmetrical relationships.  Some explanation
+is in order: some relationships, like Se, Si, and FC are _symmetrical_ relationships, because,
+if, for example Greta is your sibling, then you are also Greta's sibling.  Likewise, if you are
+Milton's first cousin, then Milton is also your first cousin.  Other relationships, like
+PO, A, and GP, are not symmetrical:  If Chelsea is your mother, then you are not Chelsea's
+mother, you are Chelsea's child.  In the non-symmetrical relationships there is always one
+member who is typically expected to be older than the other.  This is a requirement
+in a direct-descent relationship (like parent-offspring, or grandparent-grandchild),
+but is not actually required in avuncular relationships (i.e. it is possible to have an
+aunt that is younger than the nephew...).  We refer to the "typically older" member
+of non-symmetrical pairs as the "upper member" and the `upper_member` column of the output
+above tells us whether `id_1` or `id_2` is the upper member in such relationships,
+when `upper_member` is 1 or 2, respectively.  `upper_member` is NA for symmetrical
+relationships and it can be 0 for weird situations that should rarely arise where,
+for example a pair A and B is related such that A is B's half-uncle, but B is A's half-aunt.
+
+
+Often the dominant relationship is the only relationship between the pair. However,
+if you want to delve deeper into the full relationship out to `num_generations` 
+generations, you can analyze the ancestry match matrix for the pair, which is stored in the
+the `anc_match_matrix` column.  This matrix holds a TRUE
+for each shared ancestor in the two individual's ancestry (out to `num_generations`).
+If this seems obtuse, it should become more understandable when we look at some figures, later.
+
+### Tallying relationships
+
+Here, we count up the number of pairs that fall into different relationship types:
 ```{r}
 relat_counts <- count_and_plot_ancestry_matrices(crel)
 ```
 
-The first component of the return list is a tibble of the relationship counts:
+The first component of the return list is a tibble of the relationship counts in a highly summarized form
+tabulating just the `dom_relat` and `max_hit` over all the pairs.
+```{r}
+relat_counts$highly_summarised
+```
+This is telling us there are 230 half-first-cousin pairs, 161 half-avuncular (aunt/uncle with neice/nephew) pairs,
+and so forth. 
+
+
+### A closer look within the dominant relationships
+
+As noted before, the table able just lists the dominant relationship of
+each pair.  If you want to quickly assess, within those dominant categories,
+how many specific ancestry match matrices underlie them, you can
+look at the `dr_counts` component of the output:
+```{r}
+relat_counts$dr_counts
+```
+Each of these distinct ancestry match matrices for each dominant relationship can
+be visualized in a series of faceted plots, which are also returned.  For example,
+the ancestry match matrices seen amongst the FC relationships are:
+```{r, fig.width=7, fig.height=7}
+relat_counts$dr_plots$FC
+```
+Within each dominant relationship, the distinct ancestry matrices in each
+separate panel are named according to their number
+(`001`, `002`, `003`, etc), relationship and the
+`dr_hits` vector, (`FC[1,2]`) and the number of times this ancestry match matrix
+was observed amongst pairs in the sample (like ` - 4`).  So `006-FC[1,1] - 24` was
+observed in 24 of the sampled pairs.
+
+It is worth pointing out that the `014-FC[2,2] - 2` plot shows two pairwise relationships
+in which individual 2 is inbred, because its father's father (pp) and mother's father
+(mp) are the same individual. 
+
+Let's look at the distinct ancestry match matrices from the siblings:
+```{r, fig.width=7, fig.height=7}
+relat_counts$dr_plots$Si
+```
+Here in `005` we see an interesting case where ind_1 and ind_2 are maternal half sibs,
+put also individual 2's father is also his/her uncle.
+
+### Tallying all the ancestry match matrices
+
+At times, for example, when looking for the more bizarre relationships,
+you might just want to visualize all the ancestry match matrices in order
+of the number of times that they occur.  The number of different ancestry
+match matrices (and the matrices themselves) can be accessed with:
 ```{r}
 relat_counts$anc_mat_counts
 ```
-And the second part holds a series of pages/plots showing all the different
+But more useful for visualizing things is `relat_counts$anc_mat_plots` which is a list that
+holds a series of pages/plots showing all the different
 ancestry matrices seen. Here are the first 30:
 ```{r, fig.width=7, fig.height=7}
-relat_counts$plots[[1]]
+relat_counts$anc_mat_plots[[1]]
 ```
 
 And here are the remaining 15 relationship types:
 ```{r, fig.width=7, fig.height=7}
-relat_counts$plots[[2]]
+relat_counts$anc_mat_plots[[2]]
 ```
 
-If you look at these long enough you will start to see that along the first
-row, from left to right we have: 
+These are worth staring at for a while, and making sure you understand what
+they are saying.  I spent a lot of time staring at these, which is how I
+settled upon a decent algorithm for identifying the dominant relationship
+in each.
 
 - 001 = half cousin
 - 002 = paternal half-sib
@@ -293,4 +411,10 @@ approach of visualizing matrices in order to be able to tabulate and
 understand all the different sorts of bizarre relationships we might
 encounter.
 
+OK! I've figured it out.  One simple way of categorizing these things is
+to carve the ancestry match matrices up into zones and count up the number of trues
+there.  For non-symmetrical relationships we can count thing up in the above-diagonal
+and the below-diagonal zones, separately, which will tell us which direction the
+relationship runs in, unless things are super weird and there are TRUEs both in the
+above and below diagonal zones.  
 
