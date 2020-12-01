@@ -185,7 +185,7 @@ the simulations. The means are particularly different for the older
 age classes, which makes sense because there the total number of
 individuals in each of those year classes is smaller.
 
-## The distribution of offspring and mate number
+## The distribution of offspring number
 
 It makes sense to check that your simulation is delivering a reasonable distribution
 of offspring per year.  This is the number of offspring that survive to just before the
@@ -248,6 +248,24 @@ offs_and_mates$plot_fraction_of_offspring_from_each_age_class
 
 The blue vertical lines show the means over all years.
 
+## The distribution of the number of mates
+
+Some of the parameters in `spip` affect the distribution of the number
+of mates that each individual will have.  We can have a quick look
+at whether the distribution of number of mates (that produced at least
+one offspring) appears to be what we might hope it to be.  
+```{r}
+mates <- count_and_plot_mate_distribution(slurped$pedigree)
+```
+That gives us a tibble with a summary, like this:
+```{r}
+head(mates$mate_counts)
+```
+
+And also a plot:
+```{r, fig.width=7, fig.height=5}
+mates$plot_mate_counts
+```
 
 ## Compiling the related pairs from the samples
 
@@ -394,27 +412,111 @@ they are saying.  I spent a lot of time staring at these, which is how I
 settled upon a decent algorithm for identifying the dominant relationship
 in each.
 
-- 001 = half cousin
-- 002 = paternal half-sib
-- 003 = half uncle
-- 004 = half cousin
-- 005 = maternal half-sib
+## A Brief Digression: downsampling the sampled pairs
 
-The second and third rows are all half cousins and half-uncle
-or half-aunt relationships. In the fourth row, when we get to
-019 and 020, we are seeing some full cousins.  022 is a full-aunt
-relationship.
+When using `spip` within `CKMRpop` you have to specify the fraction of
+individuals in the population that you want to sample at any particular time.
+You must set those fractions so that, given the population size, you end up with
+roughly the correct number of samples for the situation you are trying to
+simulate.  Sometimes, howeever, you might want to have sampled exactly 5,000
+fish. Or some other number.  The function `downsample_pairs` lets you randomly
+discard specific instances in which an individual was sampled so that the
+number of individuals (or sampling instances) that remains is the exact number
+you want.
 
-I am going to work on some code to collapse these groups according to
-the "dominant" or closest relationship in each, but have pursued this
-approach of visualizing matrices in order to be able to tabulate and
-understand all the different sorts of bizarre relationships we might
-encounter.
+For example, looking closely at `slurped$samples` shows that 168 distinct individuals were sampled:
+```{r}
+nrow(slurped$samples)
+```
+However, those 168 individuals represent 170 distinct sampling instances, because
+two of the individuals were each sampled twice, as, in this simulation scenario,
+sampling the individuals does not remove them from the population.
+```{r}
+SS2 <- slurped$samples %>%
+  filter(map_int(samp_years_list, length) > 1) %>%
+  select(ID, samp_years_list)
 
-OK! I've figured it out.  One simple way of categorizing these things is
-to carve the ancestry match matrices up into zones and count up the number of trues
-there.  For non-symmetrical relationships we can count thing up in the above-diagonal
-and the below-diagonal zones, separately, which will tell us which direction the
-relationship runs in, unless things are super weird and there are TRUEs both in the
-above and below diagonal zones.  
+SS2
+```
+And the years that these individuals were sampled are as follows:
+```{r}
+# first indiv:
+SS2$samp_years_list[[1]]
+
+# second indiv:
+SS2$samp_years_list[[2]]
+```
+
+Great! Now, imagine that we wanted to see how many kin pairs we found when
+our sampling was such that we had only 100 instances of sampling (i.e., it could
+have been 98 individuals sampled in total, but two of them were sampled in
+two different years).  We do like so:
+```{r}
+subsampled_pairs <- downsample_pairs(
+  S = slurped$samples,
+  P = crel,
+  n = 100
+)
+```
+Now there are only 179 pairs instead of 513.  
+
+We can do a little calculation to see if that makes sense: because the number of pairs 
+varies roughly quadratically, we would expect that if we go from 170 instances to 100, we
+would expect the number of pairs to decrease by a factor of $(100/170)^2 \approx 0.346$. Let's
+check that: $179/513 = \approx 0.348$.  Yep, that makes sense.
+
+
+## Uncooked Spaghetti Plots
+
+Finally, in order to visually summarize all the kin pairs that were found,
+with specific reference to their age, time of sampling, and sex, I find it
+helpful to use what I have named the "Uncooked Spaghetti Plot".  There are multiple
+subpanels on this plot.  Here is how to read/view these plots:
+
+- Each row of subpanels is for a different dominant relationship, going from
+closer relationships near the top and more distant ones further down.  You can
+find the abbreviation for the dominant relationship at the right edge of the panels.
+- In each row, there are four subpanels: `F->F`, `F->M`, `M->F`, and `M->M`.  These
+refer to the different possible combinations of sexes of the individuals in the pair.
+    + For the non-symmetrical relationships these are naturally defined with the
+    first letter (`F` for female or `M` for male) denoting the sex of the "upper_member"
+    of the relationship.  That is, if it is PO, then the sex of the parent is the first letter.
+    The sex of the non-upper-member is the second letter.  Thus a `PO` pair that consists of
+    a father and a daughter would appear in a plot that is in the `PO` row in the `M->F` column.
+    + For the symmetrical relationships, there isn't a comparably natural way of
+    ordering the individuals' sexes for presentation.  For these relationships, the
+    first letter refers to the sex of the individual that was sampled in the earliest
+    year.  If both individuals were sampled in the same year, and they are of different
+    sexes, then the female is considered the first one, so those all go on the `F->M` subpanel.
+- On the subpanels, each straight line (i.e., each piece of uncooked spaghetti) represents
+a single kin pair.  The two endpoints represent the year/time of sampling (on the x-axis)
+and the age of the individual when it was sampled (on the y-axis) of the two members of
+the pair.  
+    + If the relationship is non-symmetrical, then the line is drawn as an arrow pointing
+    from the upper member to the lower member.
+    + The color of the line gives the number of shared ancestors (`max_hits`) at the level
+    of the dominant relationship. This is how you can distinguish full-sibs from half-sibs, etc.
+
+
+We crunch out the data and make the plot like this:
+```{r}
+# because we jitter some points, we can set a seed to get the same
+# result each time
+set.seed(22)
+spag <- uncooked_spaghetti(
+  Pairs = crel, 
+  Samples = slurped$samples
+)
+```
+
+Now, the plot can be printed like so:
+```{r, fig.width=7.5, fig.height=9.5}
+spag$plot
+```
+
+Looking at this, it is clear that I will also want to add a function to
+tally up the number of pairwise relationships that are shared between members---basically
+just compiling the connected components for all of those.
+
+
 
