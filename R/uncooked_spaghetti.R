@@ -3,15 +3,10 @@
 #'
 #'  This gives a nice graphical summary of all the kin pairs along with when they
 #'  were sampled and their age at the time of sampling and their sex.
-#'  @param Pairs  The tibble of kin pairs that comes out of `compile_related_pairs()`.
-#'  @param Samples The tibble of samples that comes out of `slurp_spip()`.
-#'  @param jitter_age half the width of the uniform jitter window around age
-#'  @param jitter_year half the width of the uniform jitter window around sampling year
-#'  @details in order to visually summarize all the kin pairs that were found,
+#'  #'  In order to visually summarize all the kin pairs that were found,
 #' with specific reference to their age, time of sampling, and sex, I find it
 #' helpful to use what I have named the "Uncooked Spaghetti Plot".  There are multiple
 #' subpanels on this plot.  Here is how to read/view these plots:
-#'
 #' - Each row of subpanels is for a different dominant relationship, going from
 #'   closer relationships near the top and more distant ones further down.  You can
 #'   find the abbreviation for the dominant relationship at the right edge of the panels.
@@ -35,6 +30,10 @@
 #'       from the upper member to the lower member.
 #'     + The color of the line gives the number of shared ancestors (`max_hit`) at the level
 #'       of the dominant relationship. This is how you can distinguish full-sibs from half-sibs, etc.
+#' @param Pairs  The tibble of kin pairs that comes out of `compile_related_pairs()`.
+#' @param Samples The tibble of samples that comes out of `slurp_spip()`.
+#' @param jitter_age half the width of the uniform jitter window around age
+#' @param jitter_year half the width of the uniform jitter window around sampling year
 #' @export
 uncooked_spaghetti <- function(
   Pairs,

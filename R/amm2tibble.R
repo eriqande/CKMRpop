@@ -1,6 +1,6 @@
 #' convert an ancestry-matching matrix to a ggplot-able tibble
 #'
-#' @param x an amm
+#' @param M an ancestry-match matrix
 #' @export
 amm2tibble <- function(M) {
   tibble(

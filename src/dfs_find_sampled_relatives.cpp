@@ -44,6 +44,7 @@ struct pedigree { // struct to hold all the nodes and info of a pedigree
 //' @param P the pedigree structure
 //' @param C a reference to a character vector to which sampled individuals' IDs will get
 //' pushed on.  At the end, we can unique them.
+//' @name search_down
 //' @keywords internal
 void search_down(
     int i,
@@ -88,6 +89,7 @@ void search_down(
 //' @param P the pedigree structure
 //' @param C a reference to a character vector to which sampled individuals' IDs will get
 //' pushed on.  At the end, we can unique them.
+//' @name search_up
 //' @keywords internal
 void search_up(
   int i,
@@ -206,6 +208,7 @@ struct pedigree *init_ped_graph(
 //' @param nv vector of names of all samples
 //' @param Ped pedigree struct
 //' @param n the number of generations.  0 = self, 1 = parent, 2 = grandparent, etc.
+//' @name ancestor_vectors_cpp
 //' @keywords internal
 List ancestor_vectors_cpp(
   IntegerVector sv,

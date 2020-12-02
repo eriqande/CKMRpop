@@ -3,10 +3,10 @@ using namespace Rcpp;
 
 
 
-//' AReference testing
-//'
-//' Boing
-//' @export
+// Reference testing
+//
+// Boing
+// @export
 // [[Rcpp::export]]
 void recursive_push_back(CharacterVector& Boing, int i) {
   Boing.push_back(" Boing ");
@@ -14,10 +14,11 @@ void recursive_push_back(CharacterVector& Boing, int i) {
 }
 
 
-//' A function used for quickly testing things
-//'
-//' Boing
-//' @export
+// A function used for quickly testing things
+//
+// Boing
+// @param v1 the input vector for testing
+// @export
 // [[Rcpp::export]]
 CharacterVector rcpp_test(CharacterVector v1) {
   CharacterVector v3 = clone(v1);

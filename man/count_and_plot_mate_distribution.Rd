@@ -6,6 +6,10 @@
 \usage{
 count_and_plot_mate_distribution(P)
 }
+\arguments{
+\item{P}{the pedigree from the simulation, like that returned in the \code{pedigree} component
+of the list returned by \code{slurp_spip()}.}
+}
 \description{
 This just tallies up the information from the pedigree.  It will plot things
 faceted by pop (over rows) and sexes (over columns).

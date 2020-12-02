@@ -3,7 +3,8 @@
 #'
 #' This just tallies up the information from the pedigree.  It will plot things
 #' faceted by pop (over rows) and sexes (over columns).
-#' @param P
+#' @param P the pedigree from the simulation, like that returned in the `pedigree` component
+#' of the list returned by `slurp_spip()`.
 #' @export
 count_and_plot_mate_distribution <- function(P) {
 

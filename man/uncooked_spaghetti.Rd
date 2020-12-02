@@ -6,19 +6,22 @@
 \usage{
 uncooked_spaghetti(Pairs, Samples, jitter_age = 0.2, jitter_year = 0.2)
 }
+\arguments{
+\item{Pairs}{The tibble of kin pairs that comes out of \code{compile_related_pairs()}.}
+
+\item{Samples}{The tibble of samples that comes out of \code{slurp_spip()}.}
+
+\item{jitter_age}{half the width of the uniform jitter window around age}
+
+\item{jitter_year}{half the width of the uniform jitter window around sampling year}
+}
 \description{
 This gives a nice graphical summary of all the kin pairs along with when they
 were sampled and their age at the time of sampling and their sex.
-@param Pairs  The tibble of kin pairs that comes out of \code{compile_related_pairs()}.
-@param Samples The tibble of samples that comes out of \code{slurp_spip()}.
-@param jitter_age half the width of the uniform jitter window around age
-@param jitter_year half the width of the uniform jitter window around sampling year
-@details in order to visually summarize all the kin pairs that were found,
+#'  In order to visually summarize all the kin pairs that were found,
 with specific reference to their age, time of sampling, and sex, I find it
 helpful to use what I have named the "Uncooked Spaghetti Plot".  There are multiple
 subpanels on this plot.  Here is how to read/view these plots:
-}
-\details{
 \itemize{
 \item Each row of subpanels is for a different dominant relationship, going from
 closer relationships near the top and more distant ones further down.  You can

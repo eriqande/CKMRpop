@@ -7,7 +7,7 @@
 amm2tibble(M)
 }
 \arguments{
-\item{x}{an amm}
+\item{M}{an ancestry-match matrix}
 }
 \description{
 convert an ancestry-matching matrix to a ggplot-able tibble

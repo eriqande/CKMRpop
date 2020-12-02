@@ -1,6 +1,9 @@
 
-# here is an function to plot a basic ancestry match matrix
+#' here is a function to plot a basic ancestry match matrix
+#'
+#' It is primarily for internal use
 #' @param ATP a tibble that has ind_1, ind_2, and an ID column
+#' @keywords internal
 basic_amm_plot <- function(ATP, add_imps = FALSE) {
   g <- ggplot(ATP, aes(x = ind_1, y = ind_2, fill = amm)) +
     geom_tile(colour = "black") # put this down to establish a discrete scale

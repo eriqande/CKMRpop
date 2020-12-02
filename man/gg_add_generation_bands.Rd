@@ -9,8 +9,7 @@ gg_add_generation_bands(
   L,
   alpha = 0.2,
   colors = c("red", "orange", "yellow", "green", "blue"),
-  add_impossibles = FALSE,
-  imposs_color = "white"
+  add_impossibles = FALSE
 )
 }
 \arguments{

@@ -15,6 +15,7 @@
 #' @param P the pedigree structure
 #' @param C a reference to a character vector to which sampled individuals' IDs will get
 #' pushed on.  At the end, we can unique them.
+#' @name search_down
 #' @keywords internal
 NULL
 
@@ -31,6 +32,7 @@ NULL
 #' @param P the pedigree structure
 #' @param C a reference to a character vector to which sampled individuals' IDs will get
 #' pushed on.  At the end, we can unique them.
+#' @name search_up
 #' @keywords internal
 NULL
 
@@ -43,6 +45,7 @@ NULL
 #' @param nv vector of names of all samples
 #' @param Ped pedigree struct
 #' @param n the number of generations.  0 = self, 1 = parent, 2 = grandparent, etc.
+#' @name ancestor_vectors_cpp
 #' @keywords internal
 NULL
 
@@ -55,18 +58,10 @@ rcpp_ancestors_and_relatives <- function(L, n) {
     .Call('_CKMRpop_rcpp_ancestors_and_relatives', PACKAGE = 'CKMRpop', L, n)
 }
 
-#' AReference testing
-#'
-#' Boing
-#' @export
 recursive_push_back <- function(Boing, i) {
     invisible(.Call('_CKMRpop_recursive_push_back', PACKAGE = 'CKMRpop', Boing, i))
 }
 
-#' A function used for quickly testing things
-#'
-#' Boing
-#' @export
 rcpp_test <- function(v1) {
     .Call('_CKMRpop_rcpp_test', PACKAGE = 'CKMRpop', v1)
 }
