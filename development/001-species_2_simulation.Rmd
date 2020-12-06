@@ -57,12 +57,22 @@ spip options.  It looks like this:
 species_2_life_history
 ```
 
-We want to add instructions to those, telling spip how long to run the simulation,
+We must note here that we have done something reasonable for computational efficiency.
+The rate of survivla from age 0 to age 1 is almost certainly much lower than 100%, but 
+0-year olds do not contribute to the next generation (0 prob of reproducing), and we
+arent't really keeping track of their numbers, so we just include them in there, knowing 
+that we aren't really caring about individuals until they are at least 1 year old.
+And with that, we can set the cohort size to whatever we need it to be to have the right
+number of 2+ year-olds, for example.  There isn't much point to simulating a bunch of
+newborns that end up dying before we even care about them.   
+
+Now, we want to add instructions to those life-history parameters, 
+telling spip how long to run the simulation,
 and what the initial census sizes should be.  
 
-So, first, we copy `species_1_life_history` to a new variable, `SPD`:
+So, first, we copy `species_2_life_history` to a new variable, `SPD`:
 ```{r}
-SPD <- species_1_life_history
+SPD <- species_2_life_history
 ```
 Now, we can add things to SPD.
 
@@ -75,14 +85,16 @@ in the package that helps with that:
 ```{r}
 # before we tell spip what the cohort sizes are, we need to 
 # tell it how long we will be running the simulation
-SPD$`number-of-years` <- 100  # run the sim forward for 100 years
+SPD$`number-of-years` <- 60  # run the sim forward for 50 years
 
-# this is our cohort size
-cohort_size <- 300
+# This is our cohort size that gives us a stable age distribution
+# and population size of 2+ individuals of about half a million
+cohort_size <- 370000
 
 # Do some matrix algebra to compute starting values from the
 # stable age distribution:
 L <- leslie_from_spip(SPD, cohort_size)
+sum(L$stable_age_distro_fem[-(1:2)])
 
 # then we add those to the spip parameters
 SPD$`initial-males` <- floor(L$stable_age_distro_fem)
@@ -98,17 +110,20 @@ SPD$`cohort-size` <- paste("const", cohort_size, collapse = " ")
 ### Specifying the fraction of sampled fish, and in different years
 
 Spip let's you specify what fraction of fish of different ages should be
-sampled in different years.  Here we do something simple, and instruct
-spip to sample 1% of the fish every year from 50 to 75.
+sampled in different years.  We want about 5000 samples a year so let's
+sample the 2 to 4 year olds at 1.5%.  We will sample this many for 3 years,
+from years 51 to 53.  That will give us enough time that we shouldn't have founders
+less than 3 generations back.  
 ```{r}
-samp_frac <- 0.01
-samp_start_year <- 50
-samp_stop_year <- 75
+samp_frac <- 0.015
+samp_start_year <- 51
+samp_stop_year <- 53
 SPD$`discard-all` <- 0
 SPD$`gtyp-ppn-fem-pre` <- paste(
-  samp_start_year, "-", samp_stop_year, " ", 
-  samp_frac, " ", samp_frac, " ", samp_frac, " ",
-  paste(rep(0, SPD$`max-age` - 3), collapse = " "),
+  samp_start_year, "-", samp_stop_year, 
+  " 0 ",  # don't sample any 0/1 year-olds 
+  samp_frac, " ", samp_frac, " ", samp_frac, " ", # sample 1.5% of the 2, 3, and 4, year olds
+  paste(rep(0, SPD$`max-age` - 4), collapse = " "),
   sep = ""
 )
 SPD$`gtyp-ppn-male-pre` <- SPD$`gtyp-ppn-fem-pre`
@@ -266,6 +281,28 @@ mates$plot_mate_counts
 ```
 
 ## Compiling the related pairs from the samples
+
+First, let's count up how many samples of different ages we have gotten.
+We are sampling before the episode of death in a year.
+```{r}
+samps <- slurped$samples %>%
+  mutate(
+    first_samp = map_int(samp_years_list, function(x) x[1]),  # just record the first year they were sampled
+    age = first_samp - born_year
+  ) 
+
+```
+
+Now, get the total number of distinct individuals sampled each year
+```{r}
+samps %>%
+  count(first_samp)
+```
+
+```{r}
+samps %>%
+  count(sex, first_samp, age)
+```
 
 From the samples that we slurped up from the spip output we 
 compile all the related pairs that we found in there with a single

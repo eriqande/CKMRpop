@@ -8,7 +8,7 @@ spip_binary_path <- function() {
   file.path(system.file(package = "CKMRpop"), "bin", bin_name)
 }
 
-#' return TRUE if ms exists where it should be
+#' return TRUE if spip exists where it should be
 #'
 spip_exists <- function() {
   file.exists(spip_binary_path())
