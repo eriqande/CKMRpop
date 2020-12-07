@@ -18,7 +18,7 @@ struct node { // for variable nodes (individuals)
   int *down;      // idxs of the children of this individual
   int been_up;    // a flag that gets set to 1 when the node has been reached by the search_up()
                   // part of the depth first search.  It gets set back to 0 before returning out
-                  // of search_up().
+                  // of search_up(). I don't think this really gets used anymore.
 };
 
 
