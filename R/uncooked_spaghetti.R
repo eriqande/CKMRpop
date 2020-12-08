@@ -120,6 +120,8 @@ uncooked_spaghetti <- function(
       Selfies,
       P2
     )
+  } else {
+    P3 <- P2
   }
 
 

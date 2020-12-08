@@ -2,10 +2,10 @@
 % Please edit documentation in R/spip_binary.R
 \name{spip_exists}
 \alias{spip_exists}
-\title{return TRUE if ms exists where it should be}
+\title{return TRUE if spip exists where it should be}
 \usage{
 spip_exists()
 }
 \description{
-return TRUE if ms exists where it should be
+return TRUE if spip exists where it should be
 }

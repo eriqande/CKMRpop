@@ -89,8 +89,8 @@ SPD$`number-of-years` <- 60  # run the sim forward for 50 years
 
 # This is our cohort size that gives us a stable age distribution
 # and population size of 2+ individuals of about half a million
-cohort_size <- 370000
-
+#cohort_size <- 370000 
+cohort_size <- 370
 # Do some matrix algebra to compute starting values from the
 # stable age distribution:
 L <- leslie_from_spip(SPD, cohort_size)
@@ -104,6 +104,9 @@ SPD$`initial-females` <- floor(L$stable_age_distro_male)
 SPD$`cohort-size` <- paste("const", cohort_size, collapse = " ")
 
 
+# how many 2, 3, and 4 year olds?
+sum(L$stable_age_distro_fem[2:4]) + sum(L$stable_age_distro_male[2:4])
+  
 ```
 
 
@@ -114,10 +117,17 @@ sampled in different years.  We want about 5000 samples a year so let's
 sample the 2 to 4 year olds at 1.5%.  We will sample this many for 3 years,
 from years 51 to 53.  That will give us enough time that we shouldn't have founders
 less than 3 generations back.  
+
+First off, note that these are going to be lethal samples, so:
 ```{r}
-samp_frac <- 0.015
+SPD$`lethal-sampling` <- 1.00
+```
+
+
+```{r}
+samp_frac <- 0.01
 samp_start_year <- 51
-samp_stop_year <- 53
+samp_stop_year <- 52
 SPD$`discard-all` <- 0
 SPD$`gtyp-ppn-fem-pre` <- paste(
   samp_start_year, "-", samp_stop_year, 
@@ -438,9 +448,6 @@ relat_counts$anc_mat_plots[[1]]
 ```
 
 And here are the remaining 15 relationship types:
-```{r, fig.width=7, fig.height=7}
-relat_counts$anc_mat_plots[[2]]
-```
 
 These are worth staring at for a while, and making sure you understand what
 they are saying.  I spent a lot of time staring at these, which is how I
@@ -478,8 +485,6 @@ And the years that these individuals were sampled are as follows:
 # first indiv:
 SS2$samp_years_list[[1]]
 
-# second indiv:
-SS2$samp_years_list[[2]]
 ```
 
 Great! Now, imagine that we wanted to see how many kin pairs we found when

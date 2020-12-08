@@ -33,6 +33,13 @@ downsample_pairs <- function(S, P, n) {
   S3 <- S2 %>%
     sample_n(n)
 
+  # make a sample list to return
+  Sret <- S3 %>%
+    group_by(ID) %>%
+    summarise(samp_years_list = map(samp_years_list, function(x) x)) %>%
+    ungroup() %>%
+    left_join(S %>% select(-samp_years_list), by = "ID")
+
   # now, only retain the pairs that have sampling instances that they should
   P2 <- P %>%
     unnest(samp_years_list_1) %>%
@@ -57,5 +64,8 @@ downsample_pairs <- function(S, P, n) {
   P4 <- P3[, names(P)]
 
   # and return that
-  P4
+  list(
+    ds_samples = Sret,
+    ds_pairs = P4
+  )
 }
