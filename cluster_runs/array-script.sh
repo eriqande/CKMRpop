@@ -8,7 +8,7 @@
 
 
 
-
+module load R
 
 # get the parameters
 eval $(./line-assign.sh $SLURM_ARRAY_TASK_ID array_jobs.tsv)
