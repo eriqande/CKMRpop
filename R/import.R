@@ -10,6 +10,7 @@
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr extract gather nest pivot_longer pivot_wider replace_na unnest
 #' @importFrom utils combn
+#' @importFrom Rcpp evalCpp
 #' @useDynLib CKMRpop
 NULL
 

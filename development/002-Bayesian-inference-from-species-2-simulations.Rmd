@@ -545,3 +545,51 @@ g <- ggplot(
 dir.create("outputs/002", recursive = TRUE, showWarnings = FALSE)
 ggsave("outputs/002/posterior-curves-10K-samples-total.pdf", plot = g, width = 8, height = 7)
 ```
+
+### Coefficients of variation, etc
+
+We can approach this from a Bayesian perspective first, calculating the
+variance (and from that the standard deviation) of the posterior distribution, and dividing the
+posterior mean by the standard deviation of the distribution.  
+```{r}
+coeffs_of_v <- scaled_likelihoods %>%
+  group_by(sim_num, pop_size) %>%
+  summarise(
+    posterior_mean = sum(N * scaled_likelihood),
+    posterior_variance = sum( scaled_likelihood * ((posterior_mean - N) ^2) ),
+    posterior_sd = sqrt(posterior_variance),
+    coeff_of_variation = posterior_sd / posterior_mean
+  )
+coeffs_of_v
+```
+
+So, that is showing that the CV of the posterior distribution for each case
+is pretty similar. Averaged over the 20 runs we have:
+```{r}
+coeffs_of_v %>%
+  group_by(pop_size) %>%
+  summarise(mean_cv = mean(coeff_of_variation))
+```
+So, those seem quite small.
+
+We can also look at the observed distribution of MLEs to estimate the mean-squared
+error, and then take the square root of that.  And look at the ratio of the sqrt(MSE) to thetrue
+value as another CV-like measurement. 
+```{r}
+like_maxes %>%
+  group_by(pop_size) %>%
+  summarise(
+    MSE = mean( (pop_size - N) ^ 2),
+    sqrt_MSE = sqrt(MSE),
+    ratio = sqrt_MSE / pop_size[1]
+  )
+```
+
+So, that is reasonably close to what we computed from the posterior distribution.
+
+In the end, let's save the scaled likelihoods.
+```{r}
+scaled_likelihoods %>%
+  ungroup() %>% 
+  write_rds("development/outputs/002/scaled-likelihoods.rds", compress = "xz")
+```
