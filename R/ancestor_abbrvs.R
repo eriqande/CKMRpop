@@ -4,6 +4,10 @@
 #' @param L desired length of the output
 #' @export
 ancestor_abbrvs <- function(L) {
+
+  if(L <= 3) {
+    return(c("s", "p", "m")[1:L])
+  }
   # determine how many generations to go (and go a bit over, possibly)
   g <- ceiling(log(L + 1, base = 2))
 

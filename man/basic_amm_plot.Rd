@@ -4,7 +4,7 @@
 \alias{basic_amm_plot}
 \title{here is a function to plot a basic ancestry match matrix}
 \usage{
-basic_amm_plot(ATP, add_imps = FALSE)
+basic_amm_plot(ATP, add_imps = FALSE, perimeter_width = 0.5)
 }
 \arguments{
 \item{ATP}{a tibble that has ind_1, ind_2, and an ID column}

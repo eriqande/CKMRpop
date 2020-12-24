@@ -19,3 +19,23 @@ NULL
 #' @docType data
 #' @name species_2_life_history
 NULL
+
+
+#' a list of examples of ancestry-match matrices
+#'
+#' Still building this up.
+#' @source Fill this in later
+#' @docType data
+#' @name example_amms
+NULL
+
+
+#' relationship zone names
+#'
+#' A simple character vector of 15 relationship zones in the order they
+#' are encountered when traversing an ancestry match matrix out to four
+#' generations
+#' @source Fill this in later
+#' @docType data
+#' @name relationship_zone_names
+NULL

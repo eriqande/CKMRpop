@@ -4,9 +4,14 @@
 #' It is primarily for internal use
 #' @param ATP a tibble that has ind_1, ind_2, and an ID column
 #' @keywords internal
-basic_amm_plot <- function(ATP, add_imps = FALSE) {
-  g <- ggplot(ATP, aes(x = ind_1, y = ind_2, fill = amm)) +
-    geom_tile(colour = "black") # put this down to establish a discrete scale
+basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
+  g <- ggplot() +
+    geom_tile(
+      data = ATP,
+      mapping = aes(x = ind_1, y = ind_2, fill = amm),
+      colour = "black"
+    ) # put this down to establish a discrete scale
+
   g <- gg_add_generation_bands(
     g = g,
     L = max(ATP$x),
@@ -14,13 +19,25 @@ basic_amm_plot <- function(ATP, add_imps = FALSE) {
     alpha = 0.3
   ) +
     scale_fill_manual(values = c(`FALSE` = NA, Impossible = "white", `TRUE` = "black")) +
-    geom_tile(colour = "black") +  # put it down again to have it on top
+    geom_tile(
+      data = ATP,
+      mapping = aes(x = ind_1, y = ind_2, fill = amm),
+      colour = "black"
+    ) +  # put it down again to have it on top
     theme_bw() +
     theme(
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
       axis.text.x = element_text(angle = 90, hjust = 1.0, vjust = 0.5)
-    )
+    ) +
+    guides(fill = guide_legend(title = "Ancestry Match\nMatrix Element"))
+
+  # finally, add the zone perimeters
+  g <- gg_add_zone_perimeters(
+    g = g,
+    L = max(ATP$x),
+    perisize = perimeter_width
+  )
 
   g
 }

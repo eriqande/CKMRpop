@@ -30,14 +30,25 @@ lower diagonal.  If the zone spans the diagonal, then each matrix
 returned in the list is the same.
 }
 \details{
-The relationships whose zones we deal with are named as follows:
+The relationships whose zones we are equipped to deal with go out to n=4 generation,
+and are named (and ordered) as follows, which is the order in which they
+appear in the package data vector \code{relationship_zone_names}:
 \itemize{
 \item \code{Se}: self.  This is as far as it goes with num_generations = 0
 \item \code{PO}: parent-offspring
-\item \code{Si}: sibling. This is as far as it goes with num_generations = 1
+\item \code{Si}: sibling. This is as far as it goes with num_generations = 1.
 \item \code{GP}: grandparental
 \item \code{A} : avuncular (aunt-neice)
-\item \code{FC}: first cousin. This is as far as it goes with num_generations = 2
+\item \code{FC}: first cousin. This is as far as it goes with num_generations = 2.
+\item \code{GGP}: great-grandparental
+\item \code{GA}: great-avuncular (great-aunt/great-neice, etc).
+\item \code{FCr1}: first-cousin once removed
+\item \code{SC}: second cousin. This is as far as it goes with num_generations = 3
+\item \code{GGGP}: great-great-grandparental
+\item \code{GGA}: great-great-avuncular
+\item \code{FCr2}: first cousin twice removed
+\item \code{SCr1}: second cousin once removed
+\item \code{TC}: third cousin
 At this point the additional zones for num_generations = 3 have not been
 implemented.
 }
