@@ -34,7 +34,10 @@ relationship_zone_perimeters <- function() {
   }) %>%
     bind_rows() %>%
     mutate(
-      which_matrix = paste0("M", which_matrix)
+      which_matrix = paste0("M", which_matrix),
+      area = (xmax - xmin) * (ymax - ymin),
+      xmid = (xmax + xmin) / 2,
+      ymid = (ymax + ymin) / 2,
     )
 
 }
