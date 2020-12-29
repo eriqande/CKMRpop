@@ -544,6 +544,7 @@ g <- ggplot(
 
 dir.create("outputs/002", recursive = TRUE, showWarnings = FALSE)
 ggsave("outputs/002/posterior-curves-10K-samples-total.pdf", plot = g, width = 8, height = 7)
+g
 ```
 
 ### Coefficients of variation, etc
@@ -591,5 +592,5 @@ In the end, let's save the scaled likelihoods.
 ```{r}
 scaled_likelihoods %>%
   ungroup() %>% 
-  write_rds("development/outputs/002/scaled-likelihoods.rds", compress = "xz")
+  write_rds("outputs/002/scaled-likelihoods-10K.rds", compress = "xz")
 ```
