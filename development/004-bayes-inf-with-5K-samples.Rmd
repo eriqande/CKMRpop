@@ -1,0 +1,567 @@
+---
+title: "Bayesian Inference of pop size from species 2 CKMRpop simulations with 2,500 fish a year"
+output: 
+  html_document:
+    toc: true
+    df_print: paged
+  html_notebook:
+    toc: true
+    df_print: paged
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(CKMRpop)
+```
+
+We need not only all the pairs with given $|b_2 - b_1|$ that are of our three focal 
+relationships, but we also must have the total number of such pairs, because that
+is required for the likelihood as well.  So, that will take a little bit of
+extra haggling.
+
+We count up the focal relationships first:
+```{r}
+# get the simulation outputs
+
+files <- dir(
+  path = "../cluster_runs_5K_samples/",
+  pattern = "cz_.*\\.rds",
+  full.names = TRUE
+)
+names(files) <- basename(files)
+
+output_list <- lapply(files, read_rds)
+
+# here is a function to count them all up for a single simulation
+count_classes <- function(x) {
+  x$ds_pairs %>%
+    mutate(
+      syear1 = map_int(samp_years_list_1, function(x) x[1]),
+      syear2 = map_int(samp_years_list_2, function(x) x[1]),
+      sage1 = syear1 - born_year_1,
+      sage2 = syear2 - born_year_2, # now make a parallel-ordered version of those
+      osage1 = pmin(sage1, sage2),
+      osage2 = pmax(sage1, sage2),
+      birth_diff = abs(born_year_2 - born_year_1),
+      relat_str = str_c(dom_relat, "-", max_hit)
+    ) %>% 
+    filter(
+      relat_str %in% c("Si-1", "A-2", "GP-1")
+    ) %>%
+    count(birth_diff, osage1, osage2, relat_str) %>%
+    pivot_wider(
+      names_from = relat_str,
+      values_from = n, 
+      values_fill = 0L
+    )
+}  
+# and here we count them up and store them in a list column.
+# Note that we will filter these down to different birth diffs
+# at some later time.
+pair_cat_counts <- tibble(
+    sim_num = 1:60,
+    sim_id = names(output_list),
+    cohort_size = map_chr(output_list, function(x) x$cohort_size),
+    pair_categ_tibs = map(output_list, count_classes)
+  )
+
+```
+
+That was the easy part.  Now we need to count the total number of pairs
+in these different birth-diff by osage1_2 classes. We need to tally up
+the total number of samples with particular properties, and then compute
+the number of pairs between them, and then sum those up a bit.
+
+```{r}
+# a function to count the total number of pairwise comparisons
+compute_sample_pairs <- function(x) {
+  s1 <- x$ds_samples %>%
+    mutate(
+      syear = map_int(samp_years_list, ~.x[1]),
+    ) %>%
+    count(born_year, syear) %>%
+    mutate(id = 1:nrow(.)) %>%
+    select(id, born_year, syear, n)
+  
+  s2 <- s1
+  names(s1) <- str_c(names(s1), "1")
+  names(s2) <- str_c(names(s2), "2")
+  
+  s3 <- bind_cols(
+    s1[rep(1:nrow(s1), each = nrow(s1)), ],
+    s2[rep(1:nrow(s2), times = nrow(s2)), ]
+  ) %>%
+    filter(id1 <= id2) %>% # don't count these pairwise groups more than once
+    mutate(
+      n_pairs = case_when(
+        id1 == id2 ~ n1 * (n1 - 1) / 2,
+        TRUE ~ n1 * n2 * 1
+      ),
+      birth_diff = abs(born_year2 - born_year1),
+      age1 = syear1 - born_year1,
+      age2 = syear2 - born_year2,
+      osage1 = pmin(age1, age2),
+      osage2 = pmax(age1, age2)
+    ) %>%
+    group_by(birth_diff, osage1, osage2) %>%
+    summarise(tot_pairs = sum(n_pairs), .groups = "drop")
+  
+  s3
+}
+
+# then get a tibble of them:
+tot_pair_counts <- tibble(
+    sim_num = 1:60,
+    sim_id = names(output_list),
+    cohort_size = map_chr(output_list, function(x) x$cohort_size),
+    tot_pair_tibs = map(output_list, compute_sample_pairs)
+  )
+```
+
+
+### Quick check on the total number of pairs
+
+To be sure that I did not gooch the total number of pairs in each category,
+we note that the sum of them all in any simulation should be equal to
+$5,000(5,000 - 1) / 2 = 12,497,500$ pretty close to 12,500,000 if the sample
+sizes are 5000.
+
+```{r}
+tot_pair_counts %>% 
+  unnest(tot_pair_tibs) %>% 
+  group_by(sim_num) %>% 
+  summarise(all_pairs = sum(tot_pairs))
+```
+
+Yep! Those are right on.  So, we have counted the total number of pairs in each category
+up correctly.
+
+### Join total pairs onto observed numbers 
+Now, we join those together and unnest, so we have everything in a single data frame.  Note that
+we can ignore any categories that didn't have any Si-1's, A-2's, or GP-1's, so we left join on that one.
+
+While we are at it, we compute the fraction of the kin pairs that are not Si-1's.
+```{r}
+pcc_u <- pair_cat_counts %>%
+  unnest(pair_categ_tibs)
+tpc_u <- tot_pair_counts %>%
+  unnest(tot_pair_tibs)
+
+all_pairs_n <- left_join(
+  pcc_u,
+  tpc_u
+) %>%
+  replace_na(data = ., replace = list(`GP-1` = 0, `A-1` = 0)) %>%
+  mutate(
+    totKin = `Si-1` + `A-2` + `GP-1`,
+    `fractNonSi-1` = (`A-2` + `GP-1`) / totKin
+  )
+
+# Here is what the first 20 rows of that look like:
+all_pairs_n %>%
+  slice(1:20)
+```
+
+
+
+
+### The distribution of A-2 and GP-1 relative to Si-1
+
+We want to see how the fraction of A-2 and GP-1 varies across these different
+birth_year differences and pair ages.  Let's make a plot to look at these
+fractions:
+```{r}
+all_pairs_n %>%
+  mutate(categ = str_c(birth_diff, osage1, osage2, sep = "-")) %>%
+  ggplot(aes(x = totKin, y = `fractNonSi-1`, fill = factor(cohort_size))) + 
+  geom_point(shape = 21, stroke = 0.2, size = 2) +
+  facet_wrap(~ categ, ncol = 4)
+```
+
+We see that apart from a birth-diff of 0, the fraction of total kin with 
+a genome sharing equivalent of Si-1 that are A-2 and GP-1 is pretty constant
+across population sizes, as we might expect.  The big difference is that the
+proportion is more variable as the total number of kin is smaller.  So, I 
+think that for the purposes of propagating uncertainty, we can just compute
+the average across all runs with birth-diff > 0 and use that as a
+correction factor, but perhaps simulate the numbers of Si-1 amongst totKin as a binomial,
+instead of just taking the expected fraction (or perhaps not do that second
+part...)
+
+So, what is that fraction?
+```{r}
+NSIF <- all_pairs_n %>%
+  filter(birth_diff > 0) %>%
+  summarise(nonSi_fract = sum(`A-2` + `GP-1`) / sum(totKin)) %>%
+  pull(nonSi_fract)
+NSIF
+```
+
+OK, we are looking at about 28% of the kin pairs that look like Si-1 actually being
+one of the other categories.  That will play into our estimates.
+
+## The Parts of the Kinship Probabilities
+
+We want to compute the probability that a randomly drawn pair of samples, 1 and 2,
+have an `Si-1` relationship given the demography and the population size.  We can derive
+that probability by breaking it down as follows.
+
+We will do all the calculations as if the pair are maternal half sibs, and then account
+for paternal halfsibs at the end.  Each subsection below is a different part of the calculation.
+
+### Probability of the age of the mother when the oldest pair member is born
+
+First, we don't know the age of the mother of 1 and 2 at the time that the oldest
+of the pair was born. Let's call that age $A$.  We will end up summing over all possibilities
+weighted by their probability of occurrence.  Since we have a stable age distribution assumption
+the probabilities of $A$ do not depend on the actual year.  Rather, they are constant over
+time, and depend on the relative reproductive outputs of the different year classes.  
+This is a function of the probability of:
+
+- The stable age distribution (how many female fish of each age that are out there)
+- The age-specific probability of reproducing.
+- The age-specific relative reproductive potentials / fecundities.
+
+(Note that in this case all these things have been assumed to be the same for
+males and females, which will make it simpler in the end). So we have:
+```{r}
+# here is the relative expected reproductive output of a single individual
+# of a given age versus a single individual of all other ages
+RERO_1 <- species_2_life_history$`fem-prob-repro` * species_2_life_history$`fem-asrf`
+
+# stable age distribution
+SAD <- leslie_from_spip(species_2_life_history, 1000)$stable_age_distro_fem 
+# there is some jiggering to do to make sure the year classes line up with
+# the way we have parameterized reproductive success, etc.
+SAD <- SAD[-1] # tweeze off the 0 class
+SAD <- c(SAD, SAD[length(SAD)] * species_2_life_history$`fem-surv-probs`[length(species_2_life_history$`fem-surv-probs`)])
+SAD <- SAD / sum(SAD)
+
+# Now, the probability of a being a mother from a given age class is the
+# relative reproductive output of each age class, which has to take account
+# of the stable age distribution, like this:
+RERO_AC <- RERO_1 * SAD / sum(RERO_1 * SAD) 
+RERO_AC
+```
+So, those are the relative expected reproductive outputs of each age class from 1 to 20.
+
+### Probability of the mother surviving $|b_2 - b_1|$ years after giving birth to the oldest member of the pair
+
+To have a half-sibling pair, the mother at age $A$ must give birth to the first member of the
+pair, and then it has to survive for $|b_2 - b_1|$ years. This depends on the survival probabilities.
+Here we write a function giving those age-specific survival probabilities for $y = |b_2 - b_1|$ years,
+starting from age $A$.
+```{r}
+# sp is a vector of survival probs, the first is the prob of surviving from 0 to 1.  
+assp <- function(y, sp) {
+  if(y == 0) return(rep(1, length(sp)))
+  
+  # fiddle the survival probs to get them to reflect 1-year-olds
+  sp2 <- sp[-1]
+  sp2 <- c(sp2, rep(0, 300))  # get the zero probability for going beyond the max age
+  
+  lapply(1:length(sp), function(x) prod(sp2[x:(x+y-1)])) %>%
+    unlist()
+  
+}
+
+# here are some examples:
+SP <- species_2_life_history$`fem-surv-probs`
+assp(0, SP)
+assp(1, SP)
+assp(2, SP)
+assp(3, SP)
+```
+
+
+### Probability that the younger member of the pair has the same mother as the older member of the pair
+
+Now, if the mother of age $A$ gave birth to the first member of the pair and then survived $y = |b_2 - b_1|$ years, then,
+what has to happen is that the second member of the pair must be the offspring of that same individual.  This is the
+part that depends on the total population size.  The probability of that same individual being the mother of the
+second member is the expected reproductive output of a female aged $A+y$ divided by the expected reproductive output
+of all females in the population at the time that the second member of the pair is born.
+We have an added wrinkle in that we are defining the population size in terms
+of the number of individuals of ages 2 and up.  So, we need to account for that, adding the 1-year-olds in for the calculations.
+Basically, we need to be able to compute the number of females of each age group, according to the stable age
+distribution, when the number of age $2+$ individuals is $N$. We are assuming an equal sex ratio here, so the 
+distribution of the number of females, starting from age 1, given $N$ of age $2+$, and the stable age distribution can be
+given by this quick little function:
+```{r}
+sad_fem_counts <- function(N, SAD) { 
+  two_plus <- N * SAD[-1] / sum(SAD[-1])
+  ones <- N * SAD[1] / sum(SAD[-1])
+  c(ones, two_plus) / 2   # divide by two because we are just counting females
+}
+```
+So, for example, if we thought there were 1 million fish age two and older, this
+is the expected number of females of each age class, starting from 1:
+```{r}
+sad_fem_counts(1e6, SAD)
+```
+
+Armed with this, we can calculate the probability that the second member of the pair has the same mother,
+when the total number of fish age 2 and up is 1 million.
+```{r}
+# Example first offspring born when mother is age A=2 and second after y=2 years
+A <- 2
+y <- 2
+N <- 1e6
+
+prob <- RERO_1[A + y] / sum(RERO_1 * sad_fem_counts(N, SAD))
+
+prob
+```
+That is looking like 1.8 out of a million.  Which seems to be in the correct ballpark, as we have about 870 K females, total, when
+you include the 1-year-olds there.
+
+###  That's it for this calculation!
+
+When I first started piecing this together, I thought that there must be a term
+in there for the probability that the two individuals of the pair survived to
+their respective ages in order to be sampled, but that turns out to NOT be necessary.
+In making this calculation, we are effectively conditioning upon the fact that they
+have survived.  Of course, if the ages of the members of the pair were uncertain, we would
+end up having to sum over the probabilities given their possible different ages, each
+weighted by the probability of those ages given some information about the fish 
+that is related to age (like length, etc).  Not an issue here with age assumed
+known, however.  
+
+
+## Putting it all together into a single function
+
+Here we use the above results to create a single function that gives us the
+probability that a pair of fish are half-siblings.  We assume that in different
+years you wouldn't get full-siblings at all, so the prob of being _either_
+a maternal or a paternal half sibling is just the sum of the probs of both
+of those outcomes, which means just twice the prob of being a maternal half-sib.
+
+Note that I am not going to bother trying to write this function so that it is
+vectorized over any of the input variables.  It just isn't worth it at this point...
+
+I have included this function in CKMRpop for convenience,
+since we will use it for a couple of different sample sizes for species 2,
+but it is not really for general or ready for prime time.  Here is
+what the function looks like:
+
+```r
+`r paste(readLines("../R/half_sib_kin_probs.R"), collapse = "\n")`
+```
+
+
+
+
+
+## Checking our probabilities
+
+Now we should be able to compute these for each sampling category and compare expected to observed
+number of kin pairs found.
+
+```{r}
+# first, find all the different categories
+pair_cats <- all_pairs_n %>%
+  distinct(cohort_size, birth_diff, osage1, osage2) %>%
+  mutate(pop_size = case_when(
+    cohort_size == "1110000" ~ 1.5e6,
+    cohort_size == "740000" ~ 1.0e6,
+    cohort_size == "370000" ~ 0.5e6,
+  )) %>%
+  select(cohort_size, pop_size, birth_diff, osage1, osage2)
+```
+Now, for each of those we can compute the half-sib probs:
+```{r}
+calced_probs <- pair_cats %>%
+  mutate(
+    hs_prob = pmap_dbl(
+      .l = list(
+        y = birth_diff,
+        a1 = osage1,
+        a2 = osage2,
+        N = pop_size),
+      .f = function(y, a1, a2, N) {
+        half_sib_kin_probs(  
+          y = y, 
+          a1 = a1, 
+          a2 = a2, 
+          N = N,
+          surv_probs = species_2_life_history$`fem-surv-probs`,
+          prob_repro = species_2_life_history$`fem-prob-repro`,
+          rel_repro = species_2_life_history$`fem-asrf`
+        )
+      }
+    )
+  )
+```
+
+Now, we can join those to the observed ones and see how they compare:
+```{r}
+comp <- all_pairs_n %>%
+  left_join(calced_probs) %>%
+  mutate(
+    expected_Si1 = hs_prob * tot_pairs,
+    categ_str = str_c(birth_diff, osage1, osage2, sep = "-")  
+  ) 
+
+comp %>%
+  filter(birth_diff > 0) %>%
+ggplot(., aes(x = expected_Si1, y = `Si-1`, fill = categ_str)) +
+  geom_point(shape = 21, stroke = 0.2) +
+  geom_abline(intercept = 0, slope = 1) +
+  facet_wrap(~ pop_size, ncol = 1)
+
+```
+Cool.  That looks right on.
+
+## Doing the actual estimation
+
+Now, the moment we have been waiting for.  We are going to 
+compute all the half-sib probs for the different birth diffs and the
+different ages at sampling for a variety of N's from 50,000 to 6 million
+in steps of 10,000:
+```{r}
+Npts <- seq(5e4, 6e6, by = 1e4)
+Nprobs <- all_pairs_n %>%
+  distinct(birth_diff, osage1, osage2) %>%
+  mutate(
+    hs_prob = pmap(
+      .l = list(
+        y = birth_diff,
+        a1 = osage1,
+        a2 = osage2
+      ),
+      .f = function(y, a1, a2) {
+        half_sib_kin_probs(  
+          y = y, 
+          a1 = a1, 
+          a2 = a2, 
+          N = Npts,
+          surv_probs = species_2_life_history$`fem-surv-probs`,
+          prob_repro = species_2_life_history$`fem-prob-repro`,
+          rel_repro = species_2_life_history$`fem-asrf`
+        )
+      }
+    )
+  ) %>%
+  mutate(
+    hs_tib = map(hs_prob, function(x) tibble(N = Npts, hs_prob = x))
+  ) %>%
+  select(-hs_prob) %>%
+  unnest(cols = c(hs_tib))
+  
+```
+
+Then, we will join the probabilities on there and we use the total kin corrected by
+the non-Si-1 fraction and the tot_pairs to compute the contributions to the log likelihood.
+Sweet!
+
+```{r}
+# first get the logl terms from all of them (even birth_diff == 0 ones)
+logl_terms <- all_pairs_n %>%
+  left_join(
+    Nprobs, 
+    by = c("birth_diff", "osage1", "osage2")
+  ) %>%
+  mutate(
+    logl_term = (totKin * (1 - NSIF) * log(hs_prob)) +
+      ((tot_pairs - totKin * (1 - NSIF)) * log(1 - hs_prob))
+  )
+
+# then, let's get the scaled likelihoods/posteriors out of those,
+# with birth_diff > 0
+scaled_likelihoods <- logl_terms %>%
+  filter(birth_diff > 0) %>%
+  group_by(sim_num, cohort_size, N) %>%
+  summarise(
+    logl = sum(logl_term)  # this is the sum over age and birth_diff categories of the binomial terms
+  ) %>%
+  mutate(
+    normo_logl = logl - max(logl),
+    scaled_likelihood = exp(normo_logl) / sum(exp(normo_logl))
+  ) %>%
+  mutate(pop_size = case_when(
+    cohort_size == "1110000" ~ 1.5e6,
+    cohort_size == "740000" ~ 1.0e6,
+    cohort_size == "370000" ~ 0.5e6
+  ))
+
+# while we are at it, let's filter these down to the maxes
+# as well, to throw a rug onto the plots
+like_maxes <- scaled_likelihoods %>%
+  filter(normo_logl == 0)
+  
+
+```
+
+
+Now, we can plot those things, which are essentially posterior probability curves:
+```{r}
+g <- ggplot(
+  scaled_likelihoods,
+  aes(x = N, y = scaled_likelihood, colour =  factor(pop_size), group = sim_num)
+) +
+  geom_vline(aes(xintercept = pop_size)) + 
+  geom_line(size = 0.2) +
+  geom_rug(data = like_maxes, aes(y = NULL)) +
+  facet_wrap(~ pop_size, ncol = 1, scales = "free_y") +
+  xlim(0, 3e6)
+
+dir.create("outputs/002", recursive = TRUE, showWarnings = FALSE)
+ggsave("outputs/002/posterior-curves-5K-samples-total.pdf", plot = g, width = 8, height = 7)
+g
+```
+
+### Coefficients of variation, etc
+
+We can approach this from a Bayesian perspective first, calculating the
+variance (and from that the standard deviation) of the posterior distribution, and dividing the
+posterior mean by the standard deviation of the distribution.  
+```{r}
+coeffs_of_v <- scaled_likelihoods %>%
+  group_by(sim_num, pop_size) %>%
+  summarise(
+    posterior_mean = sum(N * scaled_likelihood),
+    posterior_variance = sum( scaled_likelihood * ((posterior_mean - N) ^2) ),
+    posterior_sd = sqrt(posterior_variance),
+    coeff_of_variation = posterior_sd / posterior_mean
+  )
+coeffs_of_v
+```
+
+So, that is showing that the CV of the posterior distribution for each case
+is pretty similar. Averaged over the 20 runs we have:
+```{r}
+coeffs_of_v %>%
+  group_by(pop_size) %>%
+  summarise(mean_cv = mean(coeff_of_variation))
+```
+So, those are larger than with 10K samples.
+
+We can also look at the observed distribution of MLEs to estimate the mean-squared
+error, and then take the square root of that.  And look at the ratio of the sqrt(MSE) to thetrue
+value as another CV-like measurement. 
+```{r}
+like_maxes %>%
+  group_by(pop_size) %>%
+  summarise(
+    MSE = mean( (pop_size - N) ^ 2),
+    sqrt_MSE = sqrt(MSE),
+    ratio = sqrt_MSE / pop_size[1]
+  )
+```
+
+So, that is not quite what we computed from the posterior distributions.
+
+In the end, let's save the scaled likelihoods.
+```{r}
+scaled_likelihoods %>%
+  ungroup() %>% 
+  write_rds("outputs/002/scaled-likelihoods-5K.rds", compress = "xz")
+```

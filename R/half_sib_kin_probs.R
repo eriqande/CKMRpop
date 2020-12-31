@@ -83,7 +83,7 @@ half_sib_kin_probs <- function(
   # each individual were sampled when they were
   age_samp_prob <- SAD[a1] * SAD[a2] * (2 - (a1 == a2)) / (sum(SAD[2:4]) ^ 2)
 
-  fem_probs <- matchy_probs #* age_samp_prob
+  fem_probs <- matchy_probs
 
   # and at the very end, multiply by 2 for the two different sexes
   2 * fem_probs
