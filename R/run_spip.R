@@ -12,6 +12,10 @@
 #' way reproducible results from spip can be obtained by calling `set.seed()` from within
 #' R before calling `run_spip()`.  For the most part, the user should never really have
 #' to directly supply a value for spip_seeds.
+#' @details This creates a temporary directory and runs spip in that directory, redirecting
+#' stdout and stderr to files.  It then processes the output using awk to create a collection
+#' of files.  If spip throws an error, the contents of stderr are written to the screen to notify
+#' the user of how to correct their input.
 #' @export
 run_spip <- function(
   pars,
@@ -56,12 +60,28 @@ run_spip <- function(
 
   # Run this in system2
   setwd(dir)
-  system2(
+  spip_ret <- system2(
     command = spip_binary(),
     args = args,
     stdout = sfile,
     stderr = efile
   )
+
+  # catch the case where spip threw an error
+  if(spip_ret != 0) {
+    error_lines <- readr::read_lines(efile)
+    message("\n\n*** spip reported the following errors ***\n\n")
+    message(paste(error_lines, collapse = "\n"))
+    stop("\n\nAborting.  Please fix error to spip input and try again.\n\n
+For a brief listing of all available spip options use:
+
+system2(command = spip_binary(), args = \"--help\")
+
+For a long listing, use:
+
+system2(command = spip_binary(), args = \"--help-full\")\n\n
+")
+  }
 
   message(
     "Done running spip. Output file size is ",

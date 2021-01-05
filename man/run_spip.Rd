@@ -24,3 +24,9 @@ This runs it in a directory and the output from stdout
 goes into a big file spip_out.txt in that directory. Currently
 this is pretty bare bones.
 }
+\details{
+This creates a temporary directory and runs spip in that directory, redirecting
+stdout and stderr to files.  It then processes the output using awk to create a collection
+of files.  If spip throws an error, the contents of stderr are written to the screen to notify
+the user of how to correct their input.
+}

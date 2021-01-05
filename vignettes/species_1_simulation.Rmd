@@ -33,13 +33,13 @@ hood, but you still have to use the `spip` parameters.  This vignette is not abo
 using `spip`.  For a short listing of all the `spip` options, do this:
 ```r
 library(CKMRpop)
-system(paste0(spip_binary(), " --help"))
+system2(command = spip_binary(), args = "--help")
 ```
 If you want a full, complete, long listing of all the `spip` options, then you
 can do:
 ```r
 library(CKMRpop)
-system(paste0(spip_binary(), " --help-full"))
+system2(command = spip_binary(), args = "--help-full")
 ```
 
 
