@@ -58,6 +58,20 @@ rcpp_ancestors_and_relatives <- function(L, n) {
     .Call('_CKMRpop_rcpp_ancestors_and_relatives', PACKAGE = 'CKMRpop', L, n)
 }
 
+#' Return a list of the indices of the primary shared ancestors
+#'
+#' This operates on an ancestry match matrix and uses a simple, divide-by_two
+#' relationship between an ancestor and its descendants in the ordering
+#' of an ancestry vector to determine which of the matching ancestors are secondary,
+#' and then return the ones that are primary.
+#' @param M an ancestry match matrix (it is a logical matrix)
+#' @return A list of pairs.  Each pair is the 1-based index of ancestor of ind_1, then
+#' ind_2 of the primary shared ancestors.
+#' @export
+primary_ancestor_pairs <- function(M) {
+    .Call('_CKMRpop_primary_ancestor_pairs', PACKAGE = 'CKMRpop', M)
+}
+
 recursive_push_back <- function(Boing, i) {
     invisible(.Call('_CKMRpop_recursive_push_back', PACKAGE = 'CKMRpop', Boing, i))
 }
