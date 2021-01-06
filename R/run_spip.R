@@ -23,6 +23,11 @@ run_spip <- function(
   spip_seeds = ceiling(runif(2, 1, 1e9))
 ) {
 
+  # before doing anything, check to see if the spip binary is there, and dump
+  # an error if it is not:
+  boing <- spip_binary()
+
+
   cwd = getwd()  # get the current directory to change back to it after the system2 call
 
 

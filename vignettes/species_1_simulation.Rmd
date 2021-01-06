@@ -33,13 +33,13 @@ hood, but you still have to use the `spip` parameters.  This vignette is not abo
 using `spip`.  For a short listing of all the `spip` options, do this:
 ```r
 library(CKMRpop)
-system2(command = spip_binary(), args = "--help")
+spip_help()
 ```
 If you want a full, complete, long listing of all the `spip` options, then you
 can do:
 ```r
 library(CKMRpop)
-system2(command = spip_binary(), args = "--help-full")
+spip_help_full()
 ```
 
 
@@ -123,11 +123,22 @@ a temporary directory.  After running spip, it also processes the output
 with a few shell scripts.  The function returns the path to the temporary
 directory.  You will need that to slurp all the results back in.
 ```{r}
-set.seed(5)
-spip_dir <- run_spip(pars = SPD)
-
-# now read that in and find relatives within the grandparental range
-slurped <- slurp_spip(spip_dir, 2)
+# NOTE the following if()...else() blocks are here
+# to test whether spip has been installed yet.
+# If spip is not available (for example, on CRAN's build machines) this
+# is noted and stored package data are used for the variable
+# "slurped" to build the remainder of the vignette.
+if(spip_exists()) {
+  message("spip is installed and will be used")
+  set.seed(5)
+  spip_dir <- run_spip(pars = SPD)
+  
+  # now read that in and find relatives within the grandparental range
+  slurped <- slurp_spip(spip_dir, 2)
+} else {
+  message("Using stored package data because spip is not installed")  
+  slurped <- species_1_slurped_results
+}
 ```
 
 ## Some functions to summarize the runs
