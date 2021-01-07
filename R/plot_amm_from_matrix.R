@@ -6,7 +6,8 @@
 #' @param X input tibble with a factor or character column `ID` that gives
 #' the "name" of the ancestry matrix that will be used if you want to facet
 #' over the values in `ID`. And also `X` must have a list column `anc_match_matrix` each
-#' element of which is a logical ancestry match matrix.
+#' element of which is a logical ancestry match matrix.  `X` may have a list column
+#' of tibbles called `psa_tibs` that says which cells are the primary shared ancestors.
 #' @export
 plot_amm_from_matrix <- function(X) {
   X2 <- X %>%

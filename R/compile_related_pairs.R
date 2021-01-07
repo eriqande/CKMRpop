@@ -38,7 +38,8 @@ compile_related_pairs <- function(S) {
   S2_2 <- S2_joiner
   names(S2_2) <- paste0(names(S2_2), "_2")
 
-  # join those together and compute the ancestor-matching matrix (the anc_match_matrix)
+  # join those together and compute the ancestor-matching matrix (the anc_match_matrix).
+  # and, at the end, determine the "primary shared ancestors" (see the paper for an explanation).
   pairs_tib_2 <- pairs_tib_1 %>%
     count(id_1, id_2) %>%
     filter(n > 1) %>%  # toss out the ones only seen once because they are not true relationships
@@ -53,7 +54,19 @@ compile_related_pairs <- function(S) {
     )  %>%
     mutate(no_relat = map_lgl(.x = anc_match_matrix, .f = function(x) all(x == FALSE))) %>%
     filter(no_relat == FALSE) %>%
-    select(-no_relat)
+    select(-no_relat) %>%
+    mutate(
+      primary_shared_ancestors = map(.x = anc_match_matrix, .f = primary_ancestor_pairs)
+    )  %>%
+    mutate(psa_tibs = map(  # also save those primary ancestors in tibble form
+      .x = primary_shared_ancestors,
+      .f = function(m) {
+        tibble(
+          prim_anc_1 = map_int(m, 1),
+          prim_anc_2 = map_int(m, 2)
+        )
+      }
+    ))
 
     # now, we want categorize the "dominant relationship" of each pair.  This is done by
     # cycling over (within a function) relationships from Self to PO to Sib to Aunt, etc
@@ -104,6 +117,8 @@ compile_related_pairs <- function(S) {
         dr_hits,
         upper_member,
         times_encountered,
+        primary_shared_ancestors,
+        psa_tibs,
         starts_with("pop_"),
         starts_with("sex_"),
         starts_with("born_year_"),

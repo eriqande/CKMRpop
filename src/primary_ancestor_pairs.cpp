@@ -42,7 +42,7 @@ List primary_ancestor_pairs(LogicalMatrix M) {
         i -= ((i % 2) == 1);
         j -= ((j % 2) == 1);
 
-        Rcout << r+1 << c+1 << i << j << "\n";
+        //Rcout << r+1 << c+1 << i << j << "\n";
 
         // now, we test if the corresponding cell at i/2 and j/2 is also > 0,
         // in which case, r,c is a secondary shared ancestor.  But, we most only
@@ -58,8 +58,17 @@ List primary_ancestor_pairs(LogicalMatrix M) {
     }
   }
 
-
-  ret.push_back(I);
+  // finally, at the end, go back through I and record all pairs r, c
+  // that have the value 1.  These are the primary shared ancestors.
+  // Note that we want to send it back base-1 indexed, so we send pairs
+  // r+1 and c+1.
+  for(r=0;r<R;r++) {
+    for(c=0;c<C;c++) {
+      if(I(r,c) == 1) {
+        ret.push_back(IntegerVector::create(r + 1, c + 1));
+      }
+    }
+  }
 
   return(ret);
 }

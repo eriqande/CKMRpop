@@ -49,11 +49,14 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
 #' @param Pairs a tibble like that returned by `compile_related_pairs()`.
 #' @param nrow the number of rows to plot per page
 #' @param ncol the number of columns to plot per page
+#' @param white_ball_size the size of the white dot plotted on top of the
+#' primary shared ancestors' cells.
 #' @export
 count_and_plot_ancestry_matrices <- function(
   Pairs,
   nrow = 6,
-  ncol = 5
+  ncol = 5,
+  white_ball_size = 1
 ) {
 
 
@@ -76,12 +79,33 @@ count_and_plot_ancestry_matrices <- function(
     ) %>%
     mutate(amm = as.character(amm))
 
+  # now, also get a tibble to store the primary shared ancestors
+  PSA_TIBS <- Pairs %>%
+    count(anc_match_matrix, psa_tibs) %>%
+    select(-n)
+  tmp2 <- amc_to_plot %>%
+    count(anc_match_matrix, ID) %>%
+    select(-n)
+
+  primaries <- left_join(PSA_TIBS, tmp2, by = "anc_match_matrix") %>%
+    select(ID, anc_match_matrix, everything()) %>%
+    unnest(cols = c(psa_tibs))
+
 
   # now we can lapply over the different pages
   num_pages <- ceiling(n_relat / (nrow * ncol))
 
   plots <- lapply(1:num_pages, function(i) {
     g <- basic_amm_plot(amc_to_plot) +
+      geom_point(
+        data = primaries,
+        mapping = aes(
+          x = prim_anc_1,
+          y = prim_anc_2
+        ),
+        colour = "white",
+        size = white_ball_size
+      ) +
       ggforce::facet_wrap_paginate(~ ID, ncol = ncol, nrow = nrow, page = i)
 
     g
@@ -111,7 +135,7 @@ count_and_plot_ancestry_matrices <- function(
     ) %>%
     ungroup()
 
-  # now, figure dominant relationship has the most:
+  # now, figure out which dominant relationship has the most:
   max_panels <- dr_counts %>%
     count(dom_relat) %>%
     pull(n) %>%
@@ -140,9 +164,30 @@ count_and_plot_ancestry_matrices <- function(
     mutate(amm = as.character(amm)) %>%
     split(., .$dom_relat)
 
+
+  # now we need to make another parallel list that has the primary ancestor
+  # information in it.
+  psa_list <- lapply(dr_list, function(x) {
+    tmp <- x %>%
+      ungroup() %>%
+      count(anc_match_matrix, ID) %>%
+      select(-n) %>%
+      left_join(PSA_TIBS, by = "anc_match_matrix") %>%
+      unnest(cols = c(psa_tibs))
+  })
+
   # now we lapply over those and make a faceted ggplot for each
   dr_plots <- lapply(names(dr_list), function(n) {
     g <- basic_amm_plot(dr_list[[n]]) +
+      geom_point(
+        data = psa_list[[n]],
+        mapping = aes(
+          x = prim_anc_1,
+          y = prim_anc_2
+        ),
+        colour = "white",
+        size = white_ball_size
+      ) +
       ggtitle(paste0("Dominant relationship: ", n)) +
       ggforce::facet_wrap_paginate(~ ID, ncol = dcols, nrow = drows, page = 1)
   })

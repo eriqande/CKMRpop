@@ -4,7 +4,12 @@
 \alias{count_and_plot_ancestry_matrices}
 \title{Count up the number of different kinds of related pairs and make a plot}
 \usage{
-count_and_plot_ancestry_matrices(Pairs, nrow = 6, ncol = 5)
+count_and_plot_ancestry_matrices(
+  Pairs,
+  nrow = 6,
+  ncol = 5,
+  white_ball_size = 1
+)
 }
 \arguments{
 \item{Pairs}{a tibble like that returned by \code{compile_related_pairs()}.}
@@ -12,6 +17,9 @@ count_and_plot_ancestry_matrices(Pairs, nrow = 6, ncol = 5)
 \item{nrow}{the number of rows to plot per page}
 
 \item{ncol}{the number of columns to plot per page}
+
+\item{white_ball_size}{the size of the white dot plotted on top of the
+primary shared ancestors' cells.}
 }
 \description{
 This counts up all the different types of pairwise relationships and
