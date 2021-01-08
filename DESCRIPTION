@@ -1,6 +1,6 @@
 Package: CKMRpop
 Type: Package
-Title: Simulate Population of Specified Life History and Sample Related Pairs
+Title: Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations
 Version: 0.1.0
 Author: Eric C. Anderson
 Maintainer: <eric.anderson@noaa.gov>
