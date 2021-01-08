@@ -6,6 +6,45 @@ names(res_files) <- basename(res_files)
 
 res_list <- lapply(res_files, read_rds)
 
+# get the annual census sizes each year for all the simulations
+ann_pop_size_list <- lapply(res_list, function(x) {
+  x$pop_sizes %>%
+    mutate(cz = x$cohort_size)
+})
+names(ann_pop_size_list) <- 1:60
+
+ann_pop_size_tib <- bind_rows(ann_pop_size_list, .id = "sim") %>%
+  mutate(
+    expected_pop_size = case_when(
+      cz == 1110000 ~ "1.5 million",
+      cz == 740000 ~ "1 million",
+      cz == 370000 ~ "0.5 million"
+    )
+  )
+
+sizes <- tibble(
+  expected_pop_size = c("1.5 million", "1 million", "0.5 million"),
+  size = c(1.5e6, 1e6, 0.5e6)
+)
+
+# Now, just plot the annual total population sizes and overlay
+# the expected values:
+gann <- ggplot(
+  ann_pop_size_tib,
+  aes(
+    x = year,
+    y = tot_pop,
+    colour = expected_pop_size,
+    group = sim
+  )
+) +
+  geom_line(size = 0.4) +
+  facet_wrap(~expected_pop_size, scales = "free_y", ncol = 1) +
+  geom_hline(data = sizes, aes(yintercept = size))
+
+
+ggsave(gann, filename = "cluster_runs/schrodingers-snappers.pdf", width = 6, height = 8)
+
 relat_sum_tib <- tibble(
   cz = map_int(res_list, function(x) x$cohort_size),
   mean_pop = map_dbl(res_list, function(x) mean(x$pop_sizes$tot_pop)),
