@@ -8,4 +8,3 @@ src/*.so
 src/*.dll
 .DS_Store
 cluster_runs_5K_samples
-docs
