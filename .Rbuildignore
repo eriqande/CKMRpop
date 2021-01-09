@@ -4,3 +4,7 @@
 ^TODO\.md$
 ^development$
 ^cluster_runs$
+^cluster_runs_5K_samples$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
