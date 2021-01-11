@@ -2,10 +2,17 @@ Package: CKMRpop
 Type: Package
 Title: Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations
 Version: 0.1.0
-Author: Eric C. Anderson
+Authors@R: c(
+    person(given = c("Eric", "C."), "Anderson", , "eric.anderson@noaa.gov", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-1326-0840")
+    )
+  )
 Maintainer: <eric.anderson@noaa.gov>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Provides an R wrapper around the program spip, and a variety
+    of functions to parse spip output to compile information about
+    related pairs amongst sampled individuals.  Full documentation
+    and vignettes can be read online at
+    https://eriqande.github.io/CKMRpop/index.html
 License: CC0
 Encoding: UTF-8
 LazyData: true

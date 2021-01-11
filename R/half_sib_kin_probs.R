@@ -15,8 +15,9 @@
 #' @param a2 the age at sampling of another member of the pair
 #' @param N total number of 2+ individuals in the population. This
 #' can be a vector.
-#' @param prob_repo The age-specific (starting from 1) probability of reproducing in a year
+#' @param prob_repro The age-specific (starting from 1) probability of reproducing in a year
 #' @param rel_repro The relative fecundities/reproductive potential of the individuals
+#' @param surv_probs a vector giving the age specific survival probabilities.
 #' @export
 half_sib_kin_probs <- function(
   y,

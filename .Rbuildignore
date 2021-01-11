@@ -8,3 +8,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^_pkgdown$
+^README\.Rmd$
+^README_files$
+^references\.bib$

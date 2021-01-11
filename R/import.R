@@ -1,7 +1,7 @@
 
 
 #' @importFrom dplyr anti_join arrange bind_cols bind_rows case_when count desc distinct ends_with everything filter group_by inner_join lead left_join mutate n n_distinct pull recode rename rename_all sample_n select slice starts_with summarise ungroup
-#' @importFrom ggplot2 annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw
+#' @importFrom ggplot2 annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_point geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2 map2_int map_chr map_int map_lgl
 #' @importFrom readr cols read_delim read_lines read_table2
@@ -37,6 +37,7 @@ if (getRversion() >= "2.15.1")  {
       "anc_match_matrix",
       "ancestors_1",
       "ancestors_2",
+      "assp",
       "born_year",
       "born_year_1",
       "born_year_2",
@@ -58,11 +59,13 @@ if (getRversion() >= "2.15.1")  {
       "kid_id",
       "kid_idx",
       "kid_year",
+      "kin_prob",
       "ma",
       "ma_1",
       "ma_2",
       "ma_age",
       "ma_id",
+      "ma_surv_y",
       "ma_year",
       "male",
       "max_hit",
@@ -84,7 +87,15 @@ if (getRversion() >= "2.15.1")  {
       "parent_idx",
       "pop",
       "pop_1",
+      "prim_anc_1",
+      "prim_anc_2",
+      "primary_shared_ancestors",
+      "psa_tibs",
+      "relationship_zone_names",
       "relatives",
+      "rero_1",
+      "rero_ac",
+      "sad_fem_counts",
       "samp_year_1",
       "samp_year_2",
       "samp_years_list",
@@ -107,9 +118,11 @@ if (getRversion() >= "2.15.1")  {
       "tmp_1",
       "tmp_2",
       "tot_dom",
+      "tot_prob",
       "trio",
       "upper_member",
       "val",
+      "which_matrix",
       "x",
       "x_1",
       "x_2",
@@ -124,7 +137,8 @@ if (getRversion() >= "2.15.1")  {
       "yjit",
       "ylab",
       "ymax",
-      "ymin"
+      "ymin",
+      "zone"
     )
   )
 }

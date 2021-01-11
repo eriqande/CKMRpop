@@ -1,14 +1,15 @@
-CKMRpop: Forward-in-time Simulation and Tabulation of Pairwise
-Relationships in Age-structured Populations
-================
 
-# Overview and Installation
+# CKMRpop <img src="man/figures/CKMRpop-sticker.png" align="right" width="200"/>
 
-CKMRpop is an R wrapper for running the compiled C-program `spip`
-(Anderson and Dunham 2005), which will simulate an age-structured
-population forward in time. The output of `spip` is then processed and
-used to identify related pairs of individuals in samples taken from the
-simulated population.
+CKMRpop is an R package for forward-in-time simulation and tabulation of
+pairwise relationships in age-structured populations.It provides wrapper
+for running the compiled C-program `spip` (Anderson and Dunham 2005),
+which simulates an age-structured population forward in time. The output
+of `spip` is processed by functions in CKMRpop and used to identify
+related pairs of individuals in samples taken from the simulated
+population.
+
+## Installation
 
 To install CKMRpop from GitHub, first do this:
 
@@ -21,7 +22,7 @@ compiling RCpp code.
 
 After it is installed, load the library and download and install the
 spip binary appropriate for your system (Mac and Linux currently
-supported. Not Windows):
+supported. Not Windows…yet):
 
 ``` r
 library(CKMRpop)
@@ -31,9 +32,9 @@ install_spip(Dir = system.file(package = "CKMRpop"))
 The following shows an example of the use of CKMRpop for an example life
 history.
 
-# Full documentation
+## Online documentation
 
-All the package documentation and vignettes are available in
+The package documentation and vignettes are available in
 [pkgdown](https://pkgdown.r-lib.org/) format at
 <https://eriqande.github.io/CKMRpop/>
 
@@ -45,7 +46,7 @@ be found in the “articles” tab on package website, or you can go
 directly to it
 [here](https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html).
 
-# Literature Cited
+## Literature Cited
 
 <div id="refs" class="references">
 

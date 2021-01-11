@@ -1,20 +1,29 @@
 ---
-title: "CKMRpop: Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations"
 output: github_document
 bibliography: references.bib
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  fig.align = 'center',
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-")
 ```
 
+# CKMRpop <img src="man/figures/CKMRpop-sticker.png" align="right" width="200"/>
 
-# Overview and Installation
-
-CKMRpop is an R wrapper for running the compiled C-program `spip` [@anderson2005spip],
-which will simulate an age-structured population forward in time.  The output of `spip`
-is then processed and used to identify related pairs of individuals in samples taken
+CKMRpop is an R package for forward-in-time simulation and tabulation of pairwise
+relationships in age-structured populations. It provides a wrapper for running the 
+compiled C-program `spip` [@anderson2005spip],
+which simulates an age-structured population forward in time.
+The output of `spip`
+is processed by functions in CKMRpop and used to identify related pairs of 
+individuals in samples taken
 from the simulated population.  
+
+
+## Installation
 
 To install CKMRpop from GitHub, first do this:
 ```r
@@ -24,7 +33,7 @@ Installing this requires that you have your build environment set up for
 compiling RCpp code.
 
 After it is installed, load the library and download and install the spip
-binary appropriate for your system (Mac and Linux currently supported.  Not Windows):
+binary appropriate for your system (Mac and Linux currently supported.  Not Windows...yet):
 ```r
 library(CKMRpop)
 install_spip(Dir = system.file(package = "CKMRpop"))
@@ -33,9 +42,9 @@ install_spip(Dir = system.file(package = "CKMRpop"))
 The following shows an example of the use of CKMRpop for an example 
 life history.
 
-# Full documentation
+## Online documentation
 
-All the package documentation and vignettes are available in
+The package documentation and vignettes are available in
 [pkgdown](https://pkgdown.r-lib.org/) format at
 [https://eriqande.github.io/CKMRpop/](https://eriqande.github.io/CKMRpop/)
 
@@ -50,4 +59,4 @@ you can go directly to it
 
 
 
-# Literature Cited
+## Literature Cited

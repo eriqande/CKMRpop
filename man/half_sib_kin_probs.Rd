@@ -16,9 +16,11 @@ half_sib_kin_probs(y, a1, a2, N, surv_probs, prob_repro, rel_repro)
 \item{N}{total number of 2+ individuals in the population. This
 can be a vector.}
 
-\item{rel_repro}{The relative fecundities/reproductive potential of the individuals}
+\item{surv_probs}{a vector giving the age specific survival probabilities.}
 
-\item{prob_repo}{The age-specific (starting from 1) probability of reproducing in a year}
+\item{prob_repro}{The age-specific (starting from 1) probability of reproducing in a year}
+
+\item{rel_repro}{The relative fecundities/reproductive potential of the individuals}
 }
 \description{
 Just a quick function for some developmental work.  This is not meant

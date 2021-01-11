@@ -72,38 +72,40 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
-<p>CKMRpop: Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations ================</p>
-<div id="overview-and-installation" class="section level1">
+<div id="ckmrpop-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#overview-and-installation" class="anchor"></a>Overview and Installation</h1></div>
-<p>CKMRpop is an R wrapper for running the compiled C-program <code>spip</code> (Anderson and Dunham 2005), which will simulate an age-structured population forward in time. The output of <code>spip</code> is then processed and used to identify related pairs of individuals in samples taken from the simulated population.</p>
+<a href="#ckmrpop-" class="anchor"></a>CKMRpop <img src="reference/figures/CKMRpop-sticker.png" align="right" width="200">
+</h1></div>
+<p>CKMRpop is an R package for forward-in-time simulation and tabulation of pairwise relationships in age-structured populations.It provides wrapper for running the compiled C-program <code>spip</code> (Anderson and Dunham 2005), which simulates an age-structured population forward in time. The output of <code>spip</code> is processed by functions in CKMRpop and used to identify related pairs of individuals in samples taken from the simulated population.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>To install CKMRpop from GitHub, first do this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"eriqande/CKMRpop"</span><span class="op">)</span></code></pre></div>
 <p>Installing this requires that you have your build environment set up for compiling RCpp code.</p>
-<p>After it is installed, load the library and download and install the spip binary appropriate for your system (Mac and Linux currently supported. Not Windows):</p>
+<p>After it is installed, load the library and download and install the spip binary appropriate for your system (Mac and Linux currently supported. Not Windows…yet):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">CKMRpop</span><span class="op">)</span>
 <span class="fu"><a href="reference/install_spip.html">install_spip</a></span><span class="op">(</span>Dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"CKMRpop"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The following shows an example of the use of CKMRpop for an example life history.</p>
 </div>
-<div id="full-documentation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#full-documentation" class="anchor"></a>Full documentation</h1>
-<p>All the package documentation and vignettes are available in <a href="https://pkgdown.r-lib.org/">pkgdown</a> format at <a href="https://eriqande.github.io/CKMRpop/" class="uri">https://eriqande.github.io/CKMRpop/</a></p>
+<div id="online-documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#online-documentation" class="anchor"></a>Online documentation</h2>
+<p>The package documentation and vignettes are available in <a href="https://pkgdown.r-lib.org/">pkgdown</a> format at <a href="https://eriqande.github.io/CKMRpop/" class="uri">https://eriqande.github.io/CKMRpop/</a></p>
 <p>The first vignette in the package demonstrates the use of most of the functionality in the package in the context of simulation of the life history of “Species 1” which looks like an elasmobranch that can be sampled while reproducing (or growing up) in a nursery estuary. It can be found in the “articles” tab on package website, or you can go directly to it <a href="https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html">here</a>.</p>
 </div>
-<div id="literature-cited" class="section level1">
-<h1 class="hasAnchor">
-<a href="#literature-cited" class="anchor"></a>Literature Cited</h1>
+<div id="literature-cited" class="section level2">
+<h2 class="hasAnchor">
+<a href="#literature-cited" class="anchor"></a>Literature Cited</h2>
 <div id="refs" class="references">
 <div id="ref-anderson2005spip">
 <p>Anderson, Eric C, and Kevin K Dunham. 2005. “Spip 1.0: A Program for Simulating Pedigrees and Genetic Data in Age-Structured Populations.” <em>Molecular Ecology Notes</em> 5 (2): 459–61.</p>
 </div>
 </div>
 </div>
-
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -117,7 +119,7 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li> <br><small class="roles"> Maintainer </small>  </li>
+<li>Eric C. Anderson <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1326-0840" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -126,7 +128,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Eric C. Anderson.</p>
 </div>
 
 <div class="pkgdown">
