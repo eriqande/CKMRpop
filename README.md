@@ -2,12 +2,12 @@
 # CKMRpop <img src="man/figures/CKMRpop-sticker.png" align="right" width="200"/>
 
 CKMRpop is an R package for forward-in-time simulation and tabulation of
-pairwise relationships in age-structured populations.It provides wrapper
-for running the compiled C-program `spip` (Anderson and Dunham 2005),
-which simulates an age-structured population forward in time. The output
-of `spip` is processed by functions in CKMRpop and used to identify
-related pairs of individuals in samples taken from the simulated
-population.
+pairwise relationships in age-structured populations. It provides a
+wrapper for running the compiled C-program `spip` (Anderson and Dunham
+2005), which simulates an age-structured population forward in time. The
+output of `spip` is processed by functions in CKMRpop and used to
+identify related pairs of individuals in samples taken from the
+simulated population.
 
 ## Installation
 

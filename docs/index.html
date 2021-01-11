@@ -12,8 +12,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations">
-<meta property="og:description" content="More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.">
+<meta property="og:description" content="Provides an R wrapper around the program spip, and a variety
+    of functions to parse spip output to compile information about
+    related pairs amongst sampled individuals.  Full documentation
+    and vignettes can be read online at
+    https://eriqande.github.io/CKMRpop/index.html">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -76,7 +79,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#ckmrpop-" class="anchor"></a>CKMRpop <img src="reference/figures/CKMRpop-sticker.png" align="right" width="200">
 </h1></div>
-<p>CKMRpop is an R package for forward-in-time simulation and tabulation of pairwise relationships in age-structured populations.It provides wrapper for running the compiled C-program <code>spip</code> (Anderson and Dunham 2005), which simulates an age-structured population forward in time. The output of <code>spip</code> is processed by functions in CKMRpop and used to identify related pairs of individuals in samples taken from the simulated population.</p>
+<p>CKMRpop is an R package for forward-in-time simulation and tabulation of pairwise relationships in age-structured populations. It provides a wrapper for running the compiled C-program <code>spip</code> (Anderson and Dunham 2005), which simulates an age-structured population forward in time. The output of <code>spip</code> is processed by functions in CKMRpop and used to identify related pairs of individuals in samples taken from the simulated population.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
