@@ -20,7 +20,8 @@
 run_spip <- function(
   pars,
   dir = tempfile(),
-  spip_seeds = ceiling(runif(2, 1, 1e9))
+  spip_seeds = ceiling(runif(2, 1, 1e9)),
+  num_pops = 1
 ) {
 
   # before doing anything, check to see if the spip binary is there, and dump
@@ -58,7 +59,7 @@ run_spip <- function(
     )
   })
 
-  args <- paste(" --num-pops 1 --command-file ", dfile, " --locus-file ", lfile )
+  args <- paste(" --num-pops ", num_pops, " --command-file ", dfile, " --locus-file ", lfile )
 
 
   message("Running spip in directory ", dir)

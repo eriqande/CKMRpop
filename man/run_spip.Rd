@@ -4,7 +4,12 @@
 \alias{run_spip}
 \title{Run spip in a user-specified directory}
 \usage{
-run_spip(pars, dir = tempfile(), spip_seeds = ceiling(runif(2, 1, 1e+09)))
+run_spip(
+  pars,
+  dir = tempfile(),
+  spip_seeds = ceiling(runif(2, 1, 1e+09)),
+  num_pops = 1
+)
 }
 \arguments{
 \item{pars}{A named list of parameter values.}

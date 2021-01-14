@@ -1,0 +1,99 @@
+---
+title: "KR rushed analyses"
+output: html_notebook
+---
+
+Trying to get some stuff for a grant proposal.
+
+```{r}
+library(tidyverse)
+library(CKMRpop)
+
+# get the data generated on the cluster in 006
+crel <- read_rds("../cluster-run-one-big-kelp-rf-pop/crel.rds")
+
+samples <- read_rds("../cluster-run-one-big-kelp-rf-pop/samples.rds")
+
+relat_counts <- read_rds("../cluster-run-one-big-kelp-rf-pop/relat_counts.rds")
+```
+
+Now we look those over.  First, the highly summarized relationships:
+```{r}
+relat_counts$highly_summarised
+```
+
+```{r}
+s2 <- samples %>%
+  mutate(
+    samp_year = unlist(samp_years_list),
+    age = samp_year - born_year
+  )
+```
+
+Look at distribution of ages of the sampled fish:
+```{r}
+ggplot(s2, aes(x = age)) + 
+  geom_histogram(binwidth = 1)
+```
+
+Cool, that is what it should look like. So, get the number of juveniles and the number of adults
+sampled:
+```{r}
+s2 %>%
+  mutate(adult = age > 2) %>%
+  count(adult)
+```
+
+OK, in Diana's study there were 1847 adults and 4244 juveniles.
+
+So, the number of adult-juvie pairs in Diana's study would be 
+```{r}
+1847 * 4244
+```
+Roughly 7.8 million.  And, if she found 8 PO pairs, that is suggesting a pool of about
+1 million parents.  
+
+The number of adult-juvie pairs in the simulation study is:
+```{r}
+6679 * 2925
+```
+
+About 19.5 million.  
+
+And we found 61 PO pairs in the simulation.  If we had the same number of pairs as diana we
+would have expected.
+```{r}
+61 * (7.8 / 19.5)
+```
+
+About 24.  And so, this suggests that we actually overpredicting the number of pairs that
+we might see by a factor of a little less than 3.  
+
+It is hard to know how to deal with this.  On the one hand, self-recruitment might be quite low
+in Monterey and Carmel Bay, in which case the possible candidate parents contributing might be
+considerably higher than the number just in Monterey Bay, and it might be that most of the parent
+sampled in Monterey Bay don't have much of a chance of created offspring that
+stay there.  I suspect that is likely.  On the other
+hand, if self-recruitment is quite high, then each little segment of the coast is separate, in
+which case, from Diana's result, that would mean that the number of adults within Carmel Bay
+was actually very high (like 1.5 million).  That just seems way beyond what Dan and Mark
+think.  So, clearly there is a lot of dispersal I would say. 
+
+So, to first approximation, let's say that it is all well mixed.  That means
+that our expected numbers of different kin categories might be closer to:
+```{r}
+counts <- relat_counts$highly_summarised %>%
+  mutate(adjusted = n * 24 / 61)
+counts
+```
+
+Let's put that in (roughly) decreasing kinship order:
+```{r}
+newc <- counts %>%
+  mutate(relat = factor(dom_relat, levels = relationship_zone_names)) %>%
+  arrange(relat, desc(max_hit)) %>%
+  select(relat, max_hit, adjusted) %>%
+  mutate(adjusted = floor(adjusted))
+
+newc
+```

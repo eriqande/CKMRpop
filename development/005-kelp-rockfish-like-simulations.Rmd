@@ -1,0 +1,343 @@
+---
+title: "Developing kelp-rockfish-like simulations"
+output: 
+  html_notebook:
+    toc: true
+    df_print: paged
+  html_document:
+    toc: true
+    df_print: paged
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(CKMRpop)
+```
+
+Putting these together to investigate potential for doing multigenerational
+CKMR with samples taken from different places, and trying to estimate
+dispersal.  Using rough numbers.
+
+## spip parameters
+
+
+
+### Life history
+
+Sampling of the juveniles is lethal.  Not necessarily so for the adults,
+but the lethal-sampling flag on spip is an all or nothing thing, so we are
+going to be simulating lethal sampling all around.  
+
+We will assume a max age of 25.
+
+There are a couple of studies on when they become reproductively mature. It looks like a safe bet will be: a few 4 year-olds, some 5-year-olds, more 6-year-olds,
+most 7-year-olds, and all 8-year olds.   This is bootstrapped together from
+a brief CDFW report [https://web.archive.org/web/20120813223726/http://www.dfg.ca.gov/marine/nearshorefinfish/kelprockfish.asp](https://web.archive.org/web/20120813223726/http://www.dfg.ca.gov/marine/nearshorefinfish/kelprockfish.asp).
+
+So, we will set the probabilities of reproduction at different
+ages to be something like:
+
+age  |  prob of reproducing
+-----|---------------------
+1    |  0
+2    |  0
+3    |  0
+4    | 0.2
+5    | 0.5
+6    | 0.7
+7    | 0.9
+8    | 1.0
+
+with all later older categories being 1.0's as well.  This is obviously
+an approximation, but it is in the ballpark.
+```{r}
+pars <- list()
+pars$`max-age` <- 25
+pars$`number-of-years` = 80
+pars$`fem-prob-repro` <- c(0, 0, 0, 0.2, 0.5, 0.7, 0.9, 1.0, rep(1.0, 25 - 8))
+pars$`male-prob-repro` <- c(0, 0, 0, 0.2, 0.5, 0.7, 0.9, 1.0, rep(1.0, 25 - 8))
+```
+
+There is probably considerable mortality of recruits before maturity,
+but, because the sampling of recruits is lethal, we don't actually have to
+model that.  We can model the number of recruits as the number of fish that
+will actually be around when they start maturing, so we can let them all
+survive, every year until the onset of maturity.  This decreases the computation somewhat.  We really don't have much of an idea of what the survival rates
+are for ages 4 and up, but we will assume that it is about 50% and then it ramps
+up to about 85% for the older fish.
+
+```{r}
+pars$`fem-surv-probs` <- c(1, 1, 1, 0.5, 0.56, 0.62, 0.68, 0.74, 0.8, rep(0.85, 25 - 9))
+pars$`male-surv-probs` <- pars$`fem-surv-probs`
+```
+
+And, we will also let female fecundity and male reproductive
+potential increase with age (so long as they are still alive, which
+will not be true of most of many of the older categories).
+Recall that these are all relative values.
+```{r}
+pars$`fem-asrf` <- c(0, 0, 0, seq(4,25))
+pars$`male-asrp` <- pars$`fem-asrf`
+```
+
+And, finally, add some other life-history parameters:
+```{r}
+pars$`offsp-dsn` <- "negbin"
+pars$`fem-rep-disp-par` <- 0.25
+pars$`male-rep-disp-par` <- 0.25
+pars$`sex-ratio` <- 0.5
+pars$`mate-fidelity` <- 0.15 # some multiple paternity
+
+```
+
+Cool.  Those are basic life-history parameters.  Let's save them in a separate
+variable:
+```{r}
+kelpy_life_history <- pars
+```
+
+
+### Populations/demes/sampling locations
+
+We have 9 sampling locations, and I have broken the coastline up
+into 9 regions roughly centered on these sampling locations. We will assume
+that things are relatively well mixed within these regions (not a bad assumption given the 2 month larval dispersal) and pretend that our samples are a random sample from each region.
+
+Dan estimated the number of adults (and the number of mature adults) in each
+region given the extent of kelp forest.  That info looks like this:
+```{r, message=FALSE}
+psizes <- read_csv("inputs/002/kelp_areas_and_adults.csv")
+
+psizes
+```
+
+Those will serve as our relative sizes for the simulations, and we will have to
+use them to set dispersal rates that make sense.  In the meantime,
+let's write a function to set the cohort sizes and the initial sizes
+of each popululation/deme, given its target census size (of mature fish).
+```{r}
+#' @param N the desired number of mature fish
+#' @param prf the fem-prob-repro of the population
+#' @param prm the male-prob-repro of the population
+set_cohorts_and_inits <- function(N, pars) {
+  # first check the stable age distribution for N = 1000
+  check_it <- leslie_from_spip(pars, 1000)
+  
+  # and count up the number of mature females and males
+  # in the population.  We partially count individuals of
+  # different ages according to the prob of reproducing
+  size <- sum(check_it$stable_age_distro_fem * pars$`fem-prob-repro`) +
+    sum(check_it$stable_age_distro_male * pars$`male-prob-repro`)
+  
+  # now, scale the cohort size that would give us N
+  cz <- N / (size / 1000)
+  
+  # now, use that to get the stable age distro and the init cohort sizes
+  stable <- leslie_from_spip(pars, cz)
+  
+  # recheck for fun
+  stable_size <- sum(stable$stable_age_distro_fem * pars$`fem-prob-repro`) +
+    sum(stable$stable_age_distro_male * pars$`male-prob-repro`)
+  
+  # rescale again:
+  cz2 <- N / (stable_size / cz)
+  
+  final <- leslie_from_spip(pars, cz2)
+  
+  final_size <- sum(final$stable_age_distro_fem * pars$`fem-prob-repro`) +
+    sum(final$stable_age_distro_male * pars$`male-prob-repro`)
+  
+  # return a list
+  ret <- list()
+  ret$`initial-males` <- floor(final$stable_age_distro_male)
+  ret$`initial-females` <- floor(final$stable_age_distro_fem)
+  
+  # tell spip to use the cohort size
+  ret$`cohort-size` <- paste("const", ceiling(cz2), collapse = " ")
+  
+  ret
+}
+```
+
+
+We can use the above function like this:
+```{r}
+set_cohorts_and_inits(24000, pars)
+```
+So, we can expand our sim-pars
+```{r}
+kelpy_pars <- c(
+  kelpy_life_history,
+  set_cohorts_and_inits(24000, kelpy_life_history),
+  `discard-all` = 0
+)
+```
+
+### Sampling parameters
+
+We will do lethal sampling of recruits, that we assume are all 1-year-olds
+and then, for now, let's just sample 1% of them. And then let's sample
+1% of them 
+```{r}
+juv_samp_fract <- 0.01
+sampy_pars <- list()
+sampy_pars$`lethal-sampling` <- 1
+sampy_pars$`gtyp-ppn-fem-pre` <- c("75-77", juv_samp_fract, rep(0, 24)  )
+sampy_pars$`gtyp-ppn-male-pre` <- sampy_pars$`gtyp-ppn-fem-pre`
+```
+
+
+Test this:
+```{r}
+kelpy_pars2 <- c(
+  kelpy_pars,
+  sampy_pars
+)
+
+bonk <- run_spip(kelpy_pars2)
+```
+
+
+# Functionizing this
+
+OK, that worked, so let us wrap that into some functions that
+will give us the ability to make all of our separate populations:
+```{r}
+# make a set of spip pars for a single populations/deme that will
+# have a stable pop size of N mature individuals. And then we 
+# have sampling fractions each year of recruits and adults.
+# we assume that "adults" that we might sample are 5 years and up.
+spip_pars_one_pop <- function(N, juv_samp_fract, adult_samp_fract, Y = 80) {
+  pars <- list()
+  pars$`max-age` <- 25
+  pars$`number-of-years` = Y
+  pars$`fem-prob-repro` <- c(0, 0, 0, 0.2, 0.5, 0.7, 0.9, 1.0, rep(1.0, 25 - 8))
+  pars$`male-prob-repro` <- c(0, 0, 0, 0.2, 0.5, 0.7, 0.9, 1.0, rep(1.0, 25 - 8))
+  pars$`fem-surv-probs` <- c(1, 1, 1, 0.5, 0.56, 0.62, 0.68, 0.74, 0.8, rep(0.85, 25 - 9))
+  pars$`male-surv-probs` <- pars$`fem-surv-probs`
+  pars$`fem-asrf` <- c(0, 0, 0, seq(4,25))
+  pars$`male-asrp` <- pars$`fem-asrf`
+  pars$`offsp-dsn` <- "negbin"
+  pars$`fem-rep-disp-par` <- 0.25
+  pars$`male-rep-disp-par` <- 0.25
+  pars$`sex-ratio` <- 0.5
+  pars$`mate-fidelity` <- 0.15 # some multiple paternity
+
+  
+  tmp <- set_cohorts_and_inits(N, pars)
+  pars <- c(pars, tmp)
+  
+  pars$`discard-all` <- 0
+  
+  pars$`lethal-sampling` <- 1
+  pars$`gtyp-ppn-fem-pre` <- c("75-77", juv_samp_fract, 0, 0, 0, rep(adult_samp_fract, 21))
+  pars$`gtyp-ppn-male-pre` <- sampy_pars$`gtyp-ppn-fem-pre`
+  
+  pars
+}
+
+
+# test it
+#boink <- spip_pars_one_pop(2000, 0.01, 0.02)
+#bip <- run_spip(boink)
+```
+
+# Doing a big panmictic population
+
+I have too much work to do to get the multi-pop version of CKMRpop working before
+the grant goes in, so first I just want to do a simulation with all the kelp rockfish as one big panmictic population.
+```{r}
+# the total estimated pop size is 410,958 fish.  So, about half a million
+totPopSize <- sum(psizes$mature_adults)
+
+# the sampling is set up to be about 2295 juveniles and 945 adults each year for three years
+
+# get the expected stable age distribution
+one_pop <- spip_pars_one_pop(410958, 0.01, 0.02)
+
+# from that, it looks like we would get our sample sizes with a juvenile
+# numbers with a sampling fraction of this:
+jsf <- 2295 / (2 * one_pop$`initial-males`[1])
+jsf
+
+# and we would get our adult sampling numbers with
+asf <- 945 / (2 * sum(one_pop$`initial-males`[-(1:4)]))
+asf
+
+# so now, put it in there with the right sampling fractions
+one_pop2 <-  spip_pars_one_pop(410958, jsf, asf)
+```
+
+Now, let's try running that:
+```{r}
+big_run <- run_spip(one_pop2)
+```
+
+
+
+
+# Working out the multipop versions...
+
+Now, we will put that within a function that cycles over the populations
+and makes a full list for all the functions, and does island model free migration.
+```{r}
+#' @param psizes the tibble of pop sizes
+#' @param D the fraction of each deme that leaves as larvae to then randomly
+#' enter other demes OR THEIR OWN.
+#' @param TotPop How large should the total pop size be.  The indiv pop sizes
+#' get scaled to fit into this.
+island_model_pars <- function(psizes, R, TotPop, juv_samp_fract, adult_samp_fract) {
+  # we have to do some weird calculating to make an island model. In a free
+  # island model, everyone would leave their population, but some would go
+  # back to it, according to the relative population sizes.  Spip doesn't
+  # let the pool of dispersers go back to the population they came from, so
+  # we have to remove that fraction from the group that went out.
+  
+  # here are the relative sizes of the populations
+  rs <- psizes$mature_adults / sum(psizes$mature_adults)
+  
+  # here are the requested pop sizes of each deme
+  Ns <- ceiling(TotPop * rs)
+  
+  # in a free island model if R of them go out from a deme, then
+  # R * rs will go back, so it is like R - (R*rs) = R(1-rs) went out.
+  Mout <- R * (1 - rs)
+  
+  # here are the rates of migration back in
+  Min <- rs
+  
+  # then, cycle over the demes and make them all
+  P <- nrow(psizes)  # the number of pops
+  pream <- list(`num-pops` = P)
+  
+  pops <- list()
+  for(i in 1:P) {
+    tmp <- spip_pars_one_pop(N = Ns[i], juv_samp_fract, adult_samp_fract)
+    tmp$`male-prob-mig-out` = c("1-80", 1, Mout[i])
+    tmp$`fem-prob-mig-out` = c("1-80", 1, Mout[i])
+    tmp$`male-prob-mig-out` = c("1-80", 1, Min)
+    tmp$`fem-prob-mig-out` = c("1-80", 1, Min)
+    tmp$`new-pop` = character(0)
+    
+    pops[[i]] <- tmp
+  }
+  
+  flatten(pops)
+}
+```
+
+Now, let's test this:
+```{r}
+impars <- island_model_pars(psizes, 1, 50000, 0.01, 0.02)
+
+set.seed(5)
+testy <- run_spip(impars, num_pops = 9)
+```
