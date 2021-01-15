@@ -3,5 +3,8 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   species_1_simulation: species_1_simulation.html
-last_built: 2021-01-11T18:23Z
+last_built: 2021-01-15T23:17Z
+urls:
+  reference: https://eriqande.github.io/CKMRpop/reference
+  article: https://eriqande.github.io/CKMRpop/articles
 
