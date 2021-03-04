@@ -21,12 +21,15 @@ install_spip <- function(
   # first check the OS
   Sys <- Sys.info()["sysname"]
 
-  if(!(Sys %in% c("Darwin", "Linux"))) {
+  if(!(Sys %in% c("Darwin", "Linux", "Windows"))) {
     stop(paste("spip binary not available for operating system ", Sys, collapse = ""))
   }
 
   # then get the basename of the file we want
   pname <- paste("spip-", Sys, sep = "", collapse = "")
+  if(Sys == "Windows") {
+    pname <- paste(pname, ".exe", sep = "")
+  }
 
   # have a variable to hold the base GitHub address:
   Git_base <- "https://github.com/eriqande/spip/raw/master/"
@@ -46,4 +49,15 @@ install_spip <- function(
   # finally, change the file permissions to be user and group executable and writeable
   # and world readable
   Sys.chmod(Dest_file, mode = "0774", use_umask = FALSE)
+
+  # if this is Windows, then also download gawk.exe and put it in the same spot
+  if(Sys == "Windows") {
+    message("Also downloading gawk.exe for Windows...")
+    Dest_file <- file.path(Dest_dir, "gawk.exe")
+    Gawk <- "https://github.com/eriqande/CKMRpop/blob/main/extras/gawk.exe?raw=true"
+    utils::download.file(url = Gawk, destfile = Dest_file)
+    Sys.chmod(Dest_file, mode = "0774", use_umask = FALSE)
+
+
+  }
 }
