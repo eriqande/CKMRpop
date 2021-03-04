@@ -12,3 +12,4 @@
 ^README\.Rmd$
 ^README_files$
 ^references\.bib$
+^extras$

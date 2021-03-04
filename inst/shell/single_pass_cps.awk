@@ -1,6 +1,6 @@
 
 
-awk '
+
   BEGIN {
     OFS = "\t";
     print "year", "pop", "age", "male", "female" > "spip_prekill_census.tsv";
@@ -83,5 +83,3 @@ awk '
     next;
   }
 
-
-' spip_out.txt

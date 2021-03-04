@@ -100,9 +100,18 @@ system2(command = spip_binary(), args = \"--help-full\")\n\n
   # now, use awk to process that large text file into some things that
   # can be read in by R.  For very large output files, I think that
   # awk will almost certainly be faster.
-  single_pass <- system.file("shell/single_pass_cps.sh", package = "CKMRpop")
+  single_pass_awk <- system.file("shell/single_pass_cps.awk", package = "CKMRpop")
+  awk_binary <- "awk"  # on Linux or Mac this should be on the path
+  Sys <- Sys.info()["sysname"]
+  if(Sys == "Windows") {
+    awk_binary <- system.file("bin/gawk.exe", package = "CKMRpop")
+    if(awk_binary == "") {
+      stop("Not finding gawk.exe binary on Windows.  Please reinstall spip, with: install_spip(Dir = system.file(package = \"CKMRpop\"))")
+    }
+  }
   system2(
-    command = single_pass,
+    command = awk_binary,
+    args = c(" -f ", single_pass_awk, " spip_out.txt "),
     stdout = "single_pass_stdout.txt",
     stderr = "single_pass_stderr.txt"
   )
