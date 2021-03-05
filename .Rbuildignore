@@ -13,3 +13,8 @@
 ^README_files$
 ^references\.bib$
 ^extras$
+^cluster-run-one-big-kelp-rf-pop$
+^total_outputs\.rds$
+^cluster_runs_samp1-8_7000_total$
+^cluster_runs_samp1-8_5000_total$
+^cluster_runs_samp1-8_10000_total$

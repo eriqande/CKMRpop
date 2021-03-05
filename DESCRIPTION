@@ -11,8 +11,8 @@ Maintainer: <eric.anderson@noaa.gov>
 Description: Provides an R wrapper around the program spip, and a variety
     of functions to parse spip output to compile information about
     related pairs amongst sampled individuals.  Full documentation
-    and vignettes can be read online at
-    https://eriqande.github.io/CKMRpop/index.html
+    and vignettes are mirrored at https://eriqande.github.io/CKMRpop/index.html
+    and can be read online there.
 License: CC0
 Encoding: UTF-8
 LazyData: true

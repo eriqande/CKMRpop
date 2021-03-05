@@ -23,6 +23,9 @@ default, R supplies these two integers from its own random number generator.  Th
 way reproducible results from spip can be obtained by calling \code{set.seed()} from within
 R before calling \code{run_spip()}.  For the most part, the user should never really have
 to directly supply a value for spip_seeds.}
+
+\item{num_pops}{the number of demes that are being simulated.  This is still being
+implemented...}
 }
 \description{
 This runs it in a directory and the output from stdout
