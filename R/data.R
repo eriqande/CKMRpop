@@ -51,3 +51,13 @@ NULL
 #' @name species_1_slurped_results
 NULL
 
+
+#' The result of running spip in the species_1_simulation vignette and slurping out 1 generation.
+#'
+#' This is stored as package data so that the vignette can be written
+#' even if spip is not installed on the system.
+#'
+#' @source Simulation results
+#' @docType data
+#' @name species_1_slurped_results_1gen
+NULL

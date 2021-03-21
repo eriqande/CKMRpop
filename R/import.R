@@ -1,13 +1,13 @@
 
 
 #' @importFrom dplyr anti_join arrange bind_cols bind_rows case_when count desc distinct ends_with everything filter group_by inner_join lead left_join mutate n n_distinct pull recode rename rename_all sample_n select slice starts_with summarise ungroup
-#' @importFrom ggplot2 annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_point geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw
+#' @importFrom ggplot2 aes annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_point geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw
 #' @importFrom magrittr %>%
 #' @importFrom purrr map map2 map2_int map_chr map_int map_lgl
 #' @importFrom readr cols read_delim read_lines read_table2
 #' @importFrom stats runif
 #' @importFrom stringr str_c str_detect str_replace str_split str_split_fixed
-#' @importFrom tibble as_tibble tibble
+#' @importFrom tibble as_tibble enframe tibble
 #' @importFrom tidyr extract gather nest pivot_longer pivot_wider replace_na unnest
 #' @importFrom utils combn
 #' @importFrom Rcpp evalCpp
@@ -41,20 +41,27 @@ if (getRversion() >= "2.15.1")  {
       "born_year",
       "born_year_1",
       "born_year_2",
+      "cc_1",
+      "cc_2",
       "child_num",
+      "cluster",
       "cohort",
+      "conn_comp",
       "dom_relat",
+      "dom_relat-max_hit",
       "dr",
       "dr_hits",
       "extract",
       "female",
       "first",
+      "from",
       "fract",
       "id",
       "id_1",
       "id_2",
       "ind_1",
       "ind_2",
+      "indiv",
       "kid",
       "kid_id",
       "kid_idx",
@@ -71,7 +78,9 @@ if (getRversion() >= "2.15.1")  {
       "max_hit",
       "mean_fract",
       "mean_surv",
+      "name",
       "no_relat",
+      "nodes",
       "nojit_age1",
       "nojit_age2",
       "num_mates",
@@ -117,11 +126,13 @@ if (getRversion() >= "2.15.1")  {
       "times_encountered",
       "tmp_1",
       "tmp_2",
+      "to",
       "tot_dom",
       "tot_prob",
       "trio",
       "upper_member",
       "val",
+      "value",
       "which_matrix",
       "x",
       "x_1",

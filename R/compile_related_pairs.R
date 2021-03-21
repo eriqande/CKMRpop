@@ -106,7 +106,7 @@ compile_related_pairs <- function(S) {
         )
       )
 
-    # we will return that for now
+    # we will return that for now, after adding conn_comps to it
     pairs_tib_3 %>%
       rename(times_encountered = n) %>%
       select(
@@ -124,6 +124,7 @@ compile_related_pairs <- function(S) {
         starts_with("born_year_"),
         starts_with("samp_years_list"),
         everything()
-      )
+      ) %>%
+      relpair_conn_comps()
 
 }

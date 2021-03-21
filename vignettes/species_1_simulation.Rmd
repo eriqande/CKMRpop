@@ -525,9 +525,96 @@ Now, the plot can be printed like so:
 spag$plot
 ```
 
-Looking at this, it is clear that I will also want to add a function to
-tally up the number of pairwise relationships that are shared between members---basically
-just compiling the connected components for all of those.
+## Identifying connected components
+
+One issue that arises frequently in CKMR is the concern (especially in small
+populations) that the pairs of related individuals are not independent. The
+simplest way in which this occurs is when, for example, A is a half-sib of B, 
+but B is also a half-sib of C, so that the pairs A-B and B-C share the
+individual B.  These sorts of dependencies can be captured quickly by thinking
+of individuals as vertices and relationships between pairs of individuals as
+edges, which defines a _graph_.  Finding all the connected components of such a graph
+provides a nice summary of all those pairs that share members and hence are certainly
+not independent.
+
+The `CKMRpop` package provides the connected component of this graph for every
+related pair discovered. This is in column `conn_comp` of the output from 
+`compile_related_pairs()`. Here we can see it from our example, which shows that
+the first 10 pairs all belong to the same connected component, 1.
+```{r}
+crel %>%
+  slice(1:10)
+```
+It should clearly be noted that the size of the connected
+components will be affected by the size of the population (with smaller populations,
+more of the related pairs will share members) and the number of generations back in time
+over which generations are compiled (if you go back for enough in time, all the pairs
+will be related to one another). In our example case, with a small population (so it can
+be simulated quickly for building the vignettes) and going back `num_generations = 2`
+generations (thus including grandparents and first cousins, etc.) we actually find that
+_all_ of the pairs are in the same connected component.  Wow!
+
+Because this simulated popluation is quite small, at this juncture we will reduce
+the number of generations so as to create more connected components amongst these pairs
+for illustration.  So, let us compile just the pairs with `num_generations = 1`.  To
+do this, we must slurp up the spip results a second time
+```{r}
+# NOTE the following if()...else() blocks are here
+# to test whether spip has been installed yet.
+# If spip is not available (for example, on CRAN's build machines) this
+# is noted and stored package data are used for the variable
+# "slurped" to build the remainder of the vignette.
+if(spip_exists()) {
+  # read the spip output in and find relatives within the parental range
+  slurped_1gen <- slurp_spip(spip_dir, num_generations = 1)
+} else {
+  message("Using stored package data for 1gen results because spip is not installed")  
+  slurped_1gen <- species_1_slurped_results_1gen
+}
+```
+And after we have done that, we can compile the related pairs:
+```{r}
+crel_1gen <- compile_related_pairs(slurped_1gen$samples)
+```
+Look at the number of pairs:
+```{r}
+nrow(crel_1gen)
+```
+And also tally up the number of pairs in different connected components:
+```{r}
+crel_1gen %>%
+  count(conn_comp) %>%
+  arrange(desc(n))
+```
+There are some rather large connected components there.  Let's plot them. 
+```{r, fig.width=6, fig.height=6}
+# for some reason, the aes() function gets confused unless
+# ggraph library is loaded...
+library(ggraph)
+
+one_gen_graph <- plot_conn_comps(crel_1gen)
+one_gen_graph
+
+
+```
+
+Note that if you want to attach labels to those nodes, to see which individuals
+we are talking about, you can do this (and also adjust colors...):
+```{r, fig.width=6, fig.height=6}
+one_gen_graph + 
+  ggraph::geom_node_text(aes(label = name), repel = TRUE, size = 1.2) +
+  scale_edge_color_manual(values = c(`PO-1` = "tan2", `Si-1` = "gold", `Si-2` = "blue"))
+```
+
+
+And, for fun, look at it with 2 generations:
+```{r, fig.width=6, fig.height=6}
+plot_conn_comps(crel)
+
+```
+
+What a snarl!  With a small population, several generations, and large samples,
+in this case...everyone is connected!
 
 
 
