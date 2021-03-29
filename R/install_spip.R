@@ -28,7 +28,7 @@ install_spip <- function(
   # then get the basename of the file we want
   pname <- paste("spip-", Sys, sep = "", collapse = "")
   if(Sys == "Windows") {
-    pname <- paste(pname, ".exe", sep = "")
+    pname <- paste(pname, ".zip", sep = "")
   }
 
   # have a variable to hold the base GitHub address:
@@ -46,6 +46,13 @@ install_spip <- function(
   # now, download the file and save to the correct destination:
   utils::download.file(url = Git_full, destfile = Dest_file)
 
+  if(Sys == "Windows") {
+    # extract the contents of the archive to the destination directory
+    unzip(Dest_file, exdir = Dest_dir)
+
+    # reset the name of the Dest file to not have the .zip extension
+    Dest_file <- stringr::str_replace(Dest_file, "\\.zip$", ".exe")
+  }
   # finally, change the file permissions to be user and group executable and writeable
   # and world readable
   Sys.chmod(Dest_file, mode = "0774", use_umask = FALSE)
@@ -53,11 +60,13 @@ install_spip <- function(
   # if this is Windows, then also download gawk.exe and put it in the same spot
   if(Sys == "Windows") {
     message("Also downloading gawk.exe for Windows...")
-    Dest_file <- file.path(Dest_dir, "gawk.exe")
-    Gawk <- "https://github.com/eriqande/CKMRpop/blob/main/extras/gawk.exe?raw=true"
+    Dest_file <- file.path(Dest_dir, "gawk.zip")
+    Gawk <- "https://github.com/eriqande/spip/raw/master/gawk.zip"
     utils::download.file(url = Gawk, destfile = Dest_file)
+    unzip(Dest_file, exdir = Dest_dir)
+    Dest_file <- stringr::str_replace(Dest_file, "\\.zip$", ".exe")
     Sys.chmod(Dest_file, mode = "0774", use_umask = FALSE)
-
-
   }
 }
+
+
