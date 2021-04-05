@@ -80,6 +80,14 @@
     gsub(/ *: */, ":", line)
     dump_n = split(line, arr, /:/)
     print arr[2], arr[3], arr[4] > "spip_samples.tsv";
+  }
+
+  ### Getting the genotypes for a file ###
+  /^GenotypesByAllelicType/ {
+    line = $0;
+    gsub(/ *: */, ":", line)
+    dump_n = split(line, arr, /:/)
+    print arr[2], arr[9] > "spip_genotypes.tsv";
     next;
   }
 

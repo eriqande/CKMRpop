@@ -14,6 +14,17 @@
 #' to directly supply a value for spip_seeds.
 #' @param num_pops the number of demes that are being simulated.  This is still being
 #' implemented...
+#' @param allele_freqs a list of allele frequencies provided if you want
+#' to simulate unlinked genotypes for the sampled individuals. The default
+#' is simply a single locus with two alleles at frequencies 0.5, 0.5, which
+#' is provided because spip has to be given some allele frequencies if sampling
+#' is to be carried out.  Note that a user-specified value to this option should
+#' only be given if you want to actually simulate some genetic data from the
+#' sampled individuals. The length of the list should be the number of loci
+#' desired, and the length of each element should be the number of alleles.
+#' For examples for three loci with 2, 3, and 4 equifrequent alleles, respectively,
+#' you would provide `list(c(0.5, 0.5), c(0.3333, 0.3333, 0.3333), c(0.25, 0.25, 0.25, 0.25))`.
+#' Note that allele frequencies will be normalized to sum to one within each locus.
 #' @details This creates a temporary directory and runs spip in that directory, redirecting
 #' stdout and stderr to files.  It then processes the output using awk to create a collection
 #' of files.  If spip throws an error, the contents of stderr are written to the screen to notify
@@ -23,7 +34,8 @@ run_spip <- function(
   pars,
   dir = tempfile(),
   spip_seeds = ceiling(runif(2, 1, 1e9)),
-  num_pops = 1
+  num_pops = 1,
+  allele_freqs = list(c(0.5, 0.5))
 ) {
 
   # before doing anything, check to see if the spip binary is there, and dump
@@ -46,7 +58,12 @@ run_spip <- function(
   # write the spip_seeds file in dir
   cat(spip_seeds, sep = " ", eol = "\n", file = seedfile)
 
-  cat("1\n2 0.5 0.5\n", file = lfile)
+  # now, make the allele frequency file
+  cat(length(allele_freqs), file = lfile, sep = "\n")
+  dump <- lapply(allele_freqs, function(x) {
+    cat(length(x), "  ", file = lfile, append = TRUE)
+    cat(x/sum(x), "\n", sep = " ", file = lfile, append = TRUE)
+  })
 
   cat("&  generated from R &\n", file = dfile)
   dump <- lapply(names(pars), function(n) {

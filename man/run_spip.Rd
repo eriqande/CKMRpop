@@ -8,7 +8,8 @@ run_spip(
   pars,
   dir = tempfile(),
   spip_seeds = ceiling(runif(2, 1, 1e+09)),
-  num_pops = 1
+  num_pops = 1,
+  allele_freqs = list(c(0.5, 0.5))
 )
 }
 \arguments{
@@ -26,6 +27,18 @@ to directly supply a value for spip_seeds.}
 
 \item{num_pops}{the number of demes that are being simulated.  This is still being
 implemented...}
+
+\item{allele_freqs}{a list of allele frequencies provided if you want
+to simulate unlinked genotypes for the sampled individuals. The default
+is simply a single locus with two alleles at frequencies 0.5, 0.5, which
+is provided because spip has to be given some allele frequencies if sampling
+is to be carried out.  Note that a user-specified value to this option should
+only be given if you want to actually simulate some genetic data from the
+sampled individuals. The length of the list should be the number of loci
+desired, and the length of each element should be the number of alleles.
+For examples for three loci with 2, 3, and 4 equifrequent alleles, respectively,
+you would provide \code{list(c(0.5, 0.5), c(0.3333, 0.3333, 0.3333), c(0.25, 0.25, 0.25, 0.25))}.
+Note that allele frequencies will be normalized to sum to one within each locus.}
 }
 \description{
 This runs it in a directory and the output from stdout

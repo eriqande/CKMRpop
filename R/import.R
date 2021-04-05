@@ -9,7 +9,7 @@
 #' @importFrom stringr str_c str_detect str_replace str_split str_split_fixed
 #' @importFrom tibble as_tibble enframe tibble
 #' @importFrom tidyr extract gather nest pivot_longer pivot_wider replace_na unnest
-#' @importFrom utils combn
+#' @importFrom utils combn unzip
 #' @importFrom Rcpp evalCpp
 #' @useDynLib CKMRpop
 NULL

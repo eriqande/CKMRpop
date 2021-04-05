@@ -28,6 +28,7 @@ slurp_spip <- function(
   sample_file <- file.path(dir, "spip_samples.tsv")
   post_census_file <- file.path(dir, "spip_postkill_census.tsv")
   deaths_file <- file.path(dir, "spip_deaths.tsv")
+  genos_file <- file.path(dir, "spip_genotypes.tsv")
 
 
   # read in the files, and do any necessary processing
@@ -82,12 +83,22 @@ slurp_spip <- function(
   # join it to samples.
   SAR <- find_ancestors_and_relatives_of_samples(P = ped, S = samples$ID, num_generations)
 
+
+  # finally, read in the genotypes
+  genos <- readr::read_tsv(
+    file = genos_file,
+    col_names = FALSE
+  )
+  genos <- genos[, -length(genos)]  # this removes that empty column at the end
+  names(genos) <- c("ID", paste("Locus", 1:(length(genos) - 1), sep = "_"))
+
   list(
     pedigree = ped,
     census_prekill = census,
     census_postkill = post_census,
     samples = left_join(samples, SAR, by = c("ID" = "sample_id")),
-    deaths = death_reports
+    deaths = death_reports,
+    genotypes = genos
   )
 
 }

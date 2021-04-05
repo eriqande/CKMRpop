@@ -61,3 +61,16 @@ NULL
 #' @docType data
 #' @name species_1_slurped_results_1gen
 NULL
+
+
+#' The result of running spip in the species_1_simulation vignette with 100 loci.
+#'
+#' This is stored as package data so that the vignette can be written
+#' even if spip is not installed on the system.
+#'
+#' @source Simulation results
+#' @docType data
+#' @name species_1_slurped_results_100_loci
+NULL
+
+
