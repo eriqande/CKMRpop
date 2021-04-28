@@ -55,20 +55,30 @@ slurp_spip <- function(
   samples <- vroom::vroom(
     file = sample_file,
     delim = "\t",
-    col_types = "cci"
+    col_types = "ccccccc"
   ) %>%
     mutate(
-      samp_years_list = str_split(syears, "  *"),
-      samp_years_list = map(.x = samp_years_list, .f = function(x) as.integer(x))
+      samp_years_list_pre = str_split(syears_pre, "  *"),
+      samp_years_list_pre = map(.x = samp_years_list_pre, .f = function(x) as.integer(x)),
+      samp_years_list = str_split(syears_post, "  *"),
+      samp_years_list = map(.x = samp_years_list, .f = function(x) as.integer(x)),
+      samp_years_list_dur = str_split(syears_dur, "  *"),
+      samp_years_list_dur = map(.x = samp_years_list_dur, .f = function(x) as.integer(x))
     ) %>%
-    select(-syears) %>%
+    select(-syears_pre, -syears_post, -syears_dur) %>%
     extract(
       ID,
       into = c("sex", "born_year"),
       regex = "^([MF])([0-9]+)_[0-9]+",
       remove = FALSE,
       convert = TRUE
-    ) #%>%  # now, here we add a list column with the ancestors over num_generations
+    ) %>%
+    mutate(samp_years_list_post = samp_years_list)  # this is a weird thing I am doing here.  I realized that
+                                                    # gtyp-ppn-{male,fem}-post should be what people usually use,
+                                                    # so I make that the samp_years_list that gets used downstream.
+
+
+  #%>%  # now, here we add a list column with the ancestors over num_generations
     #  mutate(
     #    ancestor_list = ancestor_vectors(
     #      indivs = ID,

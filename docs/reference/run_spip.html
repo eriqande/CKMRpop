@@ -97,6 +97,9 @@ this is pretty bare bones." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/about_spip.html">About spip</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -132,7 +135,8 @@ this is pretty bare bones.</p>
   <span class='va'>pars</span>,
   dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>,
   spip_seeds <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1e+09</span><span class='op'>)</span><span class='op'>)</span>,
-  num_pops <span class='op'>=</span> <span class='fl'>1</span>
+  num_pops <span class='op'>=</span> <span class='fl'>1</span>,
+  allele_freqs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -155,6 +159,25 @@ default, R supplies these two integers from its own random number generator.  Th
 way reproducible results from spip can be obtained by calling <code><a href='https://rdrr.io/r/base/Random.html'>set.seed()</a></code> from within
 R before calling <code>run_spip()</code>.  For the most part, the user should never really have
 to directly supply a value for spip_seeds.</p></td>
+    </tr>
+    <tr>
+      <th>num_pops</th>
+      <td><p>the number of demes that are being simulated.  This is still being
+implemented...</p></td>
+    </tr>
+    <tr>
+      <th>allele_freqs</th>
+      <td><p>a list of allele frequencies provided if you want
+to simulate unlinked genotypes for the sampled individuals. The default
+is simply a single locus with two alleles at frequencies 0.5, 0.5, which
+is provided because spip has to be given some allele frequencies if sampling
+is to be carried out.  Note that a user-specified value to this option should
+only be given if you want to actually simulate some genetic data from the
+sampled individuals. The length of the list should be the number of loci
+desired, and the length of each element should be the number of alleles.
+For examples for three loci with 2, 3, and 4 equifrequent alleles, respectively,
+you would provide <code><a href='https://rdrr.io/r/base/list.html'>list(c(0.5, 0.5), c(0.3333, 0.3333, 0.3333), c(0.25, 0.25, 0.25, 0.25))</a></code>.
+Note that allele frequencies will be normalized to sum to one within each locus.</p></td>
     </tr>
     </table>
 

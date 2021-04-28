@@ -45,7 +45,7 @@ summarize_survival_from_census <- function(
     ungroup() %>%
     filter(surv_fract <= 1.0) # there are some at the beginning that are wonky
 
-  num_age_classes <- max(surv_fracts$age) + 1
+  num_age_classes <- max(surv_fracts$age)
 
   if(xor(is.null(fem_surv_probs), is.null(male_surv_probs))) {
     stop("Sorry! You have to provide both male_surv_probs and fem_surv_probs or neither.  Not just one of them")

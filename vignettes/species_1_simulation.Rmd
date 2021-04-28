@@ -101,20 +101,20 @@ SPD$`cohort-size` <- paste("const", cohort_size, collapse = " ")
 
 Spip let's you specify what fraction of fish of different ages should be
 sampled in different years.  Here we do something simple, and instruct
-spip to sample 1% of the fish of ages 0, 1, and 2 (before the episode of 
-death) every year from 50 to 75.
+spip to sample 1% of the fish of ages 1, 2, and 3 (after the episode of 
+death, see the spip vignette...) every year from year 50 to 75.
 ```{r}
-samp_frac <- 0.01
+samp_frac <- 0.03
 samp_start_year <- 50
 samp_stop_year <- 75
 SPD$`discard-all` <- 0
-SPD$`gtyp-ppn-fem-pre` <- paste(
+SPD$`gtyp-ppn-fem-post` <- paste(
   samp_start_year, "-", samp_stop_year, " ", 
   samp_frac, " ", samp_frac, " ", samp_frac, " ",
   paste(rep(0, SPD$`max-age` - 3), collapse = " "),
   sep = ""
 )
-SPD$`gtyp-ppn-male-pre` <- SPD$`gtyp-ppn-fem-pre`
+SPD$`gtyp-ppn-male-post` <- SPD$`gtyp-ppn-fem-post`
 ```
 
 ## Running spip and slurping up the results
@@ -169,7 +169,7 @@ and things.  There are a few functions in CKMRpop that make this quick and easy 
 This is just a convenience function to make a pretty plot so you can check to
 see what the population demographics look like:
 ```{r, fig.width = 7, fig.height = 5.5}
-ggplot_census_by_year_age_sex(slurped$census_prekill)
+ggplot_census_by_year_age_sex(slurped$census_postkill)
 ```
 This shows that the function `leslie_from_spip()` does a good job of finding the
 initial population numbers that accord with the stable age distibution.
@@ -178,7 +178,7 @@ initial population numbers that accord with the stable age distibution.
 
 We can compute the survival rates like this:
 ```{r}
-surv_rates <- summarize_survival_from_census(slurped$census_prekill)
+surv_rates <- summarize_survival_from_census(slurped$census_postkill)
 ```
 
 That returns a list.  One part of the list is a tibble with observed survival fractions.
@@ -376,13 +376,13 @@ tabulating just the `dom_relat` and `max_hit` over all the pairs.
 ```{r}
 relat_counts$highly_summarised
 ```
-This is telling us there are 230 half-first-cousin pairs, 161 half-avuncular (aunt/uncle with neice/nephew) pairs,
+This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with neice/nephew) pairs,
 and so forth. 
 
 
 ### A closer look within the dominant relationships
 
-As noted before, the table able just lists the dominant relationship of
+As noted before, the table just lists the dominant relationship of
 each pair.  If you want to quickly assess, within those dominant categories,
 how many specific ancestry match matrices underlie them, you can
 look at the `dr_counts` component of the output:
@@ -429,7 +429,7 @@ ancestry matrices seen. Here are the first 30:
 relat_counts$anc_mat_plots[[1]]
 ```
 
-And here are the remaining 15 relationship types:
+And here are the remaining 14 relationship types:
 ```{r, fig.width=7, fig.height=7}
 relat_counts$anc_mat_plots[[2]]
 ```
@@ -451,13 +451,20 @@ discard specific instances in which an individual was sampled so that the
 number of individuals (or sampling instances) that remains is the exact number
 you want.
 
-For example, looking closely at `slurped$samples` shows that 168 distinct individuals were sampled:
+For example, looking closely at `slurped$samples` shows that `r nrow(slurped$samples)` distinct individuals were sampled:
 ```{r}
 nrow(slurped$samples)
 ```
-However, those 168 individuals represent 170 distinct sampling instances, because
-two of the individuals were each sampled twice, as, in this simulation scenario,
-sampling the individuals does not remove them from the population.
+However, those `r nrow(slurped$samples)` individuals represent multiple distinct sampling instances, because
+some individuals may sampled twice, as, in this simulation scenario,
+sampling the individuals does not remove them from the population:
+```{r}
+slurped$samples %>% 
+  mutate(ns = map_int(samp_years_list, length)) %>% 
+  summarise(tot_times = sum(ns))
+```
+
+Here are some individuals sampled at multiple times
 ```{r}
 SS2 <- slurped$samples %>%
   filter(map_int(samp_years_list, length) > 1) %>%
@@ -465,7 +472,7 @@ SS2 <- slurped$samples %>%
 
 SS2
 ```
-And the years that these individuals were sampled are as follows:
+And the years that the first two of those individuals were sampled are as follows:
 ```{r}
 # first indiv:
 SS2$samp_years_list[[1]]
@@ -485,13 +492,35 @@ subsampled_pairs <- downsample_pairs(
   n = 100
 )
 ```
-Now there are only 179 pairs instead of 513.  
+Now there are only `r nrow(subsampled_pairs$ds_pairs)` pairs
+instead of `r nrow(crel)`.  
 
 We can do a little calculation to see if that makes sense: because the number of pairs 
-varies roughly quadratically, we would expect that if we go from 170 instances to 100, we
-would expect the number of pairs to decrease by a factor of $(100/170)^2 \approx 0.346$. Let's
-check that: $179/513 = \approx 0.348$.  Yep, that makes sense.
+varies roughly quadratically, we would expect that  the number of pairs to decrease by a
+quadratic factor of the number of samples:
+```{r}
+# num samples before downsampling
+ns_bd <- nrow(slurped$samples)
 
+# num samples after downsampling
+ns_ad <- nrow(subsampled_pairs$ds_samples)
+
+# ratio of sample sizes
+ssz_rat <- ns_ad / ns_bd
+
+# square of the ratio
+sq_rat <- ssz_rat ^ 2
+
+# ratio of number of pairs found amongst samples
+num_pairs_before <- nrow(crel)
+num_pairs_after_downsampling = nrow(subsampled_pairs$ds_pairs)
+
+ratio <- num_pairs_after_downsampling / num_pairs_before
+
+# compare these two things
+c(sq_rat, ratio)
+```
+That checks out.
 
 ## Uncooked Spaghetti Plots
 
@@ -602,9 +631,20 @@ Look at the number of pairs:
 ```{r}
 nrow(crel_1gen)
 ```
+That is still a lot of pairs, so let us downsample to 150 samples so that our figures
+are not overwhelmed by connected components.
+```{r}
+set.seed(10)
+ssp_1gen <- downsample_pairs(
+  S = slurped_1gen$samples,
+  P = crel_1gen,
+  n = 150
+)
+```
+
 And also tally up the number of pairs in different connected components:
 ```{r}
-crel_1gen %>%
+ssp_1gen$ds_pairs %>%
   count(conn_comp) %>%
   arrange(desc(n))
 ```
@@ -614,7 +654,7 @@ There are some rather large connected components there.  Let's plot them.
 # ggraph library is loaded...
 library(ggraph)
 
-one_gen_graph <- plot_conn_comps(crel_1gen)
+one_gen_graph <- plot_conn_comps(ssp_1gen$ds_pairs)
 one_gen_graph
 
 
@@ -629,7 +669,7 @@ one_gen_graph +
 ```
 
 
-And, for fun, look at it with 2 generations:
+And, for fun, look at it with 2 generations and all of the samples:
 ```{r, fig.width=6, fig.height=6}
 plot_conn_comps(crel)
 

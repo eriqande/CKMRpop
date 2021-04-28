@@ -89,6 +89,11 @@ leslie_from_spip <- function(P, C) {
   ret$stable_age_distro_fem <- sad_f[-length(sad_f)]
   ret$stable_age_distro_male <- sad_m[-length(sad_m)]
 
+  # also return what the full stable age distro is
+  ret$stable_age_distro_fem_with_max_age_class <- sad_f
+  ret$stable_age_distro_male_with_max_age_class <- sad_m
+
+
 
   # finally, for the females, we want to return a what
   # a proper Leslie matrix would look like for a non-growing population

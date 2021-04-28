@@ -63,9 +63,14 @@ downsample_pairs <- function(S, P, n) {
   # now, get the columns in the same order
   P4 <- P3[, names(P)]
 
+  # finally, reset the connected components
+  P5 <- P4 %>%
+    select(-conn_comp) %>%
+    relpair_conn_comps()
+
   # and return that
   list(
     ds_samples = Sret,
-    ds_pairs = P4
+    ds_pairs = P5
   )
 }

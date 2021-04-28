@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/about_spip.html">About spip</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -177,43 +180,31 @@
 <div id="specifying-the-fraction-of-sampled-fish-and-in-different-years" class="section level3">
 <h3 class="hasAnchor">
 <a href="#specifying-the-fraction-of-sampled-fish-and-in-different-years" class="anchor"></a>Specifying the fraction of sampled fish, and in different years</h3>
-<p>Spip let’s you specify what fraction of fish of different ages should be sampled in different years. Here we do something simple, and instruct spip to sample 1% of the fish every year from 50 to 75.</p>
+<p>Spip let’s you specify what fraction of fish of different ages should be sampled in different years. Here we do something simple, and instruct spip to sample 1% of the fish of ages 1, 2, and 3 (after the episode of death, see the spip vignette…) every year from year 50 to 75.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">samp_frac</span> <span class="op">&lt;-</span> <span class="fl">0.01</span>
+<code class="sourceCode R"><span class="va">samp_frac</span> <span class="op">&lt;-</span> <span class="fl">0.03</span>
 <span class="va">samp_start_year</span> <span class="op">&lt;-</span> <span class="fl">50</span>
 <span class="va">samp_stop_year</span> <span class="op">&lt;-</span> <span class="fl">75</span>
 <span class="va">SPD</span><span class="op">$</span><span class="va">`discard-all`</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">SPD</span><span class="op">$</span><span class="va">`gtyp-ppn-fem-pre`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+<span class="va">SPD</span><span class="op">$</span><span class="va">`gtyp-ppn-fem-post`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
   <span class="va">samp_start_year</span>, <span class="st">"-"</span>, <span class="va">samp_stop_year</span>, <span class="st">" "</span>, 
   <span class="va">samp_frac</span>, <span class="st">" "</span>, <span class="va">samp_frac</span>, <span class="st">" "</span>, <span class="va">samp_frac</span>, <span class="st">" "</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">SPD</span><span class="op">$</span><span class="va">`max-age`</span> <span class="op">-</span> <span class="fl">3</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span>,
   sep <span class="op">=</span> <span class="st">""</span>
 <span class="op">)</span>
-<span class="va">SPD</span><span class="op">$</span><span class="va">`gtyp-ppn-male-pre`</span> <span class="op">&lt;-</span> <span class="va">SPD</span><span class="op">$</span><span class="va">`gtyp-ppn-fem-pre`</span></code></pre></div>
+<span class="va">SPD</span><span class="op">$</span><span class="va">`gtyp-ppn-male-post`</span> <span class="op">&lt;-</span> <span class="va">SPD</span><span class="op">$</span><span class="va">`gtyp-ppn-fem-post`</span></code></pre></div>
 </div>
 </div>
 <div id="running-spip-and-slurping-up-the-results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-spip-and-slurping-up-the-results" class="anchor"></a>Running spip and slurping up the results</h2>
-<p>There is a function that does all this for you. It runs spip in a temporary directory. After running spip, it also processes the output with a few shell scripts. The function returns the path to the temporary directory. You will need that to slurp all the results back in.</p>
+<p>There are two function that do all this for you. The function <code><a href="../reference/run_spip.html">run_spip()</a></code> runs spip in a temporary directory. After running spip, it also processes the output with a few shell scripts. The function returns the path to the temporary directory. You pass that temporary directory path into the function <code><a href="../reference/slurp_spip.html">slurp_spip()</a></code> to read the output back into R. It looks like this:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># NOTE the following if()...else() blocks are here</span>
-<span class="co"># to test whether spip has been installed yet.</span>
-<span class="co"># If spip is not available (for example, on CRAN's build machines) this</span>
-<span class="co"># is noted and stored package data are used for the variable</span>
-<span class="co"># "slurped" to build the remainder of the vignette.</span>
-<span class="kw">if</span><span class="op">(</span><span class="fu"><a href="../reference/spip_exists.html">spip_exists</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"spip is installed and will be used"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-  <span class="va">spip_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_spip.html">run_spip</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="va">SPD</span><span class="op">)</span>
-  
-  <span class="co"># now read that in and find relatives within the grandparental range</span>
-  <span class="va">slurped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slurp_spip.html">slurp_spip</a></span><span class="op">(</span><span class="va">spip_dir</span>, <span class="fl">2</span><span class="op">)</span>
-<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Using stored package data because spip is not installed"</span><span class="op">)</span>  
-  <span class="va">slurped</span> <span class="op">&lt;-</span> <span class="va">species_1_slurped_results</span>
-<span class="op">}</span>
-<span class="co">#&gt; Using stored package data because spip is not installed</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>  <span class="co"># set a seed for reproducibility of results</span>
+<span class="va">spip_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_spip.html">run_spip</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="va">SPD</span><span class="op">)</span>  <span class="co"># run spip</span>
+<span class="va">slurped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slurp_spip.html">slurp_spip</a></span><span class="op">(</span><span class="va">spip_dir</span>, <span class="fl">2</span><span class="op">)</span> <span class="co"># read the spip output into R</span></code></pre></div>
+<p>Note that setting the seed allows you to get the same results from spip. If you don’t set the seed, that is fine. spip will be seeded by the next two integers in current random number sequence.</p>
+<p>If you are doing multiple runs and you want them to be different, you should make sure that you don’t inadvertently set the seed to be the same each time.</p>
 </div>
 <div id="some-functions-to-summarize-the-runs" class="section level2">
 <h2 class="hasAnchor">
@@ -224,15 +215,15 @@
 <a href="#plot-the-age-specific-census-sizes-over-time" class="anchor"></a>Plot the age-specific census sizes over time</h3>
 <p>This is just a convenience function to make a pretty plot so you can check to see what the population demographics look like:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ggplot_census_by_year_age_sex.html">ggplot_census_by_year_age_sex</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">census_prekill</span><span class="op">)</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-7-1.png" width="672"> This shows that the function <code><a href="../reference/leslie_from_spip.html">leslie_from_spip()</a></code> does a good job of finding the initial population numbers that accord with the stable age distibution.</p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/ggplot_census_by_year_age_sex.html">ggplot_census_by_year_age_sex</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">census_postkill</span><span class="op">)</span></code></pre></div>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-8-1.png" width="672"> This shows that the function <code><a href="../reference/leslie_from_spip.html">leslie_from_spip()</a></code> does a good job of finding the initial population numbers that accord with the stable age distibution.</p>
 </div>
 <div id="assess-the-observed-survival-rates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#assess-the-observed-survival-rates" class="anchor"></a>Assess the observed survival rates</h3>
 <p>We can compute the survival rates like this:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">surv_rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_survival_from_census.html">summarize_survival_from_census</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">census_prekill</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">surv_rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_survival_from_census.html">summarize_survival_from_census</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">census_postkill</span><span class="op">)</span></code></pre></div>
 <p>That returns a list. One part of the list is a tibble with observed survival fractions. The first 40 rows look like this:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">surv_rates</span><span class="op">$</span><span class="va">survival_tibble</span> <span class="op">%&gt;%</span>
@@ -240,21 +231,21 @@
 <span class="co">#&gt; # A tibble: 40 x 7</span>
 <span class="co">#&gt;     year   pop   age sex        n cohort surv_fract</span>
 <span class="co">#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;int&gt;  &lt;int&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1    20     0    19 female     1      1      0    </span>
-<span class="co">#&gt;  2    20     0    18 female     2      2      1    </span>
-<span class="co">#&gt;  3    21     0    19 female     2      2      0    </span>
-<span class="co">#&gt;  4    20     0    17 female     2      3      0.5  </span>
-<span class="co">#&gt;  5    21     0    18 female     1      3      1    </span>
-<span class="co">#&gt;  6    22     0    19 female     1      3      0    </span>
-<span class="co">#&gt;  7    20     0    16 female     3      4      0.667</span>
-<span class="co">#&gt;  8    21     0    17 female     2      4      1    </span>
-<span class="co">#&gt;  9    22     0    18 female     2      4      1    </span>
-<span class="co">#&gt; 10    23     0    19 female     2      4      0    </span>
+<span class="co">#&gt;  1    20     0    20 female     1      0        0  </span>
+<span class="co">#&gt;  2    20     0    19 female     2      1        0.5</span>
+<span class="co">#&gt;  3    21     0    20 female     1      1        0  </span>
+<span class="co">#&gt;  4    20     0    18 female     1      2        1  </span>
+<span class="co">#&gt;  5    21     0    19 female     1      2        1  </span>
+<span class="co">#&gt;  6    22     0    20 female     1      2        0  </span>
+<span class="co">#&gt;  7    20     0    17 female     2      3        1  </span>
+<span class="co">#&gt;  8    21     0    18 female     2      3        1  </span>
+<span class="co">#&gt;  9    22     0    19 female     2      3        1  </span>
+<span class="co">#&gt; 10    23     0    20 female     2      3        0  </span>
 <span class="co">#&gt; # … with 30 more rows</span></code></pre></div>
 <p>The second part of the list holds a plot with histograms of age-specific, observed survival rates across all years. The blue line is the mean over all years.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">surv_rates</span><span class="op">$</span><span class="va">plot_histos_by_age_and_sex</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-10-1.png" width="700" height="600"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-11-1.png" width="700" height="600"></p>
 <p>To compare these values to the parameter values for the simulation, you must pass those to the function:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">surv_rates2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_survival_from_census.html">summarize_survival_from_census</a></span><span class="op">(</span>
@@ -265,7 +256,7 @@
 
 <span class="co"># print the plot</span>
 <span class="va">surv_rates2</span><span class="op">$</span><span class="va">plot_histos_by_age_and_sex</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-11-1.png" width="700" height="600"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-12-1.png" width="700" height="600"></p>
 <p>Here, the red dashed line is the value chosen as the parameter for the simulations. The means are particularly different for the older age classes, which makes sense because there the total number of individuals in each of those year classes is smaller.</p>
 </div>
 </div>
@@ -288,7 +279,7 @@
 <a href="#age-and-sex-specific-number-of-offspring" class="anchor"></a>Age and sex specific number of offspring</h3>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">offs_and_mates</span><span class="op">$</span><span class="va">plot_age_specific_number_of_offspring</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 <p>Especially when dealing with viviparous species (like sharks and mammals) it is worth checking this to make sure that there aren’t some females having far too many offspring.</p>
 </div>
 <div id="lifetime-reproductive-output-as-a-function-of-age-at-death" class="section level3">
@@ -297,7 +288,7 @@
 <p>Especially with long-lived organisms, it can be instructive to see how lifetime reproductive output varies with age at death.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">offs_and_mates</span><span class="op">$</span><span class="va">plot_lifetime_output_vs_age_at_death</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 <p>Yep, many individuals have no offspring, and you have more kids if you live longer.</p>
 </div>
 <div id="fractional-contribution-of-each-age-class-to-the-years-offspring" class="section level3">
@@ -306,7 +297,7 @@
 <p>Out of all the offspring born each year, we can tabulate the fraction that were born to males (or females) of each age. This summary shows a histogram of those values. The represent the distribution of the fractional contribution of each age group each year.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">offs_and_mates</span><span class="op">$</span><span class="va">plot_fraction_of_offspring_from_each_age_class</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 <p>The blue vertical lines show the means over all years.</p>
 </div>
 </div>
@@ -331,7 +322,7 @@
 <p>And also a plot:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mates</span><span class="op">$</span><span class="va">plot_mate_counts</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
 </div>
 <div id="compiling-the-related-pairs-from-the-samples" class="section level2">
 <h2 class="hasAnchor">
@@ -343,23 +334,28 @@
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">crel</span> <span class="op">%&gt;%</span>
   <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 10 x 20</span>
-<span class="co">#&gt;    id_1  id_2  dom_relat max_hit dr_hits upper_member times_encounter…</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;list&gt;         &lt;int&gt;            &lt;int&gt;</span>
-<span class="co">#&gt;  1 F47_… F49_… FC              1 &lt;int […           NA                2</span>
-<span class="co">#&gt;  2 F47_… F54_… FC              1 &lt;int […           NA                4</span>
-<span class="co">#&gt;  3 F47_… F56_… A               2 &lt;int […            1                3</span>
-<span class="co">#&gt;  4 F47_… M51_… FC              1 &lt;int […           NA                3</span>
-<span class="co">#&gt;  5 F47_… M49_… FC              1 &lt;int […           NA                3</span>
-<span class="co">#&gt;  6 F47_… M54_… A               1 &lt;int […            1                3</span>
-<span class="co">#&gt;  7 F47_… F59_… PO              1 &lt;int […            1                2</span>
-<span class="co">#&gt;  8 F49_… F52_… Si              1 &lt;int […           NA                4</span>
-<span class="co">#&gt;  9 F49_… F61_… A               1 &lt;int […            1                5</span>
-<span class="co">#&gt; 10 F49_… F62_… A               1 &lt;int […            1                5</span>
-<span class="co">#&gt; # … with 13 more variables: primary_shared_ancestors &lt;list&gt;, psa_tibs &lt;list&gt;,</span>
-<span class="co">#&gt; #   pop_1 &lt;int&gt;, pop_2 &lt;int&gt;, sex_1 &lt;chr&gt;, sex_2 &lt;chr&gt;, born_year_1 &lt;int&gt;,</span>
-<span class="co">#&gt; #   born_year_2 &lt;int&gt;, samp_years_list_1 &lt;list&gt;, samp_years_list_2 &lt;list&gt;,</span>
-<span class="co">#&gt; #   ancestors_1 &lt;list&gt;, ancestors_2 &lt;list&gt;, anc_match_matrix &lt;list&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 10 x 31</span>
+<span class="co">#&gt;    id_1  id_2  conn_comp dom_relat max_hit dr_hits upper_member times_encounter…</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;int&gt; &lt;list&gt;         &lt;int&gt;            &lt;int&gt;</span>
+<span class="co">#&gt;  1 F47_… M53_…         1 FC              1 &lt;int […           NA                3</span>
+<span class="co">#&gt;  2 F47_… M53_…         1 FC              1 &lt;int […           NA                3</span>
+<span class="co">#&gt;  3 F47_… F48_…         1 FC              1 &lt;int […           NA               11</span>
+<span class="co">#&gt;  4 F47_… F50_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt;  5 F47_… F50_…         1 FC              1 &lt;int […           NA               11</span>
+<span class="co">#&gt;  6 F47_… F50_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt;  7 F47_… F52_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt;  8 F47_… F57_…         1 FC              1 &lt;int […           NA               11</span>
+<span class="co">#&gt;  9 F47_… M49_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt; 10 F47_… M51_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt; # … with 23 more variables: primary_shared_ancestors &lt;list&gt;, psa_tibs &lt;list&gt;,</span>
+<span class="co">#&gt; #   pop_pre_1 &lt;chr&gt;, pop_post_1 &lt;chr&gt;, pop_dur_1 &lt;chr&gt;, pop_pre_2 &lt;chr&gt;,</span>
+<span class="co">#&gt; #   pop_post_2 &lt;chr&gt;, pop_dur_2 &lt;chr&gt;, sex_1 &lt;chr&gt;, sex_2 &lt;chr&gt;,</span>
+<span class="co">#&gt; #   born_year_1 &lt;int&gt;, born_year_2 &lt;int&gt;, samp_years_list_pre_1 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_1 &lt;list&gt;, samp_years_list_dur_1 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_post_1 &lt;list&gt;, samp_years_list_pre_2 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_2 &lt;list&gt;, samp_years_list_dur_2 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_post_2 &lt;list&gt;, ancestors_1 &lt;list&gt;, ancestors_2 &lt;list&gt;,</span>
+<span class="co">#&gt; #   anc_match_matrix &lt;list&gt;</span></code></pre></div>
 <p>Because some pairs might be related in multiple ways (i.e., they might be paternal half-sibs, but, through their mother’s lineage, they might also be half-first cousins), things can get complicated. However, <code>CKMRpop</code> has an algorithm to categorize pairs according to their “most important” relationship.</p>
 <p>The column <code>dom_relat</code> gives the “dominant” or “closest” relationship between the pair. The possibilities, when considering up to two generations of ancestors are:</p>
 <ul>
@@ -392,47 +388,47 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <span class="co">#&gt; # A tibble: 10 x 3</span>
 <span class="co">#&gt;    dom_relat max_hit     n</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt;  1 FC              1   230</span>
-<span class="co">#&gt;  2 A               1   161</span>
-<span class="co">#&gt;  3 Si              1    76</span>
-<span class="co">#&gt;  4 FC              2    26</span>
-<span class="co">#&gt;  5 A               2    10</span>
-<span class="co">#&gt;  6 PO              1     5</span>
-<span class="co">#&gt;  7 FC              3     2</span>
-<span class="co">#&gt;  8 A               3     1</span>
-<span class="co">#&gt;  9 GP              1     1</span>
-<span class="co">#&gt; 10 Si              2     1</span></code></pre></div>
-<p>This is telling us there are 230 half-first-cousin pairs, 161 half-avuncular (aunt/uncle with neice/nephew) pairs, and so forth.</p>
+<span class="co">#&gt;  1 FC              1  1456</span>
+<span class="co">#&gt;  2 A               1   912</span>
+<span class="co">#&gt;  3 Si              1   420</span>
+<span class="co">#&gt;  4 FC              2   114</span>
+<span class="co">#&gt;  5 A               2    56</span>
+<span class="co">#&gt;  6 PO              1    31</span>
+<span class="co">#&gt;  7 Si              2    24</span>
+<span class="co">#&gt;  8 GP              1    19</span>
+<span class="co">#&gt;  9 FC              3     2</span>
+<span class="co">#&gt; 10 A               3     1</span></code></pre></div>
+<p>This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with neice/nephew) pairs, and so forth.</p>
 </div>
 <div id="a-closer-look-within-the-dominant-relationships" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-closer-look-within-the-dominant-relationships" class="anchor"></a>A closer look within the dominant relationships</h3>
-<p>As noted before, the table able just lists the dominant relationship of each pair. If you want to quickly assess, within those dominant categories, how many specific ancestry match matrices underlie them, you can look at the <code>dr_counts</code> component of the output:</p>
+<p>As noted before, the table just lists the dominant relationship of each pair. If you want to quickly assess, within those dominant categories, how many specific ancestry match matrices underlie them, you can look at the <code>dr_counts</code> component of the output:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_counts</span>
-<span class="co">#&gt; # A tibble: 45 x 7</span>
-<span class="co">#&gt;    dom_relat dr_hits   max_hit anc_match_matrix      n tot_dom ID              </span>
-<span class="co">#&gt;    &lt;chr&gt;     &lt;list&gt;      &lt;int&gt; &lt;list&gt;            &lt;int&gt;   &lt;int&gt; &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    46     258 001-FC[1,1] - 46</span>
-<span class="co">#&gt;  2 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    36     258 002-FC[1,1] - 36</span>
-<span class="co">#&gt;  3 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    35     258 003-FC[1,1] - 35</span>
-<span class="co">#&gt;  4 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    27     258 004-FC[1,1] - 27</span>
-<span class="co">#&gt;  5 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    27     258 005-FC[1,1] - 27</span>
-<span class="co">#&gt;  6 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    24     258 006-FC[1,1] - 24</span>
-<span class="co">#&gt;  7 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    18     258 007-FC[1,1] - 18</span>
-<span class="co">#&gt;  8 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;    17     258 008-FC[1,1] - 17</span>
-<span class="co">#&gt;  9 FC        &lt;int [2]&gt;       2 &lt;lgl[,7] [7 × 7]&gt;     6     258 009-FC[2,2] - 6 </span>
-<span class="co">#&gt; 10 FC        &lt;int [2]&gt;       2 &lt;lgl[,7] [7 × 7]&gt;     6     258 010-FC[2,2] - 6 </span>
-<span class="co">#&gt; # … with 35 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 65 x 7</span>
+<span class="co">#&gt;    dom_relat dr_hits   max_hit anc_match_matrix      n tot_dom ID               </span>
+<span class="co">#&gt;    &lt;chr&gt;     &lt;list&gt;      &lt;int&gt; &lt;list&gt;            &lt;int&gt;   &lt;int&gt; &lt;chr&gt;            </span>
+<span class="co">#&gt;  1 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   280    1572 001-FC[1,1] - 280</span>
+<span class="co">#&gt;  2 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   258    1572 002-FC[1,1] - 258</span>
+<span class="co">#&gt;  3 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   255    1572 003-FC[1,1] - 255</span>
+<span class="co">#&gt;  4 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   192    1572 004-FC[1,1] - 192</span>
+<span class="co">#&gt;  5 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   134    1572 005-FC[1,1] - 134</span>
+<span class="co">#&gt;  6 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   129    1572 006-FC[1,1] - 129</span>
+<span class="co">#&gt;  7 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   105    1572 007-FC[1,1] - 105</span>
+<span class="co">#&gt;  8 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   103    1572 008-FC[1,1] - 103</span>
+<span class="co">#&gt;  9 FC        &lt;int [2]&gt;       2 &lt;lgl[,7] [7 × 7]&gt;    26    1572 009-FC[2,2] - 26 </span>
+<span class="co">#&gt; 10 FC        &lt;int [2]&gt;       2 &lt;lgl[,7] [7 × 7]&gt;    24    1572 010-FC[2,2] - 24 </span>
+<span class="co">#&gt; # … with 55 more rows</span></code></pre></div>
 <p>Each of these distinct ancestry match matrices for each dominant relationship can be visualized in a series of faceted plots, which are also returned. For example, the ancestry match matrices seen amongst the FC relationships are:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_plots</span><span class="op">$</span><span class="va">FC</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-24-1.png" width="672"> Within each dominant relationship, the distinct ancestry matrices in each separate panel are named according to their number (<code>001</code>, <code>002</code>, <code>003</code>, etc), relationship and the <code>dr_hits</code> vector, (<code>FC[1,2]</code>) and the number of times this ancestry match matrix was observed amongst pairs in the sample (like <code>- 4</code>). So <code>006-FC[1,1] - 24</code> was observed in 24 of the sampled pairs.</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-25-1.png" width="672"> Within each dominant relationship, the distinct ancestry matrices in each separate panel are named according to their number (<code>001</code>, <code>002</code>, <code>003</code>, etc), relationship and the <code>dr_hits</code> vector, (<code>FC[1,2]</code>) and the number of times this ancestry match matrix was observed amongst pairs in the sample (like <code>- 4</code>). So <code>006-FC[1,1] - 24</code> was observed in 24 of the sampled pairs.</p>
 <p>It is worth pointing out that the <code>014-FC[2,2] - 2</code> plot shows two pairwise relationships in which individual 2 is inbred, because its father’s father (pp) and mother’s father (mp) are the same individual.</p>
 <p>Let’s look at the distinct ancestry match matrices from the siblings:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_plots</span><span class="op">$</span><span class="va">Si</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-25-1.png" width="672"> Here in <code>005</code> we see an interesting case where ind_1 and ind_2 are maternal half sibs, put also individual 2’s father is also his/her uncle.</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-26-1.png" width="672"> Here in <code>005</code> we see an interesting case where ind_1 and ind_2 are maternal half sibs, put also individual 2’s father is also his/her uncle.</p>
 </div>
 <div id="tallying-all-the-ancestry-match-matrices" class="section level3">
 <h3 class="hasAnchor">
@@ -440,28 +436,28 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <p>At times, for example, when looking for the more bizarre relationships, you might just want to visualize all the ancestry match matrices in order of the number of times that they occur. The number of different ancestry match matrices (and the matrices themselves) can be accessed with:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">anc_mat_counts</span>
-<span class="co">#&gt; # A tibble: 45 x 2</span>
+<span class="co">#&gt; # A tibble: 65 x 2</span>
 <span class="co">#&gt;    anc_match_matrix      n</span>
 <span class="co">#&gt;    &lt;list&gt;            &lt;int&gt;</span>
-<span class="co">#&gt;  1 &lt;lgl[,7] [7 × 7]&gt;    46</span>
-<span class="co">#&gt;  2 &lt;lgl[,7] [7 × 7]&gt;    37</span>
-<span class="co">#&gt;  3 &lt;lgl[,7] [7 × 7]&gt;    36</span>
-<span class="co">#&gt;  4 &lt;lgl[,7] [7 × 7]&gt;    36</span>
-<span class="co">#&gt;  5 &lt;lgl[,7] [7 × 7]&gt;    35</span>
-<span class="co">#&gt;  6 &lt;lgl[,7] [7 × 7]&gt;    35</span>
-<span class="co">#&gt;  7 &lt;lgl[,7] [7 × 7]&gt;    32</span>
-<span class="co">#&gt;  8 &lt;lgl[,7] [7 × 7]&gt;    27</span>
-<span class="co">#&gt;  9 &lt;lgl[,7] [7 × 7]&gt;    27</span>
-<span class="co">#&gt; 10 &lt;lgl[,7] [7 × 7]&gt;    26</span>
-<span class="co">#&gt; # … with 35 more rows</span></code></pre></div>
+<span class="co">#&gt;  1 &lt;lgl[,7] [7 × 7]&gt;   280</span>
+<span class="co">#&gt;  2 &lt;lgl[,7] [7 × 7]&gt;   258</span>
+<span class="co">#&gt;  3 &lt;lgl[,7] [7 × 7]&gt;   255</span>
+<span class="co">#&gt;  4 &lt;lgl[,7] [7 × 7]&gt;   244</span>
+<span class="co">#&gt;  5 &lt;lgl[,7] [7 × 7]&gt;   223</span>
+<span class="co">#&gt;  6 &lt;lgl[,7] [7 × 7]&gt;   202</span>
+<span class="co">#&gt;  7 &lt;lgl[,7] [7 × 7]&gt;   192</span>
+<span class="co">#&gt;  8 &lt;lgl[,7] [7 × 7]&gt;   167</span>
+<span class="co">#&gt;  9 &lt;lgl[,7] [7 × 7]&gt;   134</span>
+<span class="co">#&gt; 10 &lt;lgl[,7] [7 × 7]&gt;   129</span>
+<span class="co">#&gt; # … with 55 more rows</span></code></pre></div>
 <p>But more useful for visualizing things is <code>relat_counts$anc_mat_plots</code> which is a list that holds a series of pages/plots showing all the different ancestry matrices seen. Here are the first 30:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">anc_mat_plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-27-1.png" width="672"></p>
-<p>And here are the remaining 15 relationship types:</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
+<p>And here are the remaining 14 relationship types:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">anc_mat_plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-29-1.png" width="672"></p>
 <p>These are worth staring at for a while, and making sure you understand what they are saying. I spent a lot of time staring at these, which is how I settled upon a decent algorithm for identifying the dominant relationship in each.</p>
 </div>
 </div>
@@ -469,40 +465,78 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <h2 class="hasAnchor">
 <a href="#a-brief-digression-downsampling-the-sampled-pairs" class="anchor"></a>A Brief Digression: downsampling the sampled pairs</h2>
 <p>When using <code>spip</code> within <code>CKMRpop</code> you have to specify the fraction of individuals in the population that you want to sample at any particular time. You must set those fractions so that, given the population size, you end up with roughly the correct number of samples for the situation you are trying to simulate. Sometimes, howeever, you might want to have sampled exactly 5,000 fish. Or some other number. The function <code>downsample_pairs</code> lets you randomly discard specific instances in which an individual was sampled so that the number of individuals (or sampling instances) that remains is the exact number you want.</p>
-<p>For example, looking closely at <code>slurped$samples</code> shows that 168 distinct individuals were sampled:</p>
+<p>For example, looking closely at <code>slurped$samples</code> shows that 386 distinct individuals were sampled:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">samples</span><span class="op">)</span>
-<span class="co">#&gt; [1] 168</span></code></pre></div>
-<p>However, those 168 individuals represent 170 distinct sampling instances, because two of the individuals were each sampled twice, as, in this simulation scenario, sampling the individuals does not remove them from the population.</p>
+<span class="co">#&gt; [1] 386</span></code></pre></div>
+<p>However, those 386 individuals represent multiple distinct sampling instances, because some individuals may sampled twice, as, in this simulation scenario, sampling the individuals does not remove them from the population:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">slurped</span><span class="op">$</span><span class="va">samples</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>ns <span class="op">=</span> <span class="fu">map_int</span><span class="op">(</span><span class="va">samp_years_list</span>, <span class="va">length</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>tot_times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">ns</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 x 1</span>
+<span class="co">#&gt;   tot_times</span>
+<span class="co">#&gt;       &lt;int&gt;</span>
+<span class="co">#&gt; 1       394</span></code></pre></div>
+<p>Here are some individuals sampled at multiple times</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SS2</span> <span class="op">&lt;-</span> <span class="va">slurped</span><span class="op">$</span><span class="va">samples</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu">map_int</span><span class="op">(</span><span class="va">samp_years_list</span>, <span class="va">length</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">ID</span>, <span class="va">samp_years_list</span><span class="op">)</span>
 
 <span class="va">SS2</span>
-<span class="co">#&gt; # A tibble: 2 x 2</span>
-<span class="co">#&gt;   ID       samp_years_list</span>
-<span class="co">#&gt;   &lt;chr&gt;    &lt;list&gt;         </span>
-<span class="co">#&gt; 1 M69_0_47 &lt;int [2]&gt;      </span>
-<span class="co">#&gt; 2 F71_0_63 &lt;int [2]&gt;</span></code></pre></div>
-<p>And the years that these individuals were sampled are as follows:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<span class="co">#&gt; # A tibble: 8 x 2</span>
+<span class="co">#&gt;   ID        samp_years_list</span>
+<span class="co">#&gt;   &lt;chr&gt;     &lt;list&gt;         </span>
+<span class="co">#&gt; 1 F53_0_145 &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 2 M55_0_22  &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 3 M60_0_7   &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 4 M64_0_29  &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 5 M64_0_100 &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 6 F65_0_24  &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 7 F66_0_20  &lt;int [2]&gt;      </span>
+<span class="co">#&gt; 8 M69_0_50  &lt;int [2]&gt;</span></code></pre></div>
+<p>And the years that the first two of those individuals were sampled are as follows:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># first indiv:</span>
 <span class="va">SS2</span><span class="op">$</span><span class="va">samp_years_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; [1] 71 72</span>
+<span class="co">#&gt; [1] 55 56</span>
 
 <span class="co"># second indiv:</span>
 <span class="va">SS2</span><span class="op">$</span><span class="va">samp_years_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; [1] 72 74</span></code></pre></div>
+<span class="co">#&gt; [1] 56 57</span></code></pre></div>
 <p>Great! Now, imagine that we wanted to see how many kin pairs we found when our sampling was such that we had only 100 instances of sampling (i.e., it could have been 98 individuals sampled in total, but two of them were sampled in two different years). We do like so:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">subsampled_pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/downsample_pairs.html">downsample_pairs</a></span><span class="op">(</span>
   S <span class="op">=</span> <span class="va">slurped</span><span class="op">$</span><span class="va">samples</span>,
   P <span class="op">=</span> <span class="va">crel</span>,
   n <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span></code></pre></div>
-<p>Now there are only 179 pairs instead of 513.</p>
-<p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that if we go from 170 instances to 100, we would expect the number of pairs to decrease by a factor of <span class="math inline">\((100/170)^2 \approx 0.346\)</span>. Let’s check that: <span class="math inline">\(179/513 = \approx 0.348\)</span>. Yep, that makes sense.</p>
+<p>Now there are only 202 pairs instead of 3035.</p>
+<p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that the number of pairs to decrease by a quadratic factor of the number of samples:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># num samples before downsampling</span>
+<span class="va">ns_bd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">samples</span><span class="op">)</span>
+
+<span class="co"># num samples after downsampling</span>
+<span class="va">ns_ad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">subsampled_pairs</span><span class="op">$</span><span class="va">ds_samples</span><span class="op">)</span>
+
+<span class="co"># ratio of sample sizes</span>
+<span class="va">ssz_rat</span> <span class="op">&lt;-</span> <span class="va">ns_ad</span> <span class="op">/</span> <span class="va">ns_bd</span>
+
+<span class="co"># square of the ratio</span>
+<span class="va">sq_rat</span> <span class="op">&lt;-</span> <span class="va">ssz_rat</span> <span class="op">^</span> <span class="fl">2</span>
+
+<span class="co"># ratio of number of pairs found amongst samples</span>
+<span class="va">num_pairs_before</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">crel</span><span class="op">)</span>
+<span class="va">num_pairs_after_downsampling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">subsampled_pairs</span><span class="op">$</span><span class="va">ds_pairs</span><span class="op">)</span>
+
+<span class="va">ratio</span> <span class="op">&lt;-</span> <span class="va">num_pairs_after_downsampling</span> <span class="op">/</span> <span class="va">num_pairs_before</span>
+
+<span class="co"># compare these two things</span>
+<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.06711590 0.06655684</span></code></pre></div>
+<p>That checks out.</p>
 </div>
 <div id="uncooked-spaghetti-plots" class="section level2">
 <h2 class="hasAnchor">
@@ -524,7 +558,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 </li>
 </ul>
 <p>We crunch out the data and make the plot like this:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># because we jitter some points, we can set a seed to get the same</span>
 <span class="co"># result each time</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">22</span><span class="op">)</span>
@@ -533,10 +567,136 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
   Samples <span class="op">=</span> <span class="va">slurped</span><span class="op">$</span><span class="va">samples</span>
 <span class="op">)</span></code></pre></div>
 <p>Now, the plot can be printed like so:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">spag</span><span class="op">$</span><span class="va">plot</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-34-1.png" width="720"></p>
-<p>Looking at this, it is clear that I will also want to add a function to tally up the number of pairwise relationships that are shared between members—basically just compiling the connected components for all of those.</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-37-1.png" width="720"></p>
+</div>
+<div id="identifying-connected-components" class="section level2">
+<h2 class="hasAnchor">
+<a href="#identifying-connected-components" class="anchor"></a>Identifying connected components</h2>
+<p>One issue that arises frequently in CKMR is the concern (especially in small populations) that the pairs of related individuals are not independent. The simplest way in which this occurs is when, for example, A is a half-sib of B, but B is also a half-sib of C, so that the pairs A-B and B-C share the individual B. These sorts of dependencies can be captured quickly by thinking of individuals as vertices and relationships between pairs of individuals as edges, which defines a <em>graph</em>. Finding all the connected components of such a graph provides a nice summary of all those pairs that share members and hence are certainly not independent.</p>
+<p>The <code>CKMRpop</code> package provides the connected component of this graph for every related pair discovered. This is in column <code>conn_comp</code> of the output from <code><a href="../reference/compile_related_pairs.html">compile_related_pairs()</a></code>. Here we can see it from our example, which shows that the first 10 pairs all belong to the same connected component, 1.</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">crel</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 10 x 31</span>
+<span class="co">#&gt;    id_1  id_2  conn_comp dom_relat max_hit dr_hits upper_member times_encounter…</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;int&gt; &lt;list&gt;         &lt;int&gt;            &lt;int&gt;</span>
+<span class="co">#&gt;  1 F47_… M53_…         1 FC              1 &lt;int […           NA                3</span>
+<span class="co">#&gt;  2 F47_… M53_…         1 FC              1 &lt;int […           NA                3</span>
+<span class="co">#&gt;  3 F47_… F48_…         1 FC              1 &lt;int […           NA               11</span>
+<span class="co">#&gt;  4 F47_… F50_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt;  5 F47_… F50_…         1 FC              1 &lt;int […           NA               11</span>
+<span class="co">#&gt;  6 F47_… F50_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt;  7 F47_… F52_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt;  8 F47_… F57_…         1 FC              1 &lt;int […           NA               11</span>
+<span class="co">#&gt;  9 F47_… M49_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt; 10 F47_… M51_…         1 FC              1 &lt;int […           NA                4</span>
+<span class="co">#&gt; # … with 23 more variables: primary_shared_ancestors &lt;list&gt;, psa_tibs &lt;list&gt;,</span>
+<span class="co">#&gt; #   pop_pre_1 &lt;chr&gt;, pop_post_1 &lt;chr&gt;, pop_dur_1 &lt;chr&gt;, pop_pre_2 &lt;chr&gt;,</span>
+<span class="co">#&gt; #   pop_post_2 &lt;chr&gt;, pop_dur_2 &lt;chr&gt;, sex_1 &lt;chr&gt;, sex_2 &lt;chr&gt;,</span>
+<span class="co">#&gt; #   born_year_1 &lt;int&gt;, born_year_2 &lt;int&gt;, samp_years_list_pre_1 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_1 &lt;list&gt;, samp_years_list_dur_1 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_post_1 &lt;list&gt;, samp_years_list_pre_2 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_2 &lt;list&gt;, samp_years_list_dur_2 &lt;list&gt;,</span>
+<span class="co">#&gt; #   samp_years_list_post_2 &lt;list&gt;, ancestors_1 &lt;list&gt;, ancestors_2 &lt;list&gt;,</span>
+<span class="co">#&gt; #   anc_match_matrix &lt;list&gt;</span></code></pre></div>
+<p>It should clearly be noted that the size of the connected components will be affected by the size of the population (with smaller populations, more of the related pairs will share members) and the number of generations back in time over which generations are compiled (if you go back for enough in time, all the pairs will be related to one another). In our example case, with a small population (so it can be simulated quickly for building the vignettes) and going back <code>num_generations = 2</code> generations (thus including grandparents and first cousins, etc.) we actually find that <em>all</em> of the pairs are in the same connected component. Wow!</p>
+<p>Because this simulated popluation is quite small, at this juncture we will reduce the number of generations so as to create more connected components amongst these pairs for illustration. So, let us compile just the pairs with <code>num_generations = 1</code>. To do this, we must slurp up the spip results a second time</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">slurped_1gen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slurp_spip.html">slurp_spip</a></span><span class="op">(</span><span class="va">spip_dir</span>, num_generations <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<p>And after we have done that, we can compile the related pairs:</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">crel_1gen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compile_related_pairs.html">compile_related_pairs</a></span><span class="op">(</span><span class="va">slurped_1gen</span><span class="op">$</span><span class="va">samples</span><span class="op">)</span></code></pre></div>
+<p>Look at the number of pairs:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">crel_1gen</span><span class="op">)</span>
+<span class="co">#&gt; [1] 475</span></code></pre></div>
+<p>That is still a lot of pairs, so let us downsample to 150 samples so that our figures are not overwhelmed by connected components.</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="va">ssp_1gen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/downsample_pairs.html">downsample_pairs</a></span><span class="op">(</span>
+  S <span class="op">=</span> <span class="va">slurped_1gen</span><span class="op">$</span><span class="va">samples</span>,
+  P <span class="op">=</span> <span class="va">crel_1gen</span>,
+  n <span class="op">=</span> <span class="fl">150</span>
+<span class="op">)</span></code></pre></div>
+<p>And also tally up the number of pairs in different connected components:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ssp_1gen</span><span class="op">$</span><span class="va">ds_pairs</span> <span class="op">%&gt;%</span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">conn_comp</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 27 x 2</span>
+<span class="co">#&gt;    conn_comp     n</span>
+<span class="co">#&gt;        &lt;dbl&gt; &lt;int&gt;</span>
+<span class="co">#&gt;  1         3    14</span>
+<span class="co">#&gt;  2        14     8</span>
+<span class="co">#&gt;  3        12     7</span>
+<span class="co">#&gt;  4        17     7</span>
+<span class="co">#&gt;  5         2     6</span>
+<span class="co">#&gt;  6        10     6</span>
+<span class="co">#&gt;  7         7     3</span>
+<span class="co">#&gt;  8        25     3</span>
+<span class="co">#&gt;  9        24     2</span>
+<span class="co">#&gt; 10         1     1</span>
+<span class="co">#&gt; # … with 17 more rows</span></code></pre></div>
+<p>There are some rather large connected components there. Let’s plot them.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># for some reason, the aes() function gets confused unless</span>
+<span class="co"># ggraph library is loaded...</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span>
+
+<span class="va">one_gen_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_conn_comps.html">plot_conn_comps</a></span><span class="op">(</span><span class="va">ssp_1gen</span><span class="op">$</span><span class="va">ds_pairs</span><span class="op">)</span>
+<span class="va">one_gen_graph</span></code></pre></div>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-45-1.png" width="576"></p>
+<p>Note that if you want to attach labels to those nodes, to see which individuals we are talking about, you can do this (and also adjust colors…):</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">one_gen_graph</span> <span class="op">+</span> 
+  <span class="fu">ggraph</span><span class="fu">::</span><span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">name</span><span class="op">)</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/scale_edge_colour.html">scale_edge_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>`PO-1` <span class="op">=</span> <span class="st">"tan2"</span>, `Si-1` <span class="op">=</span> <span class="st">"gold"</span>, `Si-2` <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-46-1.png" width="576"></p>
+<p>And, for fun, look at it with 2 generations and all of the samples:</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_conn_comps.html">plot_conn_comps</a></span><span class="op">(</span><span class="va">crel</span><span class="op">)</span></code></pre></div>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-47-1.png" width="576"></p>
+<p>What a snarl! With a small population, several generations, and large samples, in this case…everyone is connected!</p>
+</div>
+<div id="simulating-genotypes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#simulating-genotypes" class="anchor"></a>Simulating Genotypes</h2>
+<p>We can simulate the genotypes of the sampled individuals at unlinked markers that have allele frequencies (amongst the founders) that we specify. We provide the desired allele frequencies in a list. Here we simulate uniformly distributed allele frequencies at 100 markers, each with a random number of alleles that is 1 + Poisson(3):</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="va">freqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">nA</span> <span class="op">=</span> <span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>
+  <span class="va">f</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">nA</span><span class="op">)</span>
+  <span class="va">f</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
+<p>Then run spip with those allele frequencies:</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<span class="va">spip_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_spip.html">run_spip</a></span><span class="op">(</span>
+  pars <span class="op">=</span> <span class="va">SPD</span>, 
+  allele_freqs <span class="op">=</span> <span class="va">freqs</span>
+<span class="op">)</span>
+<span class="co"># now read that in and find relatives within the grandparental range</span>
+<span class="va">slurped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slurp_spip.html">slurp_spip</a></span><span class="op">(</span><span class="va">spip_dir</span>, <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p>Now, the variable <code>slurped$genotypes</code> has the genotypes we requested. The first column, (<code>ID</code>) is the ID of the individual (congruent with the <code>ID</code> column in <code>slurped$samples</code>) and the remaining columns are for the markers. Each locus occupies one column and the alleles are separated by a slash.</p>
+<p>Here are the first 10 individuals at the first four loci:</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">slurped</span><span class="op">$</span><span class="va">genotypes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
+<span class="co">#&gt; # A tibble: 10 x 5</span>
+<span class="co">#&gt;    ID        Locus_1 Locus_2 Locus_3 Locus_4</span>
+<span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span>
+<span class="co">#&gt;  1 F47_0_19  3/3     3/1     4/1     3/3    </span>
+<span class="co">#&gt;  2 F47_0_25  3/2     3/3     1/4     1/1    </span>
+<span class="co">#&gt;  3 F48_0_4   2/4     3/1     3/2     1/1    </span>
+<span class="co">#&gt;  4 F48_0_28  2/3     1/3     2/4     3/1    </span>
+<span class="co">#&gt;  5 F48_0_56  3/3     3/3     1/2     1/1    </span>
+<span class="co">#&gt;  6 F48_0_138 1/3     3/1     4/4     1/3    </span>
+<span class="co">#&gt;  7 M48_0_89  4/4     2/3     1/2     1/1    </span>
+<span class="co">#&gt;  8 F49_0_16  2/2     2/2     2/1     1/1    </span>
+<span class="co">#&gt;  9 F49_0_49  4/3     1/1     3/1     3/3    </span>
+<span class="co">#&gt; 10 F49_0_62  2/2     3/3     2/3     1/3</span></code></pre></div>
 </div>
   </div>
 

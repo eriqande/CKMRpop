@@ -70,6 +70,9 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/plot_amm_from_matrix.html</loc>
   </url>
   <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/plot_conn_comps.html</loc>
+  </url>
+  <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/prepare_for_dfs.html</loc>
   </url>
   <url>
@@ -86,6 +89,9 @@
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/relationship_zone_perimeters.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/relpair_conn_comps.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/run_spip.html</loc>
@@ -110,6 +116,12 @@
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/species_1_slurped_results.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/species_1_slurped_results_100_loci.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/species_1_slurped_results_1gen.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/species_2_life_history.html</loc>
@@ -137,6 +149,9 @@
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/uncooked_spaghetti.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/articles/about_spip.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html</loc>

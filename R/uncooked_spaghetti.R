@@ -43,7 +43,7 @@ uncooked_spaghetti <- function(
 ) {
   # First, grab just the colums that we want to use for this
   P <- Pairs %>%
-    select(id_1, id_2, dom_relat, max_hit, upper_member, pop_1:samp_years_list_2)
+    select(id_1, id_2, dom_relat, max_hit, upper_member, pop_post_1:samp_years_list_2)
 
   # now, we get all combinations of the different sampling years through
   # a couple of left_joins
@@ -103,8 +103,8 @@ uncooked_spaghetti <- function(
       dom_relat = "Se",
       max_hit = 1,
       upper_member = NA,
-      pop_1 = pop,     # this is going to need fixing when we start keeping track of which populations they were sampled from
-      pop_2 = pop,
+      pop_1 = pop_post,     # this is going to need fixing when we start keeping track of which populations they were sampled from
+      pop_2 = pop_post,
       sex_1 = sex,
       sex_2 = sex,
       born_year_1 = born_year,
@@ -113,7 +113,7 @@ uncooked_spaghetti <- function(
       age_2 = samp_year_2 - born_year_2,
       sex_config = str_c(sex, "->", sex)
     ) %>%
-    select(names(P2))
+    select(intersect(names(P2), names(.)))  # hacky, dealing with all the extra columns after I added other census sizes in there
 
   if(nrow(Selfies) > 0) {
     P3 <- bind_rows(

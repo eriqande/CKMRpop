@@ -6,7 +6,7 @@
     print "year", "pop", "age", "male", "female" > "spip_prekill_census.tsv";
     print "year", "pop", "age", "male", "female" > "spip_postkill_census.tsv";
     print "year", "pop", "kid", "pa", "ma" > "spip_pedigree.tsv";
-    print "ID", "syears", "pop" > "spip_samples.tsv";
+    print "ID", "syears_pre", "pop_pre", "syears_post", "pop_post", "syears_dur", "pop_dur" > "spip_samples.tsv";
     print "ID", "year", "age" > "spip_deaths.tsv"
   }
 
@@ -79,7 +79,7 @@
     line = $0;
     gsub(/ *: */, ":", line)
     dump_n = split(line, arr, /:/)
-    print arr[2], arr[3], arr[4] > "spip_samples.tsv";
+    print arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8] > "spip_samples.tsv";
   }
 
   ### Getting the genotypes for a file ###
