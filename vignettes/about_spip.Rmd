@@ -3,9 +3,12 @@ title: "About spip"
 resource_files:
   - ../man/figures/spip-periods.svg
   - ../man/figures/spip-periods-with-sampling.svg
+  - ../man/figures/spip-periods-with-migration.svg
 author: "Eric C. Anderson"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{About spip}
   %\VignetteEngine{knitr::rmarkdown}
@@ -110,6 +113,8 @@ in the `--fem-postrep-die` option.  This is an additional source of death
 that is useful for modeling anadromous species whose reproductive journey
 incurs a substantial cost.
 
+## Sampling episodes in a `spip` annual cycle
+
 The two main sampling schemes available in spip are keyed to these different
 time periods within the spip annual cycle as shown by the following figure:
 ```{r, echo=FALSE, out.width="100%"}
@@ -119,7 +124,8 @@ Thus, `--gtyp-ppn-fem-pre` and `--gtyp-ppn-male-pre` involve sampling
 from the simulated population at a different point in the year than
 do the `--gtyp-ppn-fem-post` and `--gtyp-ppn-male-post` options.  
 It is also possible to only sample those individuals that are trying to
-reproduce in a certain year using the `--gtyp-ppn-fem-dur` and `--gtyp-ppn-male-dur` options
+reproduce in a certain year using a third sampling scheme requested with the
+`--gtyp-ppn-fem-dur` and `--gtyp-ppn-male-dur` options
 to spip.  The probability that an individual would try to reproduce
 in a given year is age specific and is set using the `--fem-prob-repro` 
 and `--male-prob-repro` options.
@@ -146,7 +152,76 @@ that is to sample 1-year-olds at time $t+1$ using the
 extra finagling to get those sampling years into the `samp_years_list` column
 referenced above for the downstream analyses.
 
+
 TODO ITEM: combine sampling at all times into the single `samp_years_list` column, perhaps,
 or make it easier for users to decide how to combine those different sampling
 episodes.  For now, though, users should stick to using the
-`--gtyp-ppn-fem-pre` and `--gtyp-ppn-male-pre` options.
+`--gtyp-ppn-fem-post` and `--gtyp-ppn-male-post` options.
+
+## How inter-population migration occurs in `spip`
+
+We can use the same diagrams developed above to describe how migration is implemented
+in `spip`.  Migration in `spip` is a "two-stage" phenomenon: in the first stage,
+individuals leave a population with sex-, year- and age-specific out-migration rates
+specified with the population's options `--fem-prob-mig-out` and
+`--male-prob-mig-out`.
+They leave each population before the prekill census occurs and also before the prekill
+sampling occurs.  Diagrammatically,
+it looks like this:
+```{r, echo=FALSE, out.width="100%", fig.cap="Schematic describing the first stage of migration: migration out of a population. Each blue line shows individuals leaving the population and entering a pool of migrants."}
+knitr::include_graphics("../man/figures/spip-periods-with-migration.svg")
+```
+
+The expected numbers of individuals in the pool of migrants who have left the population
+is given by the time- and age-specific rates set by the user.  We will denote the outmigration
+rate for age $a$ individuals at time $t$ from a given population by $m^\mathrm{out}_{t,a}$.
+It follows then that, for this given population:
+$$
+E[F^\mathrm{out}_{t,a}] = m^\mathrm{out}_{t,a}F_{t-1,a-1},~a=1,\ldots, \mathrm{MA}.
+$$
+
+In the following, we will want to refer to these outmigration rates for each
+population, so we may also adorn the notation, thus:
+$$
+E[F^{\mathrm{out},i}_{t,a}] = m^{\mathrm{out},i}_{t,a}F^i_{t-1,a-1},~a=1,\ldots, \mathrm{MA}.
+$$
+
+to refer to rates and sizes specifically for population $i$.
+
+
+
+After the outmigration stage, each population has a pool of migrants that are waiting
+to migrate into other populations.  The rates by which this happens are specified
+with the `--fem-prob-mig-in` and `--male-prob-mig-in` 
+options. These options set in-migration rates for different years and
+for different ages, effectively setting the fraction of the total number
+of out-migrated individuals from population $i$ of age $a$ at time $t$,
+$F^{\mathrm{out},i}_{t,a}$, that will migrate into the other populations. Thus,
+there is one number to set for each population.  For example, if
+there are $K$ populations, we would have:
+$$
+m^{\mathrm{in},i}_{t,a} = [m^{\mathrm{in},i}_{t,a,1},\ldots,m^{\mathrm{in},i}_{t,a,K}]~~,~~
+\sum_{j=1}^K m^{\mathrm{in},i}_{t,a,j} = 1.
+$$
+The probability of migrating back to the population from whence one came
+is always 0.  So, even if the user sets that to some non-zero value, 
+it will be forced to zero and the values of the remaining in-migration rates will
+be re-scaled so as to sum to 1.
+
+Given this set up, the expected number of individuals from the
+outmigrant pool from population $i$ that will arrive in population $j$,
+of age $a$ at time $t$ is
+$$
+E[F^{\mathrm{in},i}_{t,a,j}] = m^{\mathrm{in},i}_{t,a,j} F^{\mathrm{out},i}_{t,a}
+$$
+And, so we can also write that entirely in terms of current population sizes
+and migration rates:
+$$
+E[F^{\mathrm{in},i}_{t,a,j}] = m^{\mathrm{in},i}_{t,a,j} m^{\mathrm{out},i}_{t,a}F^i_{t-1,a-1}
+$$
+
+So, this whole system of specifying migrants is a little more complex than
+a system whereby the user specifies the fraction of individuals in population
+$j$ that originated from population $i$.  But, it does provide a lot more control
+by the user, as well as realism, in that the number of migrants into a population
+depends on the size of the donor population.

@@ -8,6 +8,7 @@
     print "year", "pop", "kid", "pa", "ma" > "spip_pedigree.tsv";
     print "ID", "syears_pre", "pop_pre", "syears_post", "pop_post", "syears_dur", "pop_dur" > "spip_samples.tsv";
     print "ID", "year", "age" > "spip_deaths.tsv"
+    print "year", "age", "event" > "spip_migrants.tsv"
   }
 
   ### Getting the prekill Census  ###
@@ -70,6 +71,23 @@
   /^KILLING/ {
     print $6, $9, $(12) > "spip_deaths.tsv";
     next;
+  }
+
+  ### Summarize the migration reports ###
+  /^(FEM|MALE)_MIGRATION/ {
+    if($1 ~ /^MALE/)
+      sex = "M"
+    else
+      sex = "F"
+
+    year = $3
+    age = $5
+    line = $0
+    sub("^.*: *", "", line)
+    n = split(line, arr, / *\| */)
+    for(i=1;i<=n;i++) {
+      print year, age, arr[i] > "spip_migrants.tsv"
+    }
   }
 
   ### Getting the sample entries ###

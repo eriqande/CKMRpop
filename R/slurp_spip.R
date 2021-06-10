@@ -29,6 +29,7 @@ slurp_spip <- function(
   post_census_file <- file.path(dir, "spip_postkill_census.tsv")
   deaths_file <- file.path(dir, "spip_deaths.tsv")
   genos_file <- file.path(dir, "spip_genotypes.tsv")
+  migrants_file <- file.path(dir, "spip_migrants.tsv")
 
 
   # read in the files, and do any necessary processing
@@ -52,6 +53,20 @@ slurp_spip <- function(
     delim = "\t",
     col_types = "cii"
   )
+  migrants <- vroom::vroom(
+    file = migrants_file,
+    delim = "\t",
+    col_types = "iic"
+  ) %>%
+    separate(
+      event,
+      into = c("ID", "from_pop", "arrow", "to_pop"),
+      sep = " +",
+      convert = TRUE
+    ) %>%
+    select(ID, everything()) %>%
+    select(-arrow)
+
   samples <- vroom::vroom(
     file = sample_file,
     delim = "\t",
@@ -68,8 +83,8 @@ slurp_spip <- function(
     select(-syears_pre, -syears_post, -syears_dur) %>%
     extract(
       ID,
-      into = c("sex", "born_year"),
-      regex = "^([MF])([0-9]+)_[0-9]+",
+      into = c("sex", "born_year", "born_pop"),
+      regex = "^([MF])([0-9]+)_([0-9]+)",
       remove = FALSE,
       convert = TRUE
     ) %>%
@@ -108,7 +123,8 @@ slurp_spip <- function(
     census_postkill = post_census,
     samples = left_join(samples, SAR, by = c("ID" = "sample_id")),
     deaths = death_reports,
-    genotypes = genos
+    genotypes = genos,
+    migrants = migrants
   )
 
 }

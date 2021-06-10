@@ -48,6 +48,8 @@ run_spip <- function(
 
   dir.create(dir, showWarnings = FALSE, recursive = TRUE)
 
+
+
   # write parameters to demog.comm
   dfile <- file.path(dir, "demog.comm")
   sfile <- file.path(dir, "spip_out.txt")
@@ -65,23 +67,68 @@ run_spip <- function(
     cat(x/sum(x), "\n", sep = " ", file = lfile, append = TRUE)
   })
 
-  cat("&  generated from R &\n", file = dfile)
-  dump <- lapply(names(pars), function(n) {
-    # R is inconsistent in type of dash it prints, so standardize with
-    # this line:
-    n_clean <- gsub("\\p{Pd}", "-", n, perl = TRUE)
-    cat(
-      "--", n_clean, " ", paste(pars[[n]], collapse = " "), "\n",
-      sep = "",
-      file = dfile,
-      append = TRUE
-    )
-  })
+  # now, make the demography and sampling file of commands.
+  # If num_pops == 1 then we just dump the pars list into it.
+  if(num_pops == 1) {
+    cat("&  generated from R &\n", file = dfile)
+    dump <- lapply(names(pars), function(n) {
+      # R is inconsistent in type of dash it prints, so standardize with
+      # this line:
+      n_clean <- gsub("\\p{Pd}", "-", n, perl = TRUE)
+      cat(
+        "--", n_clean, " ", paste(pars[[n]], collapse = " "), "\n",
+        sep = "",
+        file = dfile,
+        append = TRUE
+      )
+    })
+  }
 
-  args <- paste(" --num-pops ", num_pops, " --command-file ", dfile, " --locus-file ", lfile )
+  # if num_pops > 1, then we check to make sure that pars is a list of length
+  # num_pops and we dump each element in the list into dfile separated by --new-pop
+  # directives, as appropriate.
+  if(num_pops > 1) {
+    if(length(pars) != num_pops) {
+      stop("Hold it! When num_pops > 1, the pars parameter must be a list with a single list element (or parameters) for each population.")
+    }
+    cat("&  generated from R &\n", file = dfile)
+    for(p in 1:num_pops) {
+      subpars <- pars[[p]]
+      dump <- lapply(names(subpars), function(n) {
+        # R is inconsistent in type of dash it prints, so standardize with
+        # this line:
+        n_clean <- gsub("\\p{Pd}", "-", n, perl = TRUE)
+        cat(
+          "--", n_clean, " ", paste(subpars[[n]], collapse = " "), "\n",
+          sep = "",
+          file = dfile,
+          append = TRUE
+        )
+      })
+      cat(
+        "--locus-file ", lfile, "\n", sep = "",
+        file = dfile,
+        append = TRUE
+      )
+      if(p < num_pops) {
+        cat("--new-pop", "\n",
+            sep = "",
+            file = dfile,
+            append = TRUE
+        )
+      }
+    }
+  }
 
+  if(num_pops == 1) {
+    args <- paste(" --num-pops ", num_pops, " --command-file ", dfile, " --locus-file ", lfile )
+  } else {
+    args <- paste(" --num-pops ", num_pops, " --command-file ", dfile)
+  }
 
   message("Running spip in directory ", dir)
+  flush.console()
+
 
   # Run this in system2
   setwd(dir)
