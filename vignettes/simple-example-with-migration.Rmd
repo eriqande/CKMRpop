@@ -4,7 +4,7 @@ author: "Eric C. Anderson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{simple-example-with-migration}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -91,11 +91,12 @@ pars$`gtyp-ppn-male-post` <- "10-25 0.00 0.01 0.01 0.01 0.01"
 OK! At this point, we have set up the demography for a single population.  Let's just
 show that we could simulate a single population with that demography and the sampling
 like this:
-```{r}
+```{r, eval=FALSE}
+set.seed(15)
 one_pop_dir <- run_spip(pars = pars, num_pops = 1)
 ```
 
-But, of course, the question is, how do we simulated multiple, interacting populations?
+But, of course, the question is, how do we simulate multiple, interacting populations?
 
 ## Simulating Multiple Populations
 
@@ -117,24 +118,44 @@ because each population has the same demography.
 
 Note that we have not included any migration between the the populations yet,
 but we can still run a simulation with all of them like this:
-```{r}
+```{r, echo=FALSE, results='hide', message=FALSE}
+# NOTE the following if()...else() blocks are here
+# to test whether spip has been installed yet.
+# If spip is not available (for example, on CRAN's build machines) this
+# is noted and stored package data are used for the variable
+# "slurped" to build the remainder of the vignette.
+if(spip_exists()) {
+  message("spip is installed and will be used")
+  set.seed(15)
+  three_pop_dir <- run_spip(
+    pars = pars_list,
+    num_pops = 3
+  )
+  slurp3 <- slurp_spip(three_pop_dir, num_generations = 1)
+} else {
+  message("Using stored package data because spip is not installed")  
+  slurp3 <- three_pops_no_mig_slurped_results
+}
+```
+```{r, eval=FALSE}
+set.seed(15)
 three_pop_dir <- run_spip(
   pars = pars_list,
   num_pops = 3
 )
-```
-
-And we can slurp that up if we want:
-```{r}
 slurp3 <- slurp_spip(three_pop_dir, num_generations = 2)
 ```
-And investigate census sizes, etc.
-```{r}
+
+
+And you can investigate that output by making the plots and other
+summaries shown in the main vignette.  Many of these summaries account
+for the multiple populations like this:
+```{r, fig.width=5, out.width = '100%'}
 ggplot_census_by_year_age_sex(slurp3$census_postkill)
 ```
 
 Those are the postkill census sizes in the three different populations, which get the labels
-0, 1, and 2, according the order in which they were passed to spip (i.e., their order
+0, 1, and 2, according to the order in which they were passed to spip (i.e., their order
 in the `pars_list`, above.)
 
 ## Migration between multiple populations
@@ -176,13 +197,68 @@ pars_list[[3]]$`male-prob-mig-in` <- "5-25 1 0.10 0.90 0.00"
 ```
 
 Now, we can simulate this:
-```{r}
+```{r, echo=FALSE, results='hide', message=FALSE}
+# NOTE the following if()...else() blocks are here
+# to test whether spip has been installed yet.
+# If spip is not available (for example, on CRAN's build machines) this
+# is noted and stored package data are used for the variable
+# "slurped" to build the remainder of the vignette.
+if(spip_exists()) {
+  message("spip is installed and will be used")
+  set.seed(15)
+  mig_dir <- run_spip(
+    pars = pars_list,
+    num_pops = 3
+  )
+  slurp_mig <- slurp_spip(mig_dir, num_generations = 1)
+} else {
+  message("Using stored package data because spip is not installed")  
+  slurp_mig <- three_pops_with_mig_slurped_results
+}
+```
+```{r, eval=FALSE}
+set.seed(15)
 mig_dir <- run_spip(
   pars = pars_list,
   num_pops = 3
 )
+slurp_mig <- slurp_spip(mig_dir, num_generations = 1)
 ```
-And slurp up the output:
+
+
+Now, the object `slurp_mig` holds information about census sizes of the populations
+and the relationships between samples, etc.  That can be broken down by populations.
+
+First, a record of every migration event is stored in `slurp_mig$migrants`. This can
+be easily summarized:
 ```{r}
-slurp_m <- slurp_spip(mig_dir, num_generations = 2)
+slurp_mig$migrants %>%
+  count(age, from_pop, to_pop)
 ```
+For a further example, to tabulate parent-offspring pairs found between different
+populations, we can compile the relationships and summarize:
+```{r}
+# compile relationships
+crel <- compile_related_pairs(slurp_mig$samples)
+
+# count number of PO pairs by which populations
+# the members were born in
+crel %>%
+  filter(dom_relat == "PO") %>%
+  mutate(
+    parent_born_pop = case_when(
+      upper_member == 1 ~ born_pop_1,
+      upper_member == 2 ~ born_pop_2,
+      TRUE ~ NA_integer_
+    ),
+    child_born_pop = case_when(
+      upper_member == 1 ~ born_pop_2,
+      upper_member == 2 ~ born_pop_1,
+      TRUE ~ NA_integer_
+    )
+  ) %>% 
+  count(parent_born_pop, child_born_pop)
+  
+```
+
+

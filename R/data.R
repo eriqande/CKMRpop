@@ -74,3 +74,25 @@ NULL
 NULL
 
 
+#' The result of running spip and slurping the output in the three population case with no migration
+#'
+#' This is stored as package data so that the vignette can be written
+#' even if spip is not installed on the system.
+#'
+#' @source Simulation results
+#' @docType data
+#' @name three_pops_no_mig_slurped_results
+NULL
+
+
+#' The result of running spip and slurping the output in the three population case with migration
+#'
+#' This is stored as package data so that the vignette can be written
+#' even if spip is not installed on the system.
+#'
+#' @source Simulation results
+#' @docType data
+#' @name three_pops_with_mig_slurped_results
+NULL
+
+

@@ -8,7 +8,7 @@
 #' @importFrom stats runif
 #' @importFrom stringr str_c str_detect str_replace str_split str_split_fixed
 #' @importFrom tibble as_tibble enframe tibble
-#' @importFrom tidyr extract gather nest pivot_longer pivot_wider replace_na unnest
+#' @importFrom tidyr extract gather nest pivot_longer pivot_wider replace_na separate unnest
 #' @importFrom utils combn unzip
 #' @importFrom Rcpp evalCpp
 #' @useDynLib CKMRpop
@@ -37,6 +37,7 @@ if (getRversion() >= "2.15.1")  {
       "anc_match_matrix",
       "ancestors_1",
       "ancestors_2",
+      "arrow",
       "assp",
       "born_year",
       "born_year_1",
@@ -51,6 +52,7 @@ if (getRversion() >= "2.15.1")  {
       "dom_relat-max_hit",
       "dr",
       "dr_hits",
+      "event",
       "extract",
       "female",
       "first",

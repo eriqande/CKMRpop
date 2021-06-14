@@ -127,8 +127,6 @@ run_spip <- function(
   }
 
   message("Running spip in directory ", dir)
-  flush.console()
-
 
   # Run this in system2
   setwd(dir)
