@@ -9,6 +9,12 @@ output of `spip` is processed by functions in CKMRpop and used to
 identify related pairs of individuals in samples taken from the
 simulated population.
 
+<!-- badges: start -->
+
+[![Travis build
+status](https://travis-ci.com/eriqande/CKMRpop.svg?branch=main)](https://travis-ci.com/eriqande/CKMRpop)
+<!-- badges: end -->
+
 ## Installation
 
 To install CKMRpop from GitHub, first do this:
@@ -40,10 +46,9 @@ The package documentation and vignettes are available in
 
 The first vignette in the package demonstrates the use of most of the
 functionality in the package in the context of simulation of the life
-history of “Species 1” which looks like an elasmobranch that can be
-sampled while reproducing (or growing up) in a nursery estuary. It can
-be found in the “articles” tab on package website, or you can go
-directly to it
+history of “Species 1” which looks like a fish that can be sampled at
+relatively early life stages. It can be found in the “articles” tab on
+package website, or you can go directly to it
 [here](https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html).
 
 ## Literature Cited

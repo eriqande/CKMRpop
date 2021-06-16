@@ -8,7 +8,7 @@
 #' - `ID`: the id of the sample
 #' - `ancestors`: a list column of the ancestor vectors of each individual
 #' - `relatives`: a list column of the vectors of individual samples (including self)
-#' that each indvidual is related to.
+#' that each individual is related to.
 #' @return a tibble with columns `id_1` and `id_2` for each pair.  Any additional
 #' columns outside of `relatives` will be joined with `_1` and
 #' `_2` suffixes.

@@ -3,6 +3,8 @@ output: github_document
 bibliography: references.bib
 ---
 
+
+
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   fig.align = 'center',
@@ -11,8 +13,11 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-")
 ```
 
+
+
 # CKMRpop <img src="man/figures/CKMRpop-sticker.png" align="right" width="200"/>
 
+ 
 CKMRpop is an R package for forward-in-time simulation and tabulation of pairwise
 relationships in age-structured populations. It provides a wrapper for running the 
 compiled C-program `spip` [@anderson2005spip],
@@ -21,6 +26,10 @@ The output of `spip`
 is processed by functions in CKMRpop and used to identify related pairs of 
 individuals in samples taken
 from the simulated population.  
+
+<!-- badges: start -->
+[ ![Travis build status](https://travis-ci.com/eriqande/CKMRpop.svg?branch=main) ](https://travis-ci.com/eriqande/CKMRpop)
+<!-- badges: end -->
 
 
 ## Installation
