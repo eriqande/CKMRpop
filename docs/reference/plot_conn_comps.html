@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="plot the graph showing the connected components — plot_conn_comps" />
-<meta property="og:description" content="Simple a wrapper for some tidygraph/ggraph stuff" />
+<meta property="og:description" content="This is a simple wrapper for some tidygraph/ggraph functions
+that will let you find the connected components of a graph in which
+the related pairs are connected by edges.  It also makes
+a plot of them." />
 
 
 
@@ -98,6 +101,9 @@
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -124,7 +130,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Simple a wrapper for some tidygraph/ggraph stuff</p>
+    <p>This is a simple wrapper for some tidygraph/ggraph functions
+that will let you find the connected components of a graph in which
+the related pairs are connected by edges.  It also makes
+a plot of them.</p>
     </div>
 
     <pre class="usage"><span class='fu'>plot_conn_comps</span><span class='op'>(</span><span class='va'>Pairs</span><span class='op'>)</span></pre>
@@ -140,7 +149,44 @@ columns <code>id_1</code>, <code>id_2</code>, and <code>dom_relat</code>.</p></t
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>This returns a list with two components:</p><ul>
+<li><p><code>conn_comps</code>: a tibble with three columns:</p><ul>
+<li><p><code>name</code>: the name of the sample</p></li>
+<li><p><code>cluster</code>: the index of the connected component the sample belongs to</p></li>
+<li><p><code>cluster_size</code>: the number of samples belonging
+to that cluster</p></li>
+</ul></li>
+<li><p><code>plot</code>: a ggraph/ggplot plot object</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that it appears that the 'ggraph' package must be loaded
+for the plot output of this function to print correctly.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># get a Pairs tibble from the stored data</span>
+<span class='va'>Pairs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compile_related_pairs.html'>compile_related_pairs</a></span><span class='op'>(</span><span class='va'>species_1_slurped_results_1gen</span><span class='op'>$</span><span class='va'>samples</span><span class='op'>)</span>
+<span class='va'>PCC</span> <span class='op'>&lt;-</span>  <span class='fu'>plot_conn_comps</span><span class='op'>(</span><span class='va'>Pairs</span><span class='op'>)</span>
+
+<span class='co'># look at the conn_comps:</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>PCC</span><span class='op'>$</span><span class='va'>conn_comps</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 3</span><span>
+#&gt;   name     cluster cluster_size
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> F48_0_28       1            3
+#&gt; </span><span style='color: #555555;'>2</span><span> M49_0_55       1            3
+#&gt; </span><span style='color: #555555;'>3</span><span> M49_0_56       1            3
+#&gt; </span><span style='color: #555555;'>4</span><span> F48_0_4        2           23
+#&gt; </span><span style='color: #555555;'>5</span><span> F49_0_49       2           23
+#&gt; </span><span style='color: #555555;'>6</span><span> F50_0_17       2           23</div><div class='input'>
+<span class='co'># if you want to print the plot, that seems to require</span>
+<span class='co'># loading the ggraph library</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggraph.data-imaginist.com'>ggraph</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='input'><span class='va'>PCC</span><span class='op'>$</span><span class='va'>plot</span>
+</div><div class='img'><img src='plot_conn_comps-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,9 +1,14 @@
 
 #' Read in the pedigree, census, and sampling information from the spip run
 #'
-#' This version assumes that the spip output has been processed into
-#' three files: `spip_pedigree.tsv`, `spip_prekill_census.tsv`, and
-#' `spip_samples.tsv`, inside the directory where `run_spip()` was run.
+#' This function is run after `run_spip()`.  It assumes that `run_spip()`
+#' has left the files: `spip_pedigree.tsv`, `spip_prekill_census.tsv`, and
+#' `spip_samples.tsv`, `spip_postkill_census.tsv`, `spip_deaths.tsv`,
+#' `spip_genotypes.tsv`, and `spip_migrants.tsv`
+#'  inside the directory where `run_spip()` was run.
+#'
+#' For an example of its use, see the Vignette
+#' [species-1-simulation](species-1-simulation).
 #' @param dir  the path to the directory where spip was run.  This is
 #' returned by `run_spip()`.
 #' @param num_generations how many generations back do you wish to consider
@@ -12,12 +17,21 @@
 #' interesting, and you likely wouldn't ever use it. 1 means up to
 #' and including the parents; 2 means up to and including the grandparents; 3 means up to
 #' and including the great grandparents; and so forth.
-#' @return A list of tibbles:
-#' - `pedigree`:
-#' - `census`:
-#' - `samples`:
+#' @return A list of tibbles.  Each tibble is a named component of
+#' the return list.  The names are as follows:
+#' - `pedigree`
+#' - `census_prekill`,
+#' - `census_postkill`,
+#' - `samples`,
+#' - `deaths`,
+#' - `genotypes`,
+#' - `migrants`
 #'
+#' You can inspect some example output in
+#' the package data object `three_pops_with_mig_slurped_results`
 #' @export
+#' @examples
+#' # see Vignette: species-1-simulation
 slurp_spip <- function(
   dir,
   num_generations

@@ -53,9 +53,7 @@ PO: parent-offspring
 Si: sibling. This is as far as it goes with num_generations = 1
 GP: grandparental
 A : avuncular (aunt-neice)
-FC: first cousin. This is as far as it goes with num_generations = 2
-At this point the additional zones for num_generations = 3 have not been
-implemented.
+FC: first cousin.
 
 " />
 
@@ -115,6 +113,9 @@ implemented.
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -154,9 +155,7 @@ to identify relationships:</p><ul>
 <li><p><code>Si</code>: sibling. This is as far as it goes with num_generations = 1</p></li>
 <li><p><code>GP</code>: grandparental</p></li>
 <li><p><code>A</code> : avuncular (aunt-neice)</p></li>
-<li><p><code>FC</code>: first cousin. This is as far as it goes with num_generations = 2
-At this point the additional zones for num_generations = 3 have not been
-implemented.</p></li>
+<li><p><code>FC</code>: first cousin.</p></li>
 </ul>
 
     </div>
@@ -180,7 +179,20 @@ implemented.</p></li>
 upper or the lower diagonal of the AMM.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>And so forth.  This has been implemented out to 3 generations
+using the relationship zones in package data object
+<code>relationship_zone_names</code>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>cat_dom_relat</span><span class='op'>(</span><span class='va'>half_first_cousin_amm</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $type
+#&gt; [1] "FC"
+#&gt; 
+#&gt; $hits
+#&gt; [1] 1 1
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

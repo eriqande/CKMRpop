@@ -10,5 +10,10 @@ amm2tibble(M)
 \item{M}{an ancestry-match matrix}
 }
 \description{
-convert an ancestry-matching matrix to a ggplot-able tibble
+This merely converts a matrix to a tibble that can be plotted
+easily using ggplot.
+}
+\examples{
+# convert one of the simple example AMMs to a tibble
+amm2tibble(example_amms$Father_Offspring_2gen)
 }

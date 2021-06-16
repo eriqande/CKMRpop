@@ -11,7 +11,11 @@ using namespace Rcpp;
 //' @param M an ancestry match matrix (it is a logical matrix)
 //' @return A list of pairs.  Each pair is the 1-based index of ancestor of ind_1, then
 //' ind_2 of the primary shared ancestors.
+//' @keywords internal
 //' @export
+//' @examples
+//' # find primary ancestor pairs of example AMMs
+//' lapply(example_amms, primary_ancestor_pairs)
 // [[Rcpp::export]]
 List primary_ancestor_pairs(LogicalMatrix M) {
   int r, c, i, j, R, C;

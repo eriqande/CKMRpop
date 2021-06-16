@@ -19,3 +19,8 @@ relationship between an ancestor and its descendants in the ordering
 of an ancestry vector to determine which of the matching ancestors are secondary,
 and then return the ones that are primary.
 }
+\examples{
+# find primary ancestor pairs of example AMMs
+lapply(example_amms, primary_ancestor_pairs)
+}
+\keyword{internal}

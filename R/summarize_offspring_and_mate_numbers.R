@@ -15,6 +15,22 @@
 #' @param contrib_bin_width width of bins of histrogram fo contribution of parents of
 #' each age and sex to the offspring.
 #' @export
+#' @examples
+#' # get stored slurped output for an example
+#' X <- species_1_slurped_results
+#' g <- summarize_offspring_and_mate_numbers(
+#'   X$census_postkill,
+#'   X$pedigree,
+#'   X$deaths
+#' )
+#'
+#' # Now g is a list holding three plots
+#' g$plot_age_specific_number_of_offspring
+#'
+#' g$plot_lifetime_output_vs_age_at_death
+#'
+#' g$plot_fraction_of_offspring_from_each_age_class
+#'
 summarize_offspring_and_mate_numbers <- function(
   census_postkill,
   pedigree,

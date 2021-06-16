@@ -36,6 +36,7 @@
 #' above, the first matrix captures the zones where ind_2 is the "older" one and the
 #' second matrix captures the zones where ind_1 is the "older" one.  For the symmetrical
 #' relationships (Se, Si, FC, etc.) the two matrices in the list are identical.
+#' @keywords internal
 #' @export
 anc_match_masks <- function(
   num_generations,

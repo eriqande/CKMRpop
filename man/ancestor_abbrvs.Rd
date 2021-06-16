@@ -12,3 +12,7 @@ ancestor_abbrvs(L)
 \description{
 Use this to put axis labels on plots, etc.
 }
+\examples{
+ancestor_abbrvs(15)
+}
+\keyword{internal}

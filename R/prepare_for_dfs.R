@@ -6,6 +6,7 @@
 #' @param ped the pedigree.  A tibble with columns `kid`, `pa`, and `ma`
 #' @param samp_vec A character vector with the names of the individuals that were sampled
 #' @export
+#' @keywords internal
 prepare_for_dfs <- function(ped, samp_vec) {
 
   # figure out who the founders are.  These are the individuals whose parents are "0"

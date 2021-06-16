@@ -5,7 +5,7 @@
 \alias{species_1_life_history}
 \title{a list of life-history / life-table data for a hypothetical species}
 \source{
-Fill this in later
+Just values that might be typical of a fish.
 }
 \description{
 species_1 for examples.

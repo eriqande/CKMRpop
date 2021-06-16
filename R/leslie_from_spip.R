@@ -18,6 +18,11 @@
 #' are expectations.
 #' * `stable_age_distro_male`: same as above, but for males.
 #' @export
+#' @examples
+#' result <- leslie_from_spip(species_1_life_history, 300)
+#'
+#' # print the result list:
+#' result
 leslie_from_spip <- function(P, C) {
 
   # prepare a return list

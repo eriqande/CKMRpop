@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{rcpp_ancestors_and_relatives}
 \alias{rcpp_ancestors_and_relatives}
-\title{function being developed to test and use DFS stuff}
+\title{function to test and use DFS stuff}
 \usage{
 rcpp_ancestors_and_relatives(L, n)
 }
@@ -13,5 +13,6 @@ rcpp_ancestors_and_relatives(L, n)
 and finding relatives.}
 }
 \description{
-function being developed to test and use DFS stuff
+function to test and use DFS stuff
 }
+\keyword{internal}

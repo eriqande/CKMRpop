@@ -45,7 +45,7 @@ showing where all the relationship zones are.  It merely cycles over the
 possible relationships in relationship_zone_names and produces one or
 two rows in a tibble for each that has the corners of the rectangle of that
 zone in the columns xmin, xmax, ymin, and ymax.  It is designed to be overlaid
-upon the ancestry_match_matrix plots. There are some additional columns give
+upon the ancestry_match_matrix plots. There are some additional columns that give
 us the midpoint of the area, etc." />
 
 
@@ -104,6 +104,9 @@ us the midpoint of the area, etc." />
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -135,7 +138,7 @@ showing where all the relationship zones are.  It merely cycles over the
 possible relationships in <code><a href='relationship_zone_names.html'>relationship_zone_names</a></code> and produces one or
 two rows in a tibble for each that has the corners of the rectangle of that
 zone in the columns xmin, xmax, ymin, and ymax.  It is designed to be overlaid
-upon the ancestry_match_matrix plots. There are some additional columns give
+upon the ancestry_match_matrix plots. There are some additional columns that give
 us the midpoint of the area, etc.</p>
     </div>
 
@@ -143,6 +146,22 @@ us the midpoint of the area, etc.</p>
 
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>relationship_zone_perimeters</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 25 x 9</span><span>
+#&gt;    which_matrix zone   xmin  xmax  ymin  ymax  area  xmid  ymid
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> M1           Se      0.5   1.5   0.5   1.5     1   1     1  
+#&gt; </span><span style='color: #555555;'> 2</span><span> M1           PO      1.5   3.5   0.5   1.5     2   2.5   1  
+#&gt; </span><span style='color: #555555;'> 3</span><span> M2           PO      0.5   1.5   1.5   3.5     2   1     2.5
+#&gt; </span><span style='color: #555555;'> 4</span><span> M1           Si      1.5   3.5   1.5   3.5     4   2.5   2.5
+#&gt; </span><span style='color: #555555;'> 5</span><span> M1           GP      3.5   7.5   0.5   1.5     4   5.5   1  
+#&gt; </span><span style='color: #555555;'> 6</span><span> M2           GP      0.5   1.5   3.5   7.5     4   1     5.5
+#&gt; </span><span style='color: #555555;'> 7</span><span> M1           A       3.5   7.5   1.5   3.5     8   5.5   2.5
+#&gt; </span><span style='color: #555555;'> 8</span><span> M2           A       1.5   3.5   3.5   7.5     8   2.5   5.5
+#&gt; </span><span style='color: #555555;'> 9</span><span> M1           FC      3.5   7.5   3.5   7.5    16   5.5   5.5
+#&gt; </span><span style='color: #555555;'>10</span><span> M1           GGP     7.5  15.5   0.5   1.5     8  11.5   1  
+#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

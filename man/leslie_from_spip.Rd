@@ -29,3 +29,9 @@ as well as the annual new cohort size (assumed constant),
 and we make a leslie-like matrix
 to compute the stable age distribution.
 }
+\examples{
+result <- leslie_from_spip(species_1_life_history, 300)
+
+# print the result list:
+result
+}

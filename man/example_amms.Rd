@@ -5,8 +5,13 @@
 \alias{example_amms}
 \title{a list of examples of ancestry-match matrices}
 \source{
-Fill this in later
+I just made these for some illustrative figures in the manuscript about this
+R package.
 }
 \description{
-Still building this up.
+This is a list of matrices with names that describe what they
+represent. The names are Relationship_Number-of-Generations, like:
+"Unrelated_2gen", "Self_2gen", "Unrelated_3gen", "Unrelated_4gen",
+"Unrelated_1gen", "Father_Offspring_2gen", "FullSibling_2gen", "PatHalfSibling_2gen",
+"FullCousin_2gen", "HalfAuntNiece_2gen".
 }

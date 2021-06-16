@@ -57,6 +57,9 @@
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -512,7 +515,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
   P <span class="op">=</span> <span class="va">crel</span>,
   n <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span></code></pre></div>
-<p>Now there are only 241 pairs instead of 3035.</p>
+<p>Now there are only 182 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that the number of pairs to decrease by a quadratic factor of the number of samples:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># num samples before downsampling</span>
@@ -535,7 +538,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 
 <span class="co"># compare these two things</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.06711590 0.07940692</span></code></pre></div>
+<span class="co">#&gt; [1] 0.06711590 0.05996705</span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div id="uncooked-spaghetti-plots" class="section level2">
@@ -646,17 +649,17 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span>
 
 <span class="va">one_gen_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_conn_comps.html">plot_conn_comps</a></span><span class="op">(</span><span class="va">ssp_1gen</span><span class="op">$</span><span class="va">ds_pairs</span><span class="op">)</span>
-<span class="va">one_gen_graph</span></code></pre></div>
+<span class="va">one_gen_graph</span><span class="op">$</span><span class="va">plot</span></code></pre></div>
 <p><img src="species_1_simulation_files/figure-html/unnamed-chunk-45-1.png" width="576"></p>
 <p>Note that if you want to attach labels to those nodes, to see which individuals we are talking about, you can do this (and also adjust colors…):</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">one_gen_graph</span> <span class="op">+</span> 
   <span class="fu">ggraph</span><span class="fu">::</span><span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">name</span><span class="op">)</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/scale_edge_colour.html">scale_edge_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>`PO-1` <span class="op">=</span> <span class="st">"tan2"</span>, `Si-1` <span class="op">=</span> <span class="st">"gold"</span>, `Si-2` <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-46-1.png" width="576"></p>
+  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/scale_edge_colour.html">scale_edge_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>`PO-1` <span class="op">=</span> <span class="st">"tan2"</span>, `Si-1` <span class="op">=</span> <span class="st">"gold"</span>, `Si-2` <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; NULL</span></code></pre></div>
 <p>And, for fun, look at it with 2 generations and all of the samples:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plot_conn_comps.html">plot_conn_comps</a></span><span class="op">(</span><span class="va">crel</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_conn_comps.html">plot_conn_comps</a></span><span class="op">(</span><span class="va">crel</span><span class="op">)</span><span class="op">$</span><span class="va">plot</span></code></pre></div>
 <p><img src="species_1_simulation_files/figure-html/unnamed-chunk-47-1.png" width="576"></p>
 <p>What a snarl! With a small population, several generations, and large samples, in this case…everyone is connected!</p>
 </div>

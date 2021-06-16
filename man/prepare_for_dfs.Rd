@@ -16,3 +16,4 @@ Uses the pedigree to convert individual IDs into indexes and
 compile information to make the data structures for the DFS
 algorithm to find relatives.
 }
+\keyword{internal}

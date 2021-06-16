@@ -29,7 +29,11 @@
 #' stdout and stderr to files.  It then processes the output using awk to create a collection
 #' of files.  If spip throws an error, the contents of stderr are written to the screen to notify
 #' the user of how to correct their input.
+#'
+#' For a full example of its use see the Vignette
+#' [species-1-simulation](species-1-simulation).
 #' @export
+
 run_spip <- function(
   pars,
   dir = tempfile(),

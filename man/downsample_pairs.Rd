@@ -26,3 +26,12 @@ the desired number of samples is achieved, then it
 returns only those pairs in which both members are part of
 the retained samples.
 }
+\examples{
+# prepare some input
+S <- three_pops_with_mig_slurped_results$samples
+P <- compile_related_pairs(three_pops_with_mig_slurped_results$samples)
+result <- downsample_pairs(S, P, n = 500)
+
+# print the result
+result
+}

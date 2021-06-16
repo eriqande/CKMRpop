@@ -99,6 +99,9 @@ faceted by pop (over rows) and sexes (over columns)." />
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -142,6 +145,28 @@ of the list returned by <code><a href='slurp_spip.html'>slurp_spip()</a></code>.
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>count_and_plot_mate_distribution</span><span class='op'>(</span><span class='va'>three_pops_no_mig_slurped_results</span><span class='op'>$</span><span class='va'>pedigree</span><span class='op'>)</span>
+
+<span class='co'># have a look at the results:</span>
+<span class='va'>result</span><span class='op'>$</span><span class='va'>mate_counts</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12,417 x 6</span><span>
+#&gt;    sex     year   pop parent  num_offs num_mates
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> female     5     0 F0_0_1         1         1
+#&gt; </span><span style='color: #555555;'> 2</span><span> female     5     0 F0_0_12        3         3
+#&gt; </span><span style='color: #555555;'> 3</span><span> female     5     0 F0_0_14        1         1
+#&gt; </span><span style='color: #555555;'> 4</span><span> female     5     0 F0_0_16        7         7
+#&gt; </span><span style='color: #555555;'> 5</span><span> female     5     0 F0_0_19        3         3
+#&gt; </span><span style='color: #555555;'> 6</span><span> female     5     0 F0_0_21        1         1
+#&gt; </span><span style='color: #555555;'> 7</span><span> female     5     0 F0_0_22        1         1
+#&gt; </span><span style='color: #555555;'> 8</span><span> female     5     0 F0_0_23        2         2
+#&gt; </span><span style='color: #555555;'> 9</span><span> female     5     0 F0_0_24       23        19
+#&gt; </span><span style='color: #555555;'>10</span><span> female     5     0 F0_0_26        7         6
+#&gt; </span><span style='color: #555555;'># … with 12,407 more rows</span><span></div><div class='input'>
+<span class='va'>result</span><span class='op'>$</span><span class='va'>plot_mate_counts</span>
+</div><div class='img'><img src='count_and_plot_mate_distribution-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

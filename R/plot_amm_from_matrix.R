@@ -9,6 +9,15 @@
 #' element of which is a logical ancestry match matrix.  `X` may have a list column
 #' of tibbles called `psa_tibs` that says which cells are the primary shared ancestors.
 #' @export
+#' @examples
+#' # get some input: all the 2-generation AMMs in `example_amms`
+#' X <- example_amms[stringr::str_detect(names(example_amms), "2gen$")] %>%
+#'     tibble::enframe(name = "ID", value = "anc_match_matrix")
+#'
+#' # plot those
+#' g <- plot_amm_from_matrix(X) +
+#'     ggplot2::facet_wrap(~ ID)
+#'
 plot_amm_from_matrix <- function(X) {
   X2 <- X %>%
     select(ID, anc_match_matrix) %>%

@@ -14,3 +14,12 @@ of the list returned by \code{slurp_spip()}.}
 This just tallies up the information from the pedigree.  It will plot things
 faceted by pop (over rows) and sexes (over columns).
 }
+\examples{
+result <- count_and_plot_mate_distribution(three_pops_no_mig_slurped_results$pedigree)
+
+# have a look at the results:
+result$mate_counts
+
+result$plot_mate_counts
+
+}

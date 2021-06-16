@@ -5,6 +5,10 @@
 #' of each age and sex that survived the death episode in each year.  In the
 #' output survival in year t is the fraction of j-year olds in year t that
 #' survive to be j+1 year-olds in year t+1.
+#'
+#' This function does not track migrants.  Another one is eventually
+#' in order that accounts for migrants out of the population.  Also,
+#' the plots here might not play well with multiple populations.
 #' @param census a tibble of census counts with columns `year` and
 #' `age`, and then the counts of the different sexes in columns
 #' named `male`, and `female`.
@@ -18,6 +22,17 @@
 #' - `plot_histos_by_age_and_sex` A histogram of observed survival fractions by age for male and females
 #' across all years of the simulation.
 #' @export
+#' @examples
+#' result <- summarize_survival_from_census(
+#'   species_1_slurped_results$census_prekill,
+#'   species_1_life_history$`fem-surv-probs`,
+#'   species_1_life_history$`male-surv-probs`
+#' )
+#'
+#' # print the results if you want
+#' result$survival_tibble
+#' result$plot_histos_by_age_and_sex
+#'
 summarize_survival_from_census <- function(
   census,
   fem_surv_probs = NULL,

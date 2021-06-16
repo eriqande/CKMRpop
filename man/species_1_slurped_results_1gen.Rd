@@ -3,7 +3,7 @@
 \docType{data}
 \name{species_1_slurped_results_1gen}
 \alias{species_1_slurped_results_1gen}
-\title{The result of running spip in the species_1_simulation vignette and slurping out 1 generation.}
+\title{The result of running spip in the species_1_simulation vignette and slurping out with num_generations = 1.}
 \source{
 Simulation results
 }

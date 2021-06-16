@@ -1,8 +1,19 @@
 
+#### Import the pipe operator from magrittr ####
+#' Pipe operator
+#'
+#' @name %>%
+#' @rdname pipe
+#' @keywords internal
+#' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
+NULL
+
+
 
 #' @importFrom dplyr anti_join arrange bind_cols bind_rows case_when count desc distinct ends_with everything filter group_by inner_join lead left_join mutate n n_distinct pull recode rename rename_all sample_n select slice starts_with summarise ungroup
-#' @importFrom ggplot2 aes annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_point geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw
-#' @importFrom magrittr %>%
+#' @importFrom ggplot2 aes annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_point geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw xlab ylab
 #' @importFrom purrr map map2 map2_int map_chr map_int map_lgl
 #' @importFrom readr cols read_delim read_lines read_table2
 #' @importFrom stats runif
@@ -13,8 +24,6 @@
 #' @importFrom Rcpp evalCpp
 #' @useDynLib CKMRpop
 NULL
-
-
 
 
 # quiets concerns of R CMD check re: the . and other column names

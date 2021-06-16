@@ -1,15 +1,20 @@
 #' compile pairwise relationships from the samples
 #'
 #' Run this on some of the output from `slurp_spip()`.
-#' @param S a tibble that must have the columns:
+#' @param S a tibble. In the context of this package this tibble is
+#' typically going to often be the
+#' `samples` component of the output slurped up from spip with `slurp_spip()`.
+#' More generally, it is a tibble that must have the columns:
 #' - `ID`: the id of the sample
 #' - `ancestors`: a list column of the ancestor vectors of each individual
 #' - `relatives`: a list column of the vectors of individual samples (including self)
 #' that each indvidual is related to.
 #' @return a tibble with columns `id_1` and `id_2` for each pair.  Any additional
 #' columns outside of `relatives` will be joined with `_1` and
-#' `_2` suffixes. There are other columns in the return too.... More later.
+#' `_2` suffixes.
 #' @export
+#' @examples
+#' C <- compile_related_pairs(three_pops_with_mig_slurped_results$samples)
 compile_related_pairs <- function(S) {
 
   # toss the sampled indivs with no relatives

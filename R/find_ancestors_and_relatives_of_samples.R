@@ -21,7 +21,15 @@
 #' - `relatives`: a list column. Each element is a vector of the ids of the individuals that are _sampled_ relatives
 #' within the n generations.  The first element is the sampled individual itself, and the remaining
 #' ones are all the relatives of that individual whom were also sampled.
+#' @keywords internal
 #' @export
+#' @examples
+#' # get some input variables
+#' P <- three_pops_with_mig_slurped_results$pedigree
+#' S <- three_pops_with_mig_slurped_results$samples$ID
+#' n <- 2
+#' result <- find_ancestors_and_relatives_of_samples(P, S, n)
+#' result
 find_ancestors_and_relatives_of_samples <- function(P, S, n) {
 
   DFS_input <- prepare_for_dfs(P, S)

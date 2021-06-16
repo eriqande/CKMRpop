@@ -12,7 +12,7 @@
 #' ```
 #' scale_fill_manual(values = c(`FALSE` = NA, Impossible = "white", `TRUE` = "black"))
 #' ```
-#' @export
+#' @keywords internal
 gg_add_generation_bands <- function(
   g,
   L,

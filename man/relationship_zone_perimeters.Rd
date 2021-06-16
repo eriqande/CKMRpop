@@ -12,6 +12,9 @@ showing where all the relationship zones are.  It merely cycles over the
 possible relationships in \code{\link{relationship_zone_names}} and produces one or
 two rows in a tibble for each that has the corners of the rectangle of that
 zone in the columns xmin, xmax, ymin, and ymax.  It is designed to be overlaid
-upon the ancestry_match_matrix plots. There are some additional columns give
+upon the ancestry_match_matrix plots. There are some additional columns that give
 us the midpoint of the area, etc.
+}
+\examples{
+relationship_zone_perimeters()
 }

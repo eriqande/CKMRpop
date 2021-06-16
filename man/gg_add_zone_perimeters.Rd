@@ -16,3 +16,4 @@ gg_add_zone_perimeters(g, L, perisize = 0.5)
 \description{
 Pass it the original ggplot, and this will return it, with the perimeters added.
 }
+\keyword{internal}

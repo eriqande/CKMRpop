@@ -6,8 +6,12 @@
 #' that expands recaptures to all possible pairs of recaptures. (i.e. if the
 #' individual was caught on 3 different occasions there will be three separate pairs).
 #' The column pair_type shows RC for recapture.
+#'
+#' This is broken now that sampling in different life episodes is
+#' demarcated as such. But I have left it in here unexported and internal
+#' in case I want to pick it up at some point.
 #' @param S the samples tibble with columns ID, sex, born_year, sampling_year
-#' @export
+#' @keywords internal
 recapture_pairs <- function(S) {
   S %>%
     rename_all(paste0, "_1") %>%

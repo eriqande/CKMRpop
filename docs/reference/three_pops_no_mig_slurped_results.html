@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Return a vector of ancestor IDs for each individual — ancestor_vectors • CKMRpop</title>
+<title>The result of running spip and slurping the output in the three population case with no migration — three_pops_no_mig_slurped_results • CKMRpop</title>
 
 
 <!-- jquery -->
@@ -39,14 +39,9 @@
 
 
 
-<meta property="og:title" content="Return a vector of ancestor IDs for each individual — ancestor_vectors" />
-<meta property="og:description" content="The goal here ultimately is to reduce a large pedigree to only the individuals
-that we need, by dint of them being fairly close in the pedigree to the a group
-of individuals that were sampled.  For each member of indivs, this function returns
-a vector of its ancestors going back num_generations generations.  The ordering
-is simple: 1 is the indiv, 2 is pa, 3 is ma, then 4 is pa's pa, 5 is pa's ma, 6 is
-ma's pa, and 7 is ma's ma, then 8 is pa's pa's pa, and so forth, back as many
-generations as one needs to go." />
+<meta property="og:title" content="The result of running spip and slurping the output in the three population case with no migration — three_pops_no_mig_slurped_results" />
+<meta property="og:description" content="This is stored as package data so that the vignette can be written
+even if spip is not installed on the system." />
 
 
 
@@ -104,6 +99,9 @@ generations as one needs to go." />
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -124,46 +122,21 @@ generations as one needs to go." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Return a vector of ancestor IDs for each individual</h1>
+    <h1>The result of running spip and slurping the output in the three population case with no migration</h1>
     
-    <div class="hidden name"><code>ancestor_vectors.Rd</code></div>
+    <div class="hidden name"><code>three_pops_no_mig_slurped_results.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The goal here ultimately is to reduce a large pedigree to only the individuals
-that we need, by dint of them being fairly close in the pedigree to the a group
-of individuals that were sampled.  For each member of indivs, this function returns
-a vector of its ancestors going back <code>num_generations</code> generations.  The ordering
-is simple: 1 is the indiv, 2 is pa, 3 is ma, then 4 is pa's pa, 5 is pa's ma, 6 is
-ma's pa, and 7 is ma's ma, then 8 is pa's pa's pa, and so forth, back as many
-generations as one needs to go.</p>
+    <p>This is stored as package data so that the vignette can be written
+even if spip is not installed on the system.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ancestor_vectors</span><span class='op'>(</span><span class='va'>indivs</span>, <span class='va'>ped</span>, <span class='va'>num_generations</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>indivs</th>
-      <td><p>a vector of IDs of individuals whose ancestors you want listed</p></td>
-    </tr>
-    <tr>
-      <th>ped</th>
-      <td><p>a pedigree that includes all the individuals in <code>indivs</code> and also
-their ancestors. It should be a tibble with columns <code>kid</code>, <code>pa</code> <code>ma</code>.</p></td>
-    </tr>
-    <tr>
-      <th>num_generations</th>
-      <td><p>how many generations do you wish to record for
-each sampled individual.  1 means just the individual themselves (so, not very
-interesting, and you likely wouldn't ever use it, but it turns out to be handy,
-for the programming, to define that level as 1); 2 means up to
-and including the parents; 3 means up to and including the grandparents; 4 means up to
-and including the great grandparents; and so forth.</p></td>
-    </tr>
-    </table>
 
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Simulation results</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

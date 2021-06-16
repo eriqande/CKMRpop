@@ -3,8 +3,9 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   about_spip: about_spip.html
+  simple-example-with-migration: simple-example-with-migration.html
   species_1_simulation: species_1_simulation.html
-last_built: 2021-04-28T14:37Z
+last_built: 2021-06-16T15:56Z
 urls:
   reference: https://eriqande.github.io/CKMRpop/reference
   article: https://eriqande.github.io/CKMRpop/articles

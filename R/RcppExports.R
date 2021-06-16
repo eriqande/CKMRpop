@@ -49,10 +49,11 @@ NULL
 #' @keywords internal
 NULL
 
-#' function being developed to test and use DFS stuff
+#' function to test and use DFS stuff
 #' @param L list of inputs
 #' @param n the number of generations back to go when computing the ancestor vectors
 #' and finding relatives.
+#' @keywords internal
 #' @export
 rcpp_ancestors_and_relatives <- function(L, n) {
     .Call('_CKMRpop_rcpp_ancestors_and_relatives', PACKAGE = 'CKMRpop', L, n)
@@ -67,7 +68,11 @@ rcpp_ancestors_and_relatives <- function(L, n) {
 #' @param M an ancestry match matrix (it is a logical matrix)
 #' @return A list of pairs.  Each pair is the 1-based index of ancestor of ind_1, then
 #' ind_2 of the primary shared ancestors.
+#' @keywords internal
 #' @export
+#' @examples
+#' # find primary ancestor pairs of example AMMs
+#' lapply(example_amms, primary_ancestor_pairs)
 primary_ancestor_pairs <- function(M) {
     .Call('_CKMRpop_primary_ancestor_pairs', PACKAGE = 'CKMRpop', M)
 }

@@ -268,10 +268,11 @@ List ancestor_vectors_cpp(
 
 
 
-//' function being developed to test and use DFS stuff
+//' function to test and use DFS stuff
 //' @param L list of inputs
 //' @param n the number of generations back to go when computing the ancestor vectors
 //' and finding relatives.
+//' @keywords internal
 //' @export
 // [[Rcpp::export]]
 List rcpp_ancestors_and_relatives(List L, int n) {

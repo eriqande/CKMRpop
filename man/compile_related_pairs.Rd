@@ -7,7 +7,10 @@
 compile_related_pairs(S)
 }
 \arguments{
-\item{S}{a tibble that must have the columns:
+\item{S}{a tibble. In the context of this package this tibble is
+typically going to often be the
+\code{samples} component of the output slurped up from spip with \code{slurp_spip()}.
+More generally, it is a tibble that must have the columns:
 \itemize{
 \item \code{ID}: the id of the sample
 \item \code{ancestors}: a list column of the ancestor vectors of each individual
@@ -18,8 +21,11 @@ that each indvidual is related to.
 \value{
 a tibble with columns \code{id_1} and \code{id_2} for each pair.  Any additional
 columns outside of \code{relatives} will be joined with \verb{_1} and
-\verb{_2} suffixes. There are other columns in the return too.... More later.
+\verb{_2} suffixes.
 }
 \description{
 Run this on some of the output from \code{slurp_spip()}.
+}
+\examples{
+C <- compile_related_pairs(three_pops_with_mig_slurped_results$samples)
 }

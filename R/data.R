@@ -3,7 +3,7 @@
 #' a list of life-history / life-table data for a hypothetical species
 #'
 #' species_1 for examples.
-#' @source Fill this in later
+#' @source Just values that might be typical of a fish.
 #' @docType data
 #' @name species_1_life_history
 NULL
@@ -13,9 +13,8 @@ NULL
 #' a list of life-history / life-table data for another hypothetical species
 #'
 #' species_2 for examples.  Note that I just set the male and female
-#' rates and parameters similar.  Will probably need to adjust this
-#' once I start playing with it.
-#' @source Fill this in later
+#' rates and parameters similar.
+#' @source This is something used for simulation testing
 #' @docType data
 #' @name species_2_life_history
 NULL
@@ -23,8 +22,13 @@ NULL
 
 #' a list of examples of ancestry-match matrices
 #'
-#' Still building this up.
-#' @source Fill this in later
+#' This is a list of matrices with names that describe what they
+#' represent. The names are Relationship_Number-of-Generations, like:
+#' "Unrelated_2gen", "Self_2gen", "Unrelated_3gen", "Unrelated_4gen",
+#' "Unrelated_1gen", "Father_Offspring_2gen", "FullSibling_2gen", "PatHalfSibling_2gen",
+#' "FullCousin_2gen", "HalfAuntNiece_2gen".
+#' @source I just made these for some illustrative figures in the manuscript about this
+#' R package.
 #' @docType data
 #' @name example_amms
 NULL
@@ -35,9 +39,12 @@ NULL
 #' A simple character vector of 15 relationship zones in the order they
 #' are encountered when traversing an ancestry match matrix out to four
 #' generations
-#' @source Fill this in later
+#' @source I simply defined these
 #' @docType data
 #' @name relationship_zone_names
+#' @examples
+#' data(relationship_zone_names)
+#' relationship_zone_names
 NULL
 
 
@@ -52,7 +59,7 @@ NULL
 NULL
 
 
-#' The result of running spip in the species_1_simulation vignette and slurping out 1 generation.
+#' The result of running spip in the species_1_simulation vignette and slurping out with num_generations = 1.
 #'
 #' This is stored as package data so that the vignette can be written
 #' even if spip is not installed on the system.
@@ -93,6 +100,16 @@ NULL
 #' @source Simulation results
 #' @docType data
 #' @name three_pops_with_mig_slurped_results
+NULL
+
+
+#' A half-first cousin ancestry match matrix
+#'
+#' Just a simple AMM to use in some examples
+#'
+#' @source Simply wrote this down.
+#' @docType data
+#' @name half_first_cousin_amm
 NULL
 
 

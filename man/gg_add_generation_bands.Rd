@@ -30,3 +30,4 @@ impossibles with a \code{scale_fill_manual()} in the main ggplot call.  i.e.,\pr
 \description{
 Pass it the original ggplot, and this will return it, with the bands added
 }
+\keyword{internal}

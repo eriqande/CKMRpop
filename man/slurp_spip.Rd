@@ -18,15 +18,32 @@ and including the parents; 2 means up to and including the grandparents; 3 means
 and including the great grandparents; and so forth.}
 }
 \value{
-A list of tibbles:
+A list of tibbles.  Each tibble is a named component of
+the return list.  The names are as follows:
 \itemize{
-\item \code{pedigree}:
-\item \code{census}:
-\item \code{samples}:
+\item \code{pedigree}
+\item \code{census_prekill},
+\item \code{census_postkill},
+\item \code{samples},
+\item \code{deaths},
+\item \code{genotypes},
+\item \code{migrants}
 }
+
+You can inspect some example output in
+the package data object \code{three_pops_with_mig_slurped_results}
 }
 \description{
-This version assumes that the spip output has been processed into
-three files: \code{spip_pedigree.tsv}, \code{spip_prekill_census.tsv}, and
-\code{spip_samples.tsv}, inside the directory where \code{run_spip()} was run.
+This function is run after \code{run_spip()}.  It assumes that \code{run_spip()}
+has left the files: \code{spip_pedigree.tsv}, \code{spip_prekill_census.tsv}, and
+\code{spip_samples.tsv}, \code{spip_postkill_census.tsv}, \code{spip_deaths.tsv},
+\code{spip_genotypes.tsv}, and \code{spip_migrants.tsv}
+inside the directory where \code{run_spip()} was run.
+}
+\details{
+For an example of its use, see the Vignette
+\url{species-1-simulation}.
+}
+\examples{
+# see Vignette: species-1-simulation
 }

@@ -40,9 +40,11 @@
 
 
 <meta property="og:title" content="Read in the pedigree, census, and sampling information from the spip run — slurp_spip" />
-<meta property="og:description" content="This version assumes that the spip output has been processed into
-three files: spip_pedigree.tsv, spip_prekill_census.tsv, and
-spip_samples.tsv, inside the directory where run_spip() was run." />
+<meta property="og:description" content="This function is run after run_spip().  It assumes that run_spip()
+has left the files: spip_pedigree.tsv, spip_prekill_census.tsv, and
+spip_samples.tsv, spip_postkill_census.tsv, spip_deaths.tsv,
+spip_genotypes.tsv, and spip_migrants.tsv
+inside the directory where run_spip() was run." />
 
 
 
@@ -100,6 +102,9 @@ spip_samples.tsv, inside the directory where run_spip() was run." />
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -126,9 +131,11 @@ spip_samples.tsv, inside the directory where run_spip() was run." />
     </div>
 
     <div class="ref-description">
-    <p>This version assumes that the spip output has been processed into
-three files: <code>spip_pedigree.tsv</code>, <code>spip_prekill_census.tsv</code>, and
-<code>spip_samples.tsv</code>, inside the directory where <code><a href='run_spip.html'>run_spip()</a></code> was run.</p>
+    <p>This function is run after <code><a href='run_spip.html'>run_spip()</a></code>.  It assumes that <code><a href='run_spip.html'>run_spip()</a></code>
+has left the files: <code>spip_pedigree.tsv</code>, <code>spip_prekill_census.tsv</code>, and
+<code>spip_samples.tsv</code>, <code>spip_postkill_census.tsv</code>, <code>spip_deaths.tsv</code>,
+<code>spip_genotypes.tsv</code>, and <code>spip_migrants.tsv</code>
+inside the directory where <code><a href='run_spip.html'>run_spip()</a></code> was run.</p>
     </div>
 
     <pre class="usage"><span class='fu'>slurp_spip</span><span class='op'>(</span><span class='va'>dir</span>, <span class='va'>num_generations</span><span class='op'>)</span></pre>
@@ -154,13 +161,27 @@ and including the great grandparents; and so forth.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of tibbles:</p><ul>
-<li><p><code>pedigree</code>:</p></li>
-<li><p><code>census</code>:</p></li>
-<li><p><code>samples</code>:</p></li>
+    <p>A list of tibbles.  Each tibble is a named component of
+the return list.  The names are as follows:</p><ul>
+<li><p><code>pedigree</code></p></li>
+<li><p><code>census_prekill</code>,</p></li>
+<li><p><code>census_postkill</code>,</p></li>
+<li><p><code>samples</code>,</p></li>
+<li><p><code>deaths</code>,</p></li>
+<li><p><code>genotypes</code>,</p></li>
+<li><p><code>migrants</code></p></li>
 </ul>
 
+<p>You can inspect some example output in
+the package data object <code>three_pops_with_mig_slurped_results</code></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>For an example of its use, see the Vignette
+<a href='species-1-simulation'>species-1-simulation</a>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># see Vignette: species-1-simulation</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

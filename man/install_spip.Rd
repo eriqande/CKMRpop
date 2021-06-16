@@ -14,5 +14,12 @@ this parameter must be set to \code{system.file(package = "CKMRpop")}.}
 }
 \description{
 This checks the operating system and installs the correct version
-(either Darwin or Linux for Mac or Linux, respectively.)
+(either Darwin or Linux for Mac or Linux, respectively.)  To install
+the spip binary this function downloads it from its GitHub site.  It also
+installs a windows implementation of awk.
+}
+\examples{
+\dontrun{
+install_spip(Dir = system.file(package = "CKMRpop"))
+}
 }

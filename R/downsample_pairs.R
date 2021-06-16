@@ -14,6 +14,14 @@
 #' @return A tibble like `P` except having removed any pairs that include individuals that
 #' were not retained in the sample.
 #' @export
+#' @examples
+#' # prepare some input
+#' S <- three_pops_with_mig_slurped_results$samples
+#' P <- compile_related_pairs(three_pops_with_mig_slurped_results$samples)
+#' result <- downsample_pairs(S, P, n = 500)
+#'
+#' # print the result
+#' result
 downsample_pairs <- function(S, P, n) {
 
   # here is how we do it when assuming that we want to downsample

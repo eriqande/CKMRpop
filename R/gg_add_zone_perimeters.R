@@ -4,7 +4,7 @@
 #' @param g the original ggplot
 #' @param L the number of rows (or columns) in the ancestor-match matrices
 #' @param perisize the size of the line to color in the perimeters
-#' @export
+#' @keywords internal
 gg_add_zone_perimeters <- function(
   g,
   L,

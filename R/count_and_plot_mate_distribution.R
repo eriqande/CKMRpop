@@ -6,6 +6,14 @@
 #' @param P the pedigree from the simulation, like that returned in the `pedigree` component
 #' of the list returned by `slurp_spip()`.
 #' @export
+#' @examples
+#' result <- count_and_plot_mate_distribution(three_pops_no_mig_slurped_results$pedigree)
+#'
+#' # have a look at the results:
+#' result$mate_counts
+#'
+#' result$plot_mate_counts
+#'
 count_and_plot_mate_distribution <- function(P) {
 
   P2 <- P %>%

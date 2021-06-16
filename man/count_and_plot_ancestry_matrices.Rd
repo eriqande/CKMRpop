@@ -23,5 +23,6 @@ primary shared ancestors' cells.}
 }
 \description{
 This counts up all the different types of pairwise relationships and
-makes a plot (or multiple pages of them).
+makes a plot (or multiple pages of them). For an example, see
+the vignette \url{species-1-simulation}.
 }

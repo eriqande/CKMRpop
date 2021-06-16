@@ -5,10 +5,9 @@
 \alias{species_2_life_history}
 \title{a list of life-history / life-table data for another hypothetical species}
 \source{
-Fill this in later
+This is something used for simulation testing
 }
 \description{
 species_2 for examples.  Note that I just set the male and female
-rates and parameters similar.  Will probably need to adjust this
-once I start playing with it.
+rates and parameters similar.
 }

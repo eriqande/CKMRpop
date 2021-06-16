@@ -3,12 +3,18 @@
 #' Download the spip binary and install it where CKMRpop expects it
 #'
 #' This checks the operating system and installs the correct version
-#' (either Darwin or Linux for Mac or Linux, respectively.)
+#' (either Darwin or Linux for Mac or Linux, respectively.)  To install
+#' the spip binary this function downloads it from its GitHub site.  It also
+#' installs a windows implementation of awk.
 #' @param Dir the directory to install spip into.  Because of restrictions
 #' on functions writing to the user's home filespace, this is set, by default,
 #' to a temporary directory.  But to really use this function to install spip,
 #' this parameter must be set to `system.file(package = "CKMRpop")`.
 #' @export
+#' @examples
+#' \dontrun{
+#' install_spip(Dir = system.file(package = "CKMRpop"))
+#' }
 install_spip <- function(
   Dir = tempfile()
 ) {

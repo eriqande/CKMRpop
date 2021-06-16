@@ -6,9 +6,11 @@
 #' possible relationships in [`relationship_zone_names`] and produces one or
 #' two rows in a tibble for each that has the corners of the rectangle of that
 #' zone in the columns xmin, xmax, ymin, and ymax.  It is designed to be overlaid
-#' upon the ancestry_match_matrix plots. There are some additional columns give
+#' upon the ancestry_match_matrix plots. There are some additional columns that give
 #' us the midpoint of the area, etc.
 #' @export
+#' @examples
+#' relationship_zone_perimeters()
 relationship_zone_perimeters <- function() {
   lapply(relationship_zone_names, function(R) {
     tmp_tib <- lapply(anc_match_masks(4, R), function(m) {

@@ -13,9 +13,6 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/ancestor_abbrvs.html</loc>
   </url>
   <url>
-    <loc>https://eriqande.github.io/CKMRpop/reference/ancestor_vectors.html</loc>
-  </url>
-  <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/ancestor_vectors_cpp.html</loc>
   </url>
   <url>
@@ -52,7 +49,7 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/ggplot_census_by_year_age_sex.html</loc>
   </url>
   <url>
-    <loc>https://eriqande.github.io/CKMRpop/reference/half_sib_kin_probs.html</loc>
+    <loc>https://eriqande.github.io/CKMRpop/reference/half_first_cousin_amm.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/install_spip.html</loc>
@@ -61,10 +58,7 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/leslie_from_spip.html</loc>
   </url>
   <url>
-    <loc>https://eriqande.github.io/CKMRpop/reference/pairs_grid_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://eriqande.github.io/CKMRpop/reference/parent_offspring_pairs.html</loc>
+    <loc>https://eriqande.github.io/CKMRpop/reference/pipe.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/plot_amm_from_matrix.html</loc>
@@ -103,13 +97,7 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/search_up.html</loc>
   </url>
   <url>
-    <loc>https://eriqande.github.io/CKMRpop/reference/sibling_pairs.html</loc>
-  </url>
-  <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/slurp_spip.html</loc>
-  </url>
-  <url>
-    <loc>https://eriqande.github.io/CKMRpop/reference/slurp_spip_OLD.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/species_1_life_history.html</loc>
@@ -148,10 +136,19 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/summarize_survival_from_census.html</loc>
   </url>
   <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/three_pops_no_mig_slurped_results.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/three_pops_with_mig_slurped_results.html</loc>
+  </url>
+  <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/uncooked_spaghetti.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/articles/about_spip.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/articles/simple-example-with-migration.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html</loc>

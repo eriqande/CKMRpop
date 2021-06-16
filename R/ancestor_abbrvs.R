@@ -2,7 +2,10 @@
 #'
 #' Use this to put axis labels on plots, etc.
 #' @param L desired length of the output
+#' @keywords internal
 #' @export
+#' @examples
+#' ancestor_abbrvs(15)
 ancestor_abbrvs <- function(L) {
 
   if(L <= 3) {

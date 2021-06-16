@@ -14,15 +14,20 @@
 #' - `Si`: sibling. This is as far as it goes with num_generations = 1
 #' - `GP`: grandparental
 #' - `A` : avuncular (aunt-neice)
-#' - `FC`: first cousin. This is as far as it goes with num_generations = 2
-#' At this point the additional zones for num_generations = 3 have not been
-#' implemented.
+#' - `FC`: first cousin.
+#'
+#' And so forth.  This has been implemented out to 3 generations
+#' using the relationship zones in package data object
+#' `relationship_zone_names`.
 #' @param AMM The ancestry match matrix to categorize
 #' @return This returns a list with two components:
 #' - `type`: a string saying what type of relationship (i.e., "Si", or "A").
 #' - `hits`: a two vector of the number of TRUEs in each "relationship zone" on the
 #' upper or the lower diagonal of the AMM.
 #' @export
+#' @keywords internal
+#' @examples
+#' cat_dom_relat(half_first_cousin_amm)
 cat_dom_relat <- function(AMM) {
 
   # Determine the number of generations from the dimensions of the matrix and
@@ -32,7 +37,7 @@ cat_dom_relat <- function(AMM) {
   stopifnot(Ng %% 1 == 0)
 
   # cycle over the relationships in order until we get one that is non-zero
-  Relats <- c("Se", "PO", "Si", "GP", "A", "FC")
+  Relats <- relationship_zone_names
 
   for(r in Relats) {
     masks <- anc_match_masks(num_generations = Ng, R = r)

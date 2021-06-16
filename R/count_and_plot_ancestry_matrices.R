@@ -45,7 +45,8 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
 #' Count up the number of different kinds of related pairs and make a plot
 #'
 #' This counts up all the different types of pairwise relationships and
-#' makes a plot (or multiple pages of them).
+#' makes a plot (or multiple pages of them). For an example, see
+#' the vignette [species-1-simulation](species-1-simulation).
 #' @param Pairs a tibble like that returned by `compile_related_pairs()`.
 #' @param nrow the number of rows to plot per page
 #' @param ncol the number of columns to plot per page

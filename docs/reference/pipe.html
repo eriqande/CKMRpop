@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read in spip output and return as a list of tibbles — slurp_spip_OLD • CKMRpop</title>
+<title>Pipe operator — %&gt;% • CKMRpop</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,8 @@
 
 
 
-<meta property="og:title" content="Read in spip output and return as a list of tibbles — slurp_spip_OLD" />
-<meta property="og:description" content="Bare bones at the moment.  This returns the full pedigree
-and the census sizes.  It also returns a full list of the
-samples, and also a tibble that includes the self, full-sib,
-half-sib, and parent-offspring pairs amongst the samples, as
-determined from the pedigree." />
+<meta property="og:title" content="Pipe operator — %&gt;%" />
+<meta property="og:description" content="Pipe operator" />
 
 
 
@@ -102,6 +98,9 @@ determined from the pedigree." />
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -122,29 +121,17 @@ determined from the pedigree." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read in spip output and return as a list of tibbles</h1>
+    <h1>Pipe operator</h1>
     
-    <div class="hidden name"><code>slurp_spip_OLD.Rd</code></div>
+    <div class="hidden name"><code>pipe.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Bare bones at the moment.  This returns the full pedigree
-and the census sizes.  It also returns a full list of the
-samples, and also a tibble that includes the self, full-sib,
-half-sib, and parent-offspring pairs amongst the samples, as
-determined from the pedigree.</p>
+    <p>Pipe operator</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slurp_spip_OLD</span><span class='op'>(</span><span class='va'>sfile</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>sfile</th>
-      <td><p>the path to the spip outfile</p></td>
-    </tr>
-    </table>
 
 
   </div>

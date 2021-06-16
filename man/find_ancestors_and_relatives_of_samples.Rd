@@ -37,3 +37,12 @@ This is a fairly general function that can be applied to pedigree output
 from any simulation program.  It calls a function written in C++ to
 do all the recursive pedigree searching.
 }
+\examples{
+# get some input variables
+P <- three_pops_with_mig_slurped_results$pedigree
+S <- three_pops_with_mig_slurped_results$samples$ID
+n <- 2
+result <- find_ancestors_and_relatives_of_samples(P, S, n)
+result
+}
+\keyword{internal}

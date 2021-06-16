@@ -7,6 +7,12 @@
 #' named `male`, and `female`.
 #' @return a ggplot object
 #' @export
+#' @examples
+#' # A single population example
+#' g <- ggplot_census_by_year_age_sex(species_1_slurped_results$census_postkill)
+#'
+#' # a three-population example
+#' g3 <- ggplot_census_by_year_age_sex(three_pops_with_mig_slurped_results$census_postkill)
 ggplot_census_by_year_age_sex <- function(census) {
   g <- census %>%
     pivot_longer(

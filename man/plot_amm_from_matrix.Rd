@@ -18,3 +18,13 @@ For illustration purposes, if you want to simply plot an ancestry
 matrix (or several) to show particular values, then this is the
 handy function for you.
 }
+\examples{
+# get some input: all the 2-generation AMMs in `example_amms`
+X <- example_amms[stringr::str_detect(names(example_amms), "2gen$")] \%>\%
+    tibble::enframe(name = "ID", value = "anc_match_matrix")
+
+# plot those
+g <- plot_amm_from_matrix(X) +
+    ggplot2::facet_wrap(~ ID)
+
+}

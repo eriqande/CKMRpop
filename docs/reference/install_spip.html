@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Download the spip binary and install it where CKMRpop expects it — install_spip" />
 <meta property="og:description" content="This checks the operating system and installs the correct version
-(either Darwin or Linux for Mac or Linux, respectively.)" />
+(either Darwin or Linux for Mac or Linux, respectively.)  To install
+the spip binary this function downloads it from its GitHub site.  It also
+installs a windows implementation of awk." />
 
 
 
@@ -99,6 +101,9 @@
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -126,7 +131,9 @@
 
     <div class="ref-description">
     <p>This checks the operating system and installs the correct version
-(either Darwin or Linux for Mac or Linux, respectively.)</p>
+(either Darwin or Linux for Mac or Linux, respectively.)  To install
+the spip binary this function downloads it from its GitHub site.  It also
+installs a windows implementation of awk.</p>
     </div>
 
     <pre class="usage"><span class='fu'>install_spip</span><span class='op'>(</span>Dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
@@ -144,6 +151,11 @@ this parameter must be set to <code><a href='https://rdrr.io/r/base/system.file.
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>install_spip</span><span class='op'>(</span>Dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>"CKMRpop"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

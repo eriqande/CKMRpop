@@ -4,7 +4,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Simulation from species 1 life history}
+  %\VignetteIndexEntry{species-1-simulation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -655,7 +655,7 @@ There are some rather large connected components there.  Let's plot them.
 library(ggraph)
 
 one_gen_graph <- plot_conn_comps(ssp_1gen$ds_pairs)
-one_gen_graph
+one_gen_graph$plot
 
 
 ```
@@ -671,7 +671,7 @@ one_gen_graph +
 
 And, for fun, look at it with 2 generations and all of the samples:
 ```{r, fig.width=6, fig.height=6}
-plot_conn_comps(crel)
+plot_conn_comps(crel)$plot
 
 ```
 

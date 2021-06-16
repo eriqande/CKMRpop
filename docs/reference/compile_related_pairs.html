@@ -98,6 +98,9 @@
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
+    </li>
+    <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
   </ul>
@@ -134,7 +137,10 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>S</th>
-      <td><p>a tibble that must have the columns:</p><ul>
+      <td><p>a tibble. In the context of this package this tibble is
+typically going to often be the
+<code>samples</code> component of the output slurped up from spip with <code><a href='slurp_spip.html'>slurp_spip()</a></code>.
+More generally, it is a tibble that must have the columns:</p><ul>
 <li><p><code>ID</code>: the id of the sample</p></li>
 <li><p><code>ancestors</code>: a list column of the ancestor vectors of each individual</p></li>
 <li><p><code>relatives</code>: a list column of the vectors of individual samples (including self)
@@ -147,8 +153,11 @@ that each indvidual is related to.</p></li>
 
     <p>a tibble with columns <code>id_1</code> and <code>id_2</code> for each pair.  Any additional
 columns outside of <code>relatives</code> will be joined with <code>_1</code> and
-<code>_2</code> suffixes. There are other columns in the return too.... More later.</p>
+<code>_2</code> suffixes.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'>compile_related_pairs</span><span class='op'>(</span><span class='va'>three_pops_with_mig_slurped_results</span><span class='op'>$</span><span class='va'>samples</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

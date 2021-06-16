@@ -32,8 +32,15 @@ to identify relationships:
 \item \code{Si}: sibling. This is as far as it goes with num_generations = 1
 \item \code{GP}: grandparental
 \item \code{A} : avuncular (aunt-neice)
-\item \code{FC}: first cousin. This is as far as it goes with num_generations = 2
-At this point the additional zones for num_generations = 3 have not been
-implemented.
+\item \code{FC}: first cousin.
 }
 }
+\details{
+And so forth.  This has been implemented out to 3 generations
+using the relationship zones in package data object
+\code{relationship_zone_names}.
+}
+\examples{
+cat_dom_relat(half_first_cousin_amm)
+}
+\keyword{internal}
