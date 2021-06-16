@@ -1,5 +1,5 @@
 
-#' downsample the number of indivduals sampled
+#' downsample the number of individuals sampled
 #'
 #' This discards individuals from the sample, randomly, until
 #' the desired number of samples is achieved, then it

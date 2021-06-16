@@ -13,7 +13,7 @@
 #' - `PO`: parent-offspring
 #' - `Si`: sibling. This is as far as it goes with num_generations = 1
 #' - `GP`: grandparental
-#' - `A` : avuncular (aunt-neice)
+#' - `A` : avuncular (aunt-niece)
 #' - `FC`: first cousin.
 #'
 #' And so forth.  This has been implemented out to 3 generations

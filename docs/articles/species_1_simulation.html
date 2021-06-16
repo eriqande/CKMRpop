@@ -219,7 +219,7 @@
 <p>This is just a convenience function to make a pretty plot so you can check to see what the population demographics look like:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ggplot_census_by_year_age_sex.html">ggplot_census_by_year_age_sex</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">census_postkill</span><span class="op">)</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-8-1.png" width="672"> This shows that the function <code><a href="../reference/leslie_from_spip.html">leslie_from_spip()</a></code> does a good job of finding the initial population numbers that accord with the stable age distibution.</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-8-1.png" width="672"> This shows that the function <code><a href="../reference/leslie_from_spip.html">leslie_from_spip()</a></code> does a good job of finding the initial population numbers that accord with the stable age distribution.</p>
 </div>
 <div id="assess-the-observed-survival-rates" class="section level3">
 <h3 class="hasAnchor">
@@ -266,8 +266,8 @@
 <div id="the-distribution-of-offspring-number" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-distribution-of-offspring-number" class="anchor"></a>The distribution of offspring number</h2>
-<p>It makes sense to check that your simulation is delivering a reasonable distribution of offspring per year. This is the number of offspring that survive to just before the first prekill census. Keep in mind that, for super high-fecundity speces, we won’t model every single larva, we just don’t start “keeping track of them” until they reach a stage that is recognizable in some way.</p>
-<p>We make this summary from the pedigree information. In order to get the number of adults that were present, but did not produce any offspring, we also need to pass in the postkill census information. Also, to get limetime reproductive output, we need to know how old individuals were when they died, so we also pass in the information about deaths.</p>
+<p>It makes sense to check that your simulation is delivering a reasonable distribution of offspring per year. This is the number of offspring that survive to just before the first prekill census. Keep in mind that, for super high-fecundity species, we won’t model every single larva, we just don’t start “keeping track of them” until they reach a stage that is recognizable in some way.</p>
+<p>We make this summary from the pedigree information. In order to get the number of adults that were present, but did not produce any offspring, we also need to pass in the postkill census information. Also, to get lifetime reproductive output, we need to know how old individuals were when they died, so we also pass in the information about deaths.</p>
 <p>To make all the summaries, we do:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">offs_and_mates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_offspring_and_mate_numbers.html">summarize_offspring_and_mate_numbers</a></span><span class="op">(</span>
@@ -371,12 +371,12 @@
 <li>
 <code>GP</code>: grandparental</li>
 <li>
-<code>A</code> : avuncular (aunt-neice)</li>
+<code>A</code> : avuncular (aunt-niece)</li>
 <li>
 <code>FC</code>: first cousin.</li>
 </ul>
 <p>The <code>max_hit</code> column can be interpreted as the number of shared ancestors at the level of the dominant relationship. For example a pair of half-siblings are of category <code>Si</code> and have <code>max_hit = 1</code>, because they share one parent. On the other hand, a pair with category <code>Si</code> and <code>max_hit = 2</code> would be full siblings.<br>
-Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or half-uncle-nephew pair, while <code>A</code> with <code>max_hit = 2</code> would be a full-aunt-neice or full-uncle-nephew pair.</p>
+Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or half-uncle-nephew pair, while <code>A</code> with <code>max_hit = 2</code> would be a full-aunt-niece or full-uncle-nephew pair.</p>
 <p>The column <code>dr_hits</code> gives the number of shared ancestors on the upper vs lower diagonals of the ancestry match matrices (see below). These are meaningful primarily for understanding the “directionality” of non-symmetrical relationships. Some explanation is in order: some relationships, like Se, Si, and FC are <em>symmetrical</em> relationships, because, if, for example Greta is your sibling, then you are also Greta’s sibling. Likewise, if you are Milton’s first cousin, then Milton is also your first cousin. Other relationships, like PO, A, and GP, are not symmetrical: If Chelsea is your mother, then you are not Chelsea’s mother, you are Chelsea’s child. In the non-symmetrical relationships there is always one member who is typically expected to be older than the other. This is a requirement in a direct-descent relationship (like parent-offspring, or grandparent-grandchild), but is not actually required in avuncular relationships (i.e. it is possible to have an aunt that is younger than the nephew…). We refer to the “typically older” member of non-symmetrical pairs as the “upper member” and the <code>upper_member</code> column of the output above tells us whether <code>id_1</code> or <code>id_2</code> is the upper member in such relationships, when <code>upper_member</code> is 1 or 2, respectively. <code>upper_member</code> is NA for symmetrical relationships and it can be 0 for weird situations that should rarely arise where, for example a pair A and B is related such that A is B’s half-uncle, but B is A’s half-aunt.</p>
 <p>Often the dominant relationship is the only relationship between the pair. However, if you want to delve deeper into the full relationship out to <code>num_generations</code> generations, you can analyze the ancestry match matrix for the pair, which is stored in the the <code>anc_match_matrix</code> column. This matrix holds a TRUE for each shared ancestor in the two individual’s ancestry (out to <code>num_generations</code>). If this seems obtuse, it should become more understandable when we look at some figures, later.</p>
 <div id="tallying-relationships" class="section level3">
@@ -401,7 +401,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <span class="co">#&gt;  8 GP              1    19</span>
 <span class="co">#&gt;  9 FC              3     2</span>
 <span class="co">#&gt; 10 A               3     1</span></code></pre></div>
-<p>This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with neice/nephew) pairs, and so forth.</p>
+<p>This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with niece/nephew) pairs, and so forth.</p>
 </div>
 <div id="a-closer-look-within-the-dominant-relationships" class="section level3">
 <h3 class="hasAnchor">
@@ -467,7 +467,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <div id="a-brief-digression-downsampling-the-sampled-pairs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-brief-digression-downsampling-the-sampled-pairs" class="anchor"></a>A Brief Digression: downsampling the sampled pairs</h2>
-<p>When using <code>spip</code> within <code>CKMRpop</code> you have to specify the fraction of individuals in the population that you want to sample at any particular time. You must set those fractions so that, given the population size, you end up with roughly the correct number of samples for the situation you are trying to simulate. Sometimes, howeever, you might want to have sampled exactly 5,000 fish. Or some other number. The function <code>downsample_pairs</code> lets you randomly discard specific instances in which an individual was sampled so that the number of individuals (or sampling instances) that remains is the exact number you want.</p>
+<p>When using <code>spip</code> within <code>CKMRpop</code> you have to specify the fraction of individuals in the population that you want to sample at any particular time. You must set those fractions so that, given the population size, you end up with roughly the correct number of samples for the situation you are trying to simulate. Sometimes, however, you might want to have sampled exactly 5,000 fish. Or some other number. The function <code>downsample_pairs</code> lets you randomly discard specific instances in which an individual was sampled so that the number of individuals (or sampling instances) that remains is the exact number you want.</p>
 <p>For example, looking closely at <code>slurped$samples</code> shows that 386 distinct individuals were sampled:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">samples</span><span class="op">)</span>
@@ -515,7 +515,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
   P <span class="op">=</span> <span class="va">crel</span>,
   n <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span></code></pre></div>
-<p>Now there are only 233 pairs instead of 3035.</p>
+<p>Now there are only 186 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that the number of pairs to decrease by a quadratic factor of the number of samples:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># num samples before downsampling</span>
@@ -538,7 +538,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 
 <span class="co"># compare these two things</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.0671159 0.0767710</span></code></pre></div>
+<span class="co">#&gt; [1] 0.06711590 0.06128501</span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div id="uncooked-spaghetti-plots" class="section level2">
@@ -605,7 +605,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <span class="co">#&gt; #   samp_years_list_post_2 &lt;list&gt;, ancestors_1 &lt;list&gt;, ancestors_2 &lt;list&gt;,</span>
 <span class="co">#&gt; #   anc_match_matrix &lt;list&gt;</span></code></pre></div>
 <p>It should clearly be noted that the size of the connected components will be affected by the size of the population (with smaller populations, more of the related pairs will share members) and the number of generations back in time over which generations are compiled (if you go back for enough in time, all the pairs will be related to one another). In our example case, with a small population (so it can be simulated quickly for building the vignettes) and going back <code>num_generations = 2</code> generations (thus including grandparents and first cousins, etc.) we actually find that <em>all</em> of the pairs are in the same connected component. Wow!</p>
-<p>Because this simulated popluation is quite small, at this juncture we will reduce the number of generations so as to create more connected components amongst these pairs for illustration. So, let us compile just the pairs with <code>num_generations = 1</code>. To do this, we must slurp up the spip results a second time</p>
+<p>Because this simulated population is quite small, at this juncture we will reduce the number of generations so as to create more connected components amongst these pairs for illustration. So, let us compile just the pairs with <code>num_generations = 1</code>. To do this, we must slurp up the spip results a second time</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">slurped_1gen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slurp_spip.html">slurp_spip</a></span><span class="op">(</span><span class="va">spip_dir</span>, num_generations <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>And after we have done that, we can compile the related pairs:</p>

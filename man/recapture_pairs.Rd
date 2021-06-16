@@ -12,7 +12,7 @@ recapture_pairs(S)
 \description{
 Given the tibble of sampled individuals
 return a tibble of all the recaptures.
-This is a somehat complicated operation
+This is a somewhat complicated operation
 that expands recaptures to all possible pairs of recaptures. (i.e. if the
 individual was caught on 3 different occasions there will be three separate pairs).
 The column pair_type shows RC for recapture.

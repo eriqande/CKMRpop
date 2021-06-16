@@ -168,7 +168,7 @@ see what the population demographics look like:
 ggplot_census_by_year_age_sex(slurped$census_prekill)
 ```
 This shows that the function `leslie_from_spip()` does a good job of finding the
-initial population numbers that accord with the stable age distibution.
+initial population numbers that accord with the stable age distribution.
 
 ### Assess the observed survival rates
 
@@ -212,13 +212,13 @@ individuals in each of those year classes is smaller.
 
 It makes sense to check that your simulation is delivering a reasonable distribution
 of offspring per year.  This is the number of offspring that survive to just before the
-first prekill census.  Keep in mind that, for super high-fecundity speces, we won't model
+first prekill census.  Keep in mind that, for super high-fecundity species, we won't model
 every single larva, we just don't start "keeping track of them" until they reach a stage
 that is recognizable in some way. 
 
 We make this summary from the pedigree information. 
 In order to get the number of adults that were present, but did not produce any offspring,
-we also need to pass in the postkill census information.  Also, to get limetime
+we also need to pass in the postkill census information.  Also, to get lifetime
 reproductive output, we need to know how old individuals were when they died, so 
 we also pass in the information about deaths.  
 
@@ -460,7 +460,7 @@ When using `spip` within `CKMRpop` you have to specify the fraction of
 individuals in the population that you want to sample at any particular time.
 You must set those fractions so that, given the population size, you end up with
 roughly the correct number of samples for the situation you are trying to
-simulate.  Sometimes, howeever, you might want to have sampled exactly 5,000
+simulate.  Sometimes, however, you might want to have sampled exactly 5,000
 fish. Or some other number.  The function `downsample_pairs` lets you randomly
 discard specific instances in which an individual was sampled so that the
 number of individuals (or sampling instances) that remains is the exact number

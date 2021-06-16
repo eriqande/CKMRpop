@@ -172,7 +172,7 @@ see what the population demographics look like:
 ggplot_census_by_year_age_sex(slurped$census_postkill)
 ```
 This shows that the function `leslie_from_spip()` does a good job of finding the
-initial population numbers that accord with the stable age distibution.
+initial population numbers that accord with the stable age distribution.
 
 ### Assess the observed survival rates
 
@@ -216,13 +216,13 @@ individuals in each of those year classes is smaller.
 
 It makes sense to check that your simulation is delivering a reasonable distribution
 of offspring per year.  This is the number of offspring that survive to just before the
-first prekill census.  Keep in mind that, for super high-fecundity speces, we won't model
+first prekill census.  Keep in mind that, for super high-fecundity species, we won't model
 every single larva, we just don't start "keeping track of them" until they reach a stage
 that is recognizable in some way. 
 
 We make this summary from the pedigree information. 
 In order to get the number of adults that were present, but did not produce any offspring,
-we also need to pass in the postkill census information.  Also, to get limetime
+we also need to pass in the postkill census information.  Also, to get lifetime
 reproductive output, we need to know how old individuals were when they died, so 
 we also pass in the information about deaths.  
 
@@ -328,15 +328,15 @@ The possibilities, when considering up to two generations of ancestors are:
 - `PO`: parent-offspring
 - `Si`: sibling. 
 - `GP`: grandparental
-- `A` : avuncular (aunt-neice)
+- `A` : avuncular (aunt-niece)
 - `FC`: first cousin. 
 
 The `max_hit` column can be interpreted as the number of shared ancestors at the
 level of the dominant relationship.  For example a pair of half-siblings are of
 category `Si` and have `max_hit = 1`, because they share one parent. On the other
 hand, a pair with category `Si` and `max_hit = 2` would be full siblings.  
-Likewise, `A` with `max_hit = 1` is a half-aunt-neice or half-uncle-nephew pair,
-while `A` with `max_hit = 2` would be a full-aunt-neice or full-uncle-nephew pair.
+Likewise, `A` with `max_hit = 1` is a half-aunt-niece or half-uncle-nephew pair,
+while `A` with `max_hit = 2` would be a full-aunt-niece or full-uncle-nephew pair.
 
 The column `dr_hits` gives the number of shared ancestors on the upper vs lower
 diagonals of the ancestry match matrices (see below).  These are meaningful primarily
@@ -376,7 +376,7 @@ tabulating just the `dom_relat` and `max_hit` over all the pairs.
 ```{r}
 relat_counts$highly_summarised
 ```
-This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with neice/nephew) pairs,
+This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with niece/nephew) pairs,
 and so forth. 
 
 
@@ -445,7 +445,7 @@ When using `spip` within `CKMRpop` you have to specify the fraction of
 individuals in the population that you want to sample at any particular time.
 You must set those fractions so that, given the population size, you end up with
 roughly the correct number of samples for the situation you are trying to
-simulate.  Sometimes, howeever, you might want to have sampled exactly 5,000
+simulate.  Sometimes, however, you might want to have sampled exactly 5,000
 fish. Or some other number.  The function `downsample_pairs` lets you randomly
 discard specific instances in which an individual was sampled so that the
 number of individuals (or sampling instances) that remains is the exact number
@@ -599,7 +599,7 @@ be simulated quickly for building the vignettes) and going back `num_generations
 generations (thus including grandparents and first cousins, etc.) we actually find that
 _all_ of the pairs are in the same connected component.  Wow!
 
-Because this simulated popluation is quite small, at this juncture we will reduce
+Because this simulated population is quite small, at this juncture we will reduce
 the number of generations so as to create more connected components amongst these pairs
 for illustration.  So, let us compile just the pairs with `num_generations = 1`.  To
 do this, we must slurp up the spip results a second time

@@ -55,7 +55,7 @@ pars$`sex-ratio` <- 0.5
 We will run these simulations for 25 years and just assume
 an annual cohort size of 200 fish in each population, and we will
 go for a constant population size and start off with the stable
-age distirbution.
+age distribution.
 ```{r}
 pars$`number-of-years` <- 25
 
@@ -162,9 +162,9 @@ in the `pars_list`, above.)
 
 The above simulated multiple populations, but did not simulate any migration between them.
 
-Here, we will imagine different rates of self-recruitment of the larve, which means different rates
-at which surviving larve are going to be migrants.
-The populations are labelled 0, 1, and 2, and, as stated above, we will simulate
+Here, we will imagine different rates of self-recruitment of the larvae, which means different rates
+at which surviving larvae are going to be migrants.
+The populations are labeled 0, 1, and 2, and, as stated above, we will simulate
 somewhat unidirectional migration between them, like so:
 
 - 20% of pop 0 individuals are migrants; 80% of those end up in pop 1 and 20% in pop 2

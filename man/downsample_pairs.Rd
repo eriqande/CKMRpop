@@ -2,7 +2,7 @@
 % Please edit documentation in R/downsample_pairs.R
 \name{downsample_pairs}
 \alias{downsample_pairs}
-\title{downsample the number of indivduals sampled}
+\title{downsample the number of individuals sampled}
 \usage{
 downsample_pairs(S, P, n)
 }

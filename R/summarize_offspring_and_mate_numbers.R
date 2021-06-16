@@ -12,7 +12,7 @@
 #' @param lifetime_hexbin_width a vector of length two.  The first element is the width in the
 #' age direction of each hexbin and the second is the width in the lifetime number of offspring
 #' direction for the `plot_lifetime_output_vs_age_at_death` output plot.
-#' @param contrib_bin_width width of bins of histrogram fo contribution of parents of
+#' @param contrib_bin_width width of bins of histogram of contribution of parents of
 #' each age and sex to the offspring.
 #' @export
 #' @examples

@@ -23,7 +23,7 @@ individual's ancestor vector. 0 = self, 1 =  back to and including the parents,
 \value{
 A tibble with three columns:
 \itemize{
-\item \code{sample_id}: the ID names of the sampled indivdiduals
+\item \code{sample_id}: the ID names of the sampled individuals
 \item \code{ancestors}: a list column.  Each element is a vector of the ids of the ancestors of the
 sampled individual in the 2^(n+1) - 1 positions.  The first is the sampled individual, the second
 is pa, third is ma, fourth is pa's pa, fifth is pa's ma, sixth is ma's pa, and so forth.

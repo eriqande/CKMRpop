@@ -31,7 +31,7 @@ to identify relationships:
 \item \code{PO}: parent-offspring
 \item \code{Si}: sibling. This is as far as it goes with num_generations = 1
 \item \code{GP}: grandparental
-\item \code{A} : avuncular (aunt-neice)
+\item \code{A} : avuncular (aunt-niece)
 \item \code{FC}: first cousin.
 }
 }

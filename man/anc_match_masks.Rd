@@ -38,10 +38,10 @@ appear in the package data vector \code{relationship_zone_names}:
 \item \code{PO}: parent-offspring
 \item \code{Si}: sibling. This is as far as it goes with num_generations = 1.
 \item \code{GP}: grandparental
-\item \code{A} : avuncular (aunt-neice)
+\item \code{A} : avuncular (aunt-niece)
 \item \code{FC}: first cousin. This is as far as it goes with num_generations = 2.
 \item \code{GGP}: great-grandparental
-\item \code{GA}: great-avuncular (great-aunt/great-neice, etc).
+\item \code{GA}: great-avuncular (great-aunt/great-niece, etc).
 \item \code{FCr1}: first-cousin once removed
 \item \code{SC}: second cousin. This is as far as it goes with num_generations = 3
 \item \code{GGGP}: great-great-grandparental

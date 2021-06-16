@@ -18,10 +18,10 @@
 #' - `PO`: parent-offspring
 #' - `Si`: sibling. This is as far as it goes with num_generations = 1.
 #' - `GP`: grandparental
-#' - `A` : avuncular (aunt-neice)
+#' - `A` : avuncular (aunt-niece)
 #' - `FC`: first cousin. This is as far as it goes with num_generations = 2.
 #' - `GGP`: great-grandparental
-#' - `GA`: great-avuncular (great-aunt/great-neice, etc).
+#' - `GA`: great-avuncular (great-aunt/great-niece, etc).
 #' - `FCr1`: first-cousin once removed
 #' - `SC`: second cousin. This is as far as it goes with num_generations = 3
 #' - `GGGP`: great-great-grandparental

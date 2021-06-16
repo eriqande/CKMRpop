@@ -28,7 +28,7 @@ different individuals died.}
 age direction of each hexbin and the second is the width in the lifetime number of offspring
 direction for the \code{plot_lifetime_output_vs_age_at_death} output plot.}
 
-\item{contrib_bin_width}{width of bins of histrogram fo contribution of parents of
+\item{contrib_bin_width}{width of bins of histogram of contribution of parents of
 each age and sex to the offspring.}
 }
 \description{
