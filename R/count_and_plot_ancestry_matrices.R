@@ -46,7 +46,7 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
 #'
 #' This counts up all the different types of pairwise relationships and
 #' makes a plot (or multiple pages of them). For an example, see
-#' the vignette [species-1-simulation](species-1-simulation).
+#' the Vignette: `vignette("species_1_simulation", package = "CKMRpop")`.
 #' @param Pairs a tibble like that returned by `compile_related_pairs()`.
 #' @param nrow the number of rows to plot per page
 #' @param ncol the number of columns to plot per page

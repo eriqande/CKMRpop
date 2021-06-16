@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations • CKMRpop</title>
+<title>Forward-in-Time Simulation and Tabulation of Pairwise Relationships in Age-Structured Populations • CKMRpop</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Forward-in-time Simulation and Tabulation of Pairwise Relationships in Age-structured Populations">
+<script src="pkgdown.js"></script><meta property="og:title" content="Forward-in-Time Simulation and Tabulation of Pairwise Relationships in Age-Structured Populations">
 <meta property="og:description" content="Provides an R wrapper around the program spip, and a variety
     of functions to parse spip output to compile information about
     related pairs amongst sampled individuals.  Full documentation
@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CKMRpop</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -86,6 +86,8 @@
 <a href="#ckmrpop-" class="anchor"></a>CKMRpop <img src="reference/figures/CKMRpop-sticker.png" align="right" width="200">
 </h1></div>
 <p>CKMRpop is an R package for forward-in-time simulation and tabulation of pairwise relationships in age-structured populations. It provides a wrapper for running the compiled C-program <code>spip</code> (Anderson and Dunham 2005), which simulates an age-structured population forward in time. The output of <code>spip</code> is processed by functions in CKMRpop and used to identify related pairs of individuals in samples taken from the simulated population.</p>
+<!-- badges: start -->
+<p><a href="https://travis-ci.com/eriqande/CKMRpop"><img src="https://travis-ci.com/eriqande/CKMRpop.svg?branch=main" alt="Travis build status"></a> <!-- badges: end --></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -103,7 +105,7 @@
 <h2 class="hasAnchor">
 <a href="#online-documentation" class="anchor"></a>Online documentation</h2>
 <p>The package documentation and vignettes are available in <a href="https://pkgdown.r-lib.org/">pkgdown</a> format at <a href="https://eriqande.github.io/CKMRpop/" class="uri">https://eriqande.github.io/CKMRpop/</a></p>
-<p>The first vignette in the package demonstrates the use of most of the functionality in the package in the context of simulation of the life history of “Species 1” which looks like an elasmobranch that can be sampled while reproducing (or growing up) in a nursery estuary. It can be found in the “articles” tab on package website, or you can go directly to it <a href="https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html">here</a>.</p>
+<p>The first vignette in the package demonstrates the use of most of the functionality in the package in the context of simulation of the life history of “Species 1” which looks like a fish that can be sampled at relatively early life stages. It can be found in the “articles” tab on package website, or you can go directly to it <a href="https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html">here</a>.</p>
 </div>
 <div id="literature-cited" class="section level2">
 <h2 class="hasAnchor">

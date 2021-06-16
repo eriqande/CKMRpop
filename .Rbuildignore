@@ -20,3 +20,4 @@
 ^cluster_runs_samp1-8_10000_total$
 ^figure_creation$
 ^\.travis\.yml$
+^cran-comments\.md$

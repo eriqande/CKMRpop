@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CKMRpop</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -410,18 +410,18 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_counts</span>
 <span class="co">#&gt; # A tibble: 65 x 7</span>
-<span class="co">#&gt;    dom_relat dr_hits   max_hit anc_match_matrix      n tot_dom ID               </span>
-<span class="co">#&gt;    &lt;chr&gt;     &lt;list&gt;      &lt;int&gt; &lt;list&gt;            &lt;int&gt;   &lt;int&gt; &lt;chr&gt;            </span>
-<span class="co">#&gt;  1 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   280    1572 001-FC[1,1] - 280</span>
-<span class="co">#&gt;  2 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   258    1572 002-FC[1,1] - 258</span>
-<span class="co">#&gt;  3 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   255    1572 003-FC[1,1] - 255</span>
-<span class="co">#&gt;  4 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   192    1572 004-FC[1,1] - 192</span>
-<span class="co">#&gt;  5 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   134    1572 005-FC[1,1] - 134</span>
-<span class="co">#&gt;  6 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   129    1572 006-FC[1,1] - 129</span>
-<span class="co">#&gt;  7 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   105    1572 007-FC[1,1] - 105</span>
-<span class="co">#&gt;  8 FC        &lt;int [2]&gt;       1 &lt;lgl[,7] [7 × 7]&gt;   103    1572 008-FC[1,1] - 103</span>
-<span class="co">#&gt;  9 FC        &lt;int [2]&gt;       2 &lt;lgl[,7] [7 × 7]&gt;    26    1572 009-FC[2,2] - 26 </span>
-<span class="co">#&gt; 10 FC        &lt;int [2]&gt;       2 &lt;lgl[,7] [7 × 7]&gt;    24    1572 010-FC[2,2] - 24 </span>
+<span class="co">#&gt;    dom_relat dr_hits   max_hit anc_match_matrix     n tot_dom ID               </span>
+<span class="co">#&gt;    &lt;chr&gt;     &lt;list&gt;      &lt;int&gt; &lt;list&gt;           &lt;int&gt;   &lt;int&gt; &lt;chr&gt;            </span>
+<span class="co">#&gt;  1 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      280    1572 001-FC[1,1] - 280</span>
+<span class="co">#&gt;  2 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      258    1572 002-FC[1,1] - 258</span>
+<span class="co">#&gt;  3 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      255    1572 003-FC[1,1] - 255</span>
+<span class="co">#&gt;  4 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      192    1572 004-FC[1,1] - 192</span>
+<span class="co">#&gt;  5 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      134    1572 005-FC[1,1] - 134</span>
+<span class="co">#&gt;  6 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      129    1572 006-FC[1,1] - 129</span>
+<span class="co">#&gt;  7 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      105    1572 007-FC[1,1] - 105</span>
+<span class="co">#&gt;  8 FC        &lt;int [2]&gt;       1 &lt;lgl [7 × 7]&gt;      103    1572 008-FC[1,1] - 103</span>
+<span class="co">#&gt;  9 FC        &lt;int [2]&gt;       2 &lt;lgl [7 × 7]&gt;       26    1572 009-FC[2,2] - 26 </span>
+<span class="co">#&gt; 10 FC        &lt;int [2]&gt;       2 &lt;lgl [7 × 7]&gt;       24    1572 010-FC[2,2] - 24 </span>
 <span class="co">#&gt; # … with 55 more rows</span></code></pre></div>
 <p>Each of these distinct ancestry match matrices for each dominant relationship can be visualized in a series of faceted plots, which are also returned. For example, the ancestry match matrices seen amongst the FC relationships are:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
@@ -440,18 +440,18 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">anc_mat_counts</span>
 <span class="co">#&gt; # A tibble: 65 x 2</span>
-<span class="co">#&gt;    anc_match_matrix      n</span>
-<span class="co">#&gt;    &lt;list&gt;            &lt;int&gt;</span>
-<span class="co">#&gt;  1 &lt;lgl[,7] [7 × 7]&gt;   280</span>
-<span class="co">#&gt;  2 &lt;lgl[,7] [7 × 7]&gt;   258</span>
-<span class="co">#&gt;  3 &lt;lgl[,7] [7 × 7]&gt;   255</span>
-<span class="co">#&gt;  4 &lt;lgl[,7] [7 × 7]&gt;   244</span>
-<span class="co">#&gt;  5 &lt;lgl[,7] [7 × 7]&gt;   223</span>
-<span class="co">#&gt;  6 &lt;lgl[,7] [7 × 7]&gt;   202</span>
-<span class="co">#&gt;  7 &lt;lgl[,7] [7 × 7]&gt;   192</span>
-<span class="co">#&gt;  8 &lt;lgl[,7] [7 × 7]&gt;   167</span>
-<span class="co">#&gt;  9 &lt;lgl[,7] [7 × 7]&gt;   134</span>
-<span class="co">#&gt; 10 &lt;lgl[,7] [7 × 7]&gt;   129</span>
+<span class="co">#&gt;    anc_match_matrix     n</span>
+<span class="co">#&gt;    &lt;list&gt;           &lt;int&gt;</span>
+<span class="co">#&gt;  1 &lt;lgl [7 × 7]&gt;      280</span>
+<span class="co">#&gt;  2 &lt;lgl [7 × 7]&gt;      258</span>
+<span class="co">#&gt;  3 &lt;lgl [7 × 7]&gt;      255</span>
+<span class="co">#&gt;  4 &lt;lgl [7 × 7]&gt;      244</span>
+<span class="co">#&gt;  5 &lt;lgl [7 × 7]&gt;      223</span>
+<span class="co">#&gt;  6 &lt;lgl [7 × 7]&gt;      202</span>
+<span class="co">#&gt;  7 &lt;lgl [7 × 7]&gt;      192</span>
+<span class="co">#&gt;  8 &lt;lgl [7 × 7]&gt;      167</span>
+<span class="co">#&gt;  9 &lt;lgl [7 × 7]&gt;      134</span>
+<span class="co">#&gt; 10 &lt;lgl [7 × 7]&gt;      129</span>
 <span class="co">#&gt; # … with 55 more rows</span></code></pre></div>
 <p>But more useful for visualizing things is <code>relat_counts$anc_mat_plots</code> which is a list that holds a series of pages/plots showing all the different ancestry matrices seen. Here are the first 30:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
@@ -515,7 +515,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
   P <span class="op">=</span> <span class="va">crel</span>,
   n <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span></code></pre></div>
-<p>Now there are only 182 pairs instead of 3035.</p>
+<p>Now there are only 233 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that the number of pairs to decrease by a quadratic factor of the number of samples:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># num samples before downsampling</span>
@@ -538,7 +538,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-neice or h
 
 <span class="co"># compare these two things</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.06711590 0.05996705</span></code></pre></div>
+<span class="co">#&gt; [1] 0.0671159 0.0767710</span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div id="uncooked-spaghetti-plots" class="section level2">

@@ -7,8 +7,8 @@
 #' `spip_genotypes.tsv`, and `spip_migrants.tsv`
 #'  inside the directory where `run_spip()` was run.
 #'
-#' For an example of its use, see the Vignette
-#' [species-1-simulation](species-1-simulation).
+#' For an example of its use, see the Vignette:
+#' `vignette("species_1_simulation", package = "CKMRpop")`.
 #' @param dir  the path to the directory where spip was run.  This is
 #' returned by `run_spip()`.
 #' @param num_generations how many generations back do you wish to consider
@@ -31,7 +31,7 @@
 #' the package data object `three_pops_with_mig_slurped_results`
 #' @export
 #' @examples
-#' # see Vignette: species-1-simulation
+#' # see Vignette: vignette("species_1_simulation", package = "CKMRpop")
 slurp_spip <- function(
   dir,
   num_generations

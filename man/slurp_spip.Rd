@@ -41,9 +41,9 @@ has left the files: \code{spip_pedigree.tsv}, \code{spip_prekill_census.tsv}, an
 inside the directory where \code{run_spip()} was run.
 }
 \details{
-For an example of its use, see the Vignette
-\url{species-1-simulation}.
+For an example of its use, see the Vignette:
+\code{vignette("species_1_simulation", package = "CKMRpop")}.
 }
 \examples{
-# see Vignette: species-1-simulation
+# see Vignette: vignette("species_1_simulation", package = "CKMRpop")
 }

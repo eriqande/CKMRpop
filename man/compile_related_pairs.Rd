@@ -15,7 +15,7 @@ More generally, it is a tibble that must have the columns:
 \item \code{ID}: the id of the sample
 \item \code{ancestors}: a list column of the ancestor vectors of each individual
 \item \code{relatives}: a list column of the vectors of individual samples (including self)
-that each indvidual is related to.
+that each individual is related to.
 }}
 }
 \value{
