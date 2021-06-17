@@ -28,6 +28,9 @@ Currently no known reverse dependencies
 
 ## User Notices
 
-* Revised first submission to CRAN.
-* Upon Uwe's recommendation, wrapped URLs in < and > in DESCRIPTION, and described 'spip' further.  Thanks!
+* 2nd-Revised first submission to CRAN.
+    * Fix 1 NOTE: Modified example for `summarize_offspring_and_mate_numbers()` to be under 10 seconds. Thanks!
+    * Other remaining NOTE = first submission to CRAN
+* First-revised first submission to CRAN:
+    * Upon Uwe's recommendation, wrapped URLs in < and > in DESCRIPTION, and described 'spip' further.  Thanks!
 * Large installed size driven mostly by vignettes with plotted figures, and, on Linux, the compiled C++ libs.
