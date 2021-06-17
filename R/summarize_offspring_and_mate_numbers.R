@@ -24,13 +24,14 @@
 #'   X$deaths
 #' )
 #'
-#' # Now g is a list holding three plots
+#' # Now g is a list holding three plots, accessible like this:
+#' \dontrun{
 #' g$plot_age_specific_number_of_offspring
 #'
 #' g$plot_lifetime_output_vs_age_at_death
 #'
 #' g$plot_fraction_of_offspring_from_each_age_class
-#'
+#' }
 summarize_offspring_and_mate_numbers <- function(
   census_postkill,
   pedigree,
