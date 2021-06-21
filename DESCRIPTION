@@ -1,6 +1,6 @@
 Package: CKMRpop
 Type: Package
-Title: Forward-in-Time Simulation and Tabulation of Pairwise Relationships in Age-Structured Populations
+Title: Forward-in-Time Simulation and Tallying of Pairwise Relationships
 Version: 0.1.2
 Authors@R: c(
     person(given = c("Eric", "C."), "Anderson", , "eric.anderson@noaa.gov", role = c("aut", "cre"),
