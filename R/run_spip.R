@@ -48,7 +48,7 @@ run_spip <- function(
 
 
   cwd = getwd()  # get the current directory to change back to it after the system2 call
-
+  on.exit(setwd(cwd))
 
   dir.create(dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -185,9 +185,6 @@ system2(command = spip_binary(), args = \"--help-full\")\n\n
   )
 
   message("Done processing output into spip_pedigree.tsv, spip_prekill_census.tsv, and spip_samples.tsv")
-
-  # change back to the original working directory
-  setwd(cwd)
 
   # here is how I used to call it using system()
   # call <- paste("./bin/spip --command-file ", dfile, " --locus-file ", lfile, " > ", sfile )
