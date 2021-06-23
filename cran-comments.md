@@ -17,7 +17,7 @@ WINDOWS DEVEL, (2021-06-14 r80502), win-builder: 0 errors | 0 warnings | 1 notes
 MAC, local: 0 errors | 0 warnings | 1 notes
   1 note =  installed size is 6.0Mb. sub-directories of 1 Mb or more: data 1.1 Mb, doc 3.5 Mb
 LINUX, travis-ci: 0 errors | 0 warnings | 1 notes
-  1 note = installed size is 6.8 Mb. sub-directories of 1 Mb or more: data 1.1 Mb, doc 2.7 Mb, libs 1.9 Mb
+  1 note = installed size is 6.9 Mb. sub-directories of 1 Mb or more: data 1.1 Mb, doc 2.7 Mb, libs 1.9 Mb, help 1.0 Mb
 LINUX, CentOS: 0 errors | 0 warnings | 1 notes
   1 note = installed size is 8.7 Mb. sub-directories of 1 Mb or more: data 1.8, doc 2.9, help 1.1, libs 2.8
 
@@ -30,11 +30,10 @@ Currently no known reverse dependencies
 
 * 3rd-revised, first submission to CRAN:
 
-    1. making changes requested by Julia Haider
+    1. making changes requested by Julia Haider:
         - Shortened title to 65 characters
         - Used on.exit() to ensure working directory is returned to
-          correct directory in run_spip()
-          even if the function fails.
+          correct directory in run_spip() even if the function fails.
         - Left only three uses of `\dontrun`. I inspected the four previous
           uses of `\dontrun{}` in the examples.  In three cases it
           is used because the examples will not run without further installation that
@@ -45,7 +44,7 @@ Currently no known reverse dependencies
           In the fourth case it was used only for the final step that prints several plots
           and which takes > 5 seconds to run, but I removed those printing steps.
         - Added `\value` tags (via the `@return` Roxygen tag) for all exported functions.
-    2. Additionally, added an example for t `uncooked_spaghetti()`.
+    2. Additionally, added an example for `uncooked_spaghetti()`.
     
         
 * 2nd-Revised first submission to CRAN.
