@@ -32,6 +32,8 @@
 #'
 #' For a full example of its use see the Vignette:
 #' `vignette("species_1_simulation", package = "CKMRpop")`.
+#' @return Returns the path to the temporary directory were `spip` was run and where the
+#' processed output files can be found to be read in using `slurp_spip()`.
 #' @export
 
 run_spip <- function(

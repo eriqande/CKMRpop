@@ -9,6 +9,14 @@ amm2tibble(M)
 \arguments{
 \item{M}{an ancestry-match matrix}
 }
+\value{
+\code{amm2tibble()} returns a tibble with three columns:
+\itemize{
+\item \code{x}: the 1-based index of the row of input matrix,
+\item \code{y}: the 1-based index of the column of the input matrix,
+\item \code{amm}: the logical value (TRUE/FALSE) of the (x,y)-th cell of the input matrix.
+}
+}
 \description{
 This merely converts a matrix to a tibble that can be plotted
 easily using ggplot.

@@ -10,6 +10,25 @@ count_and_plot_mate_distribution(P)
 \item{P}{the pedigree from the simulation, like that returned in the \code{pedigree} component
 of the list returned by \code{slurp_spip()}.}
 }
+\value{
+A list with two components with names:
+\itemize{
+\item \code{mate_counts}: A tibble with information about the number of mates with which
+a parent produced offspring each year.  It has the columns:
+\itemize{
+\item \code{sex}: the sex of this parent
+\item \code{year}: the year during which the mating occurred
+\item \code{pop}: the population this parent was in
+\item \code{parent}: the ID of the parent
+\item \code{num_offs}: the number of offspring this parent had in total
+\item \code{num_mates}: the number of mates this parent had
+}
+\item \code{plot_mate_counts}: a ggplot object, faceted on a grid by population in columns
+and sex in rows. The x-axis is the number of offspring (in a season), the y-axis is the
+number of mates in a season, and the fill color of the grid gives the number of parents
+with that number of offspring and mates.
+}
+}
 \description{
 This just tallies up the information from the pedigree.  It will plot things
 faceted by pop (over rows) and sexes (over columns).

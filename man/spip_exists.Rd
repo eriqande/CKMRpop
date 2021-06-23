@@ -6,6 +6,9 @@
 \usage{
 spip_exists()
 }
+\value{
+A single logical scalar, either TRUE or FALSE.
+}
 \description{
 This just checks for the file where it gets installed with
 \code{install_spip()}. This is exported so it can be used to control

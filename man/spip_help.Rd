@@ -6,6 +6,11 @@
 \usage{
 spip_help()
 }
+\value{
+This returns the exit status of \code{spip} if spip is installed,
+but the return value is of little use.  Mainly this is run for the side
+effect of printing the \code{spip} help menu to the console.
+}
 \description{
 This simply calls spip with the \code{--help} option.
 }

@@ -5,7 +5,10 @@
 #' @param census a tibble of census counts with columns `year` and
 #' `age`, and then the counts of the different sexes in columns
 #' named `male`, and `female`.
-#' @return a ggplot object
+#' @return  `ggplot_census_by_year_age_sex()` returns a ggplot object which is a
+#' stacked barplot with year on the x-axis,
+#' counts on the y-axis with fill mapped to age.  It is facet-gridded
+#' with sex in the columns and populations in the rows.
 #' @export
 #' @examples
 #' # A single population example

@@ -11,8 +11,11 @@
 #' `compile_related_pairs()`.
 #' @param n The desired number of individuals (or instances, really, see below) to
 #' retain in the sample.
-#' @return A tibble like `P` except having removed any pairs that include individuals that
-#' were not retained in the sample.
+#' @return This returns a list with two components as follows:
+#'    - `ds_samples`: A tibble like `S` except having randomly removed individuals
+#'      so as to only have n left.
+#'    - `ds_pairs`: A tibble like `P` except having removed any pairs that
+#'    include individuals that were not retained in the sample.
 #' @export
 #' @examples
 #' # prepare some input

@@ -7,6 +7,9 @@
 \source{
 Simulation results
 }
+\usage{
+three_pops_no_mig_slurped_results
+}
 \description{
 This is stored as package data so that the vignette can be written
 even if spip is not installed on the system.

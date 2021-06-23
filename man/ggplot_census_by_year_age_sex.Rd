@@ -12,7 +12,10 @@ ggplot_census_by_year_age_sex(census)
 named \code{male}, and \code{female}.}
 }
 \value{
-a ggplot object
+\code{ggplot_census_by_year_age_sex()} returns a ggplot object which is a
+stacked barplot with year on the x-axis,
+counts on the y-axis with fill mapped to age.  It is facet-gridded
+with sex in the columns and populations in the rows.
 }
 \description{
 Easy to do, but quicker to have it wrapped up in a plot.

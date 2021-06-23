@@ -8,6 +8,8 @@
 #' over the values in `ID`. And also `X` must have a list column `anc_match_matrix` each
 #' element of which is a logical ancestry match matrix.  `X` may have a list column
 #' of tibbles called `psa_tibs` that says which cells are the primary shared ancestors.
+#' @return `plot_amm_from_matrix()` returns a ggplot object: each facet is an image of the
+#' ancestry match matrix.  It is facet-wrapped over the values in the ID column of `X`.
 #' @export
 #' @examples
 #' # get some input: all the 2-generation AMMs in `example_amms`

@@ -27,9 +27,21 @@ these are put on the histogram plots.}
 \value{
 A list with components:
 \itemize{
-\item \code{survival_tibble}  A tibble with all the survival fractions
-\item \code{plot_histos_by_age_and_sex} A histogram of observed survival fractions by age for male and females
-across all years of the simulation.
+\item \code{survival_tibble}:  A tibble with the following columns:
+\itemize{
+\item \code{year}: The year
+\item \code{pop}: The population whose census is being counted
+\item \code{age}: The age of individuals
+\item \code{sex}: The sex of individuals
+\item \code{n}: The number of individuals alive and present of sex \code{sex} and age \code{age} in year
+\code{year} in pop \code{pop}.
+\item \code{cohort}: The birth year of these individuals
+\item \code{surv_fract}: The fraction of the n individuals that survive to have age \code{age + 1} in
+year \code{year + 1}.
+}
+\item \code{plot_histos_by_age_and_sex}: A ggplot object of histograms of observed survival fractions
+facet-wrapped by age and sex.  Blue vertical lines are the observed means and dashed vertical
+red lines are the expected values given the simulation parameters.
 }
 }
 \description{

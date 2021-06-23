@@ -6,6 +6,7 @@
 #' @source Just values that might be typical of a fish.
 #' @docType data
 #' @name species_1_life_history
+#' @usage species_1_life_history
 NULL
 
 
@@ -17,6 +18,7 @@ NULL
 #' @source This is something used for simulation testing
 #' @docType data
 #' @name species_2_life_history
+#' @usage species_2_life_history
 NULL
 
 
@@ -31,6 +33,7 @@ NULL
 #' R package.
 #' @docType data
 #' @name example_amms
+#' @usage example_amms
 NULL
 
 
@@ -42,9 +45,6 @@ NULL
 #' @source I simply defined these
 #' @docType data
 #' @name relationship_zone_names
-#' @examples
-#' data(relationship_zone_names)
-#' relationship_zone_names
 NULL
 
 
@@ -56,6 +56,7 @@ NULL
 #' @source Simulation results
 #' @docType data
 #' @name species_1_slurped_results
+#' @usage species_1_slurped_results
 NULL
 
 
@@ -67,17 +68,20 @@ NULL
 #' @source Simulation results
 #' @docType data
 #' @name species_1_slurped_results_1gen
+#' @usage species_1_slurped_results_1gen
 NULL
 
 
 #' The result of running spip in the species_1_simulation vignette with 100 loci.
 #'
 #' This is stored as package data so that the vignette can be written
-#' even if spip is not installed on the system.
-#'
+#' even if spip is not installed on the system. This particular version
+#' stores the results of running `run_spip()` calling for 100 loci segregating
+#' in the population, then slurping the results up with `slurp_spip()`.
 #' @source Simulation results
 #' @docType data
 #' @name species_1_slurped_results_100_loci
+#' @usage species_1_slurped_results_100_loci
 NULL
 
 
@@ -89,6 +93,7 @@ NULL
 #' @source Simulation results
 #' @docType data
 #' @name three_pops_no_mig_slurped_results
+#' @usage three_pops_no_mig_slurped_results
 NULL
 
 
@@ -100,6 +105,7 @@ NULL
 #' @source Simulation results
 #' @docType data
 #' @name three_pops_with_mig_slurped_results
+#' @usage three_pops_with_mig_slurped_results
 NULL
 
 
@@ -110,6 +116,7 @@ NULL
 #' @source Simply wrote this down.
 #' @docType data
 #' @name half_first_cousin_amm
+#' @usage half_first_cousin_amm
 NULL
 
 

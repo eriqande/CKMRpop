@@ -17,8 +17,13 @@ this will be what is returned in the \code{samples} component from \code{slurp_s
 retain in the sample.}
 }
 \value{
-A tibble like \code{P} except having removed any pairs that include individuals that
-were not retained in the sample.
+This returns a list with two components as follows:
+\itemize{
+\item \code{ds_samples}: A tibble like \code{S} except having randomly removed individuals
+so as to only have n left.
+\item \code{ds_pairs}: A tibble like \code{P} except having removed any pairs that
+include individuals that were not retained in the sample.
+}
 }
 \description{
 This discards individuals from the sample, randomly, until

@@ -6,6 +6,19 @@
 #' @param P the pedigree from the simulation, like that returned in the `pedigree` component
 #' of the list returned by `slurp_spip()`.
 #' @export
+#' @return A list with two components with names:
+#'    - `mate_counts`: A tibble with information about the number of mates with which
+#'    a parent produced offspring each year.  It has the columns:
+#'        * `sex`: the sex of this parent
+#'        * `year`: the year during which the mating occurred
+#'        * `pop`: the population this parent was in
+#'        * `parent`: the ID of the parent
+#'        * `num_offs`: the number of offspring this parent had in total
+#'        * `num_mates`: the number of mates this parent had
+#'    - `plot_mate_counts`: a ggplot object, faceted on a grid by population in columns
+#'    and sex in rows. The x-axis is the number of offspring (in a season), the y-axis is the
+#'    number of mates in a season, and the fill color of the grid gives the number of parents
+#'    with that number of offspring and mates.
 #' @examples
 #' result <- count_and_plot_mate_distribution(three_pops_no_mig_slurped_results$pedigree)
 #'

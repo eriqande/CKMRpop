@@ -12,6 +12,9 @@ on functions writing to the user's home filespace, this is set, by default,
 to a temporary directory.  But to really use this function to install spip,
 this parameter must be set to \code{system.file(package = "CKMRpop")}.}
 }
+\value{
+No return value.  Called for side effect of installing the 'spip' binary.
+}
 \description{
 This checks the operating system and installs the correct version
 (either Darwin or Linux for Mac or Linux, respectively.)  To install

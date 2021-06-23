@@ -13,6 +13,10 @@ over the values in \code{ID}. And also \code{X} must have a list column \code{an
 element of which is a logical ancestry match matrix.  \code{X} may have a list column
 of tibbles called \code{psa_tibs} that says which cells are the primary shared ancestors.}
 }
+\value{
+\code{plot_amm_from_matrix()} returns a ggplot object: each facet is an image of the
+ancestry match matrix.  It is facet-wrapped over the values in the ID column of \code{X}.
+}
 \description{
 For illustration purposes, if you want to simply plot an ancestry
 matrix (or several) to show particular values, then this is the

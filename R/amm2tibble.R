@@ -3,6 +3,10 @@
 #' This merely converts a matrix to a tibble that can be plotted
 #' easily using ggplot.
 #' @param M an ancestry-match matrix
+#' @return `amm2tibble()` returns a tibble with three columns:
+#'    * `x`: the 1-based index of the row of input matrix,
+#'    * `y`: the 1-based index of the column of the input matrix,
+#'    * `amm`: the logical value (TRUE/FALSE) of the (x,y)-th cell of the input matrix.
 #' @export
 #' @examples
 #' # convert one of the simple example AMMs to a tibble

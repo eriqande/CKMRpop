@@ -21,7 +21,8 @@ This returns a list with two components:
 \item \code{cluster_size}: the number of samples belonging
 to that cluster
 }
-\item \code{plot}: a ggraph/ggplot plot object
+\item \code{plot}: a ggraph/ggplot plot object showing the connected components as vertices with
+edges between them.
 }
 }
 \description{

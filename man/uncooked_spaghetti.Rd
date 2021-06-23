@@ -15,6 +15,19 @@ uncooked_spaghetti(Pairs, Samples, jitter_age = 0.2, jitter_year = 0.2)
 
 \item{jitter_year}{half the width of the uniform jitter window around sampling year}
 }
+\value{
+\code{uncooked_spaghetti()} returns a list with two components: \code{input_data} and \code{plot}.
+\code{plot} is a ggplot object of the plot described above in "Description."  \code{input_data} is,
+itself, another list with the following named components:
+\itemize{
+\item \code{P5}: A tibble that is a processed version of the \code{Pairs} input.  This is what
+goes into makeing the ggplot.
+\item \code{age_grid}: A tibble giving the coordinates for placing the alternating pink and white
+horizontal background rectangles on the plot.
+\item \code{year_grid}: A tibble giving the coordinates for placing the alternating pink and white
+vertical background rectangles on the plot.
+}
+}
 \description{
 This gives a nice graphical summary of all the kin pairs along with when they
 were sampled and their age at the time of sampling and their sex.
@@ -51,4 +64,13 @@ from the upper member to the lower member.
 of the dominant relationship. This is how you can distinguish full-sibs from half-sibs, etc.
 }
 }
+}
+\examples{
+# get the input variables
+Samples <- species_1_slurped_results$samples
+Pairs <- compile_related_pairs(Samples)
+result <- uncooked_spaghetti(Pairs, Samples)
+
+# produce the plot with:
+# result$plot
 }

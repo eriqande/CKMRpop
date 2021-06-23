@@ -31,6 +31,22 @@ direction for the \code{plot_lifetime_output_vs_age_at_death} output plot.}
 \item{contrib_bin_width}{width of bins of histogram of contribution of parents of
 each age and sex to the offspring.}
 }
+\value{
+A list with three components, each of them a ggplot object:
+\itemize{
+\item \code{plot_age_specific_number_of_offspring}: a ggplot object that plots boxplots and jittered points.
+The x-axis are the ages of the individuals; the y-axis shows the number of offspring. Summarized
+over the entire spip simulation. This is faceted by sex.
+\item \code{plot_lifetime_output_vs_age_at_death}: a ggplot object.  This is a hexbin plot. The x-axis
+are age-at-death bins, the y axis ar bins of total number of offspring produced in a lifetime.
+The fill color of each bin gives the number of individuals with that age at death and number
+of offspring encountered over the whole simulation.  Plot is faceted by sex.
+\item \code{plot_fraction_of_offspring_from_each_age_class}: a ggplot object. This shows the distribution
+over all years of the simulation, of the fraction of offspring produced each year that were
+produced by males or females of a given age (the plots are facet-wrapped by both age and sex).
+The blue vertical line gives the mean.
+}
+}
 \description{
 More later
 }
@@ -43,11 +59,12 @@ g <- summarize_offspring_and_mate_numbers(
   X$deaths
 )
 
-# Now g is a list holding three plots
-g$plot_age_specific_number_of_offspring
+# Now g is a list holding three plots, accessible like this:
 
-g$plot_lifetime_output_vs_age_at_death
+# g$plot_age_specific_number_of_offspring
 
-g$plot_fraction_of_offspring_from_each_age_class
+# g$plot_lifetime_output_vs_age_at_death
+
+# g$plot_fraction_of_offspring_from_each_age_class
 
 }

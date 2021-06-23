@@ -7,6 +7,9 @@
 \source{
 Simply wrote this down.
 }
+\usage{
+half_first_cousin_amm
+}
 \description{
 Just a simple AMM to use in some examples
 }

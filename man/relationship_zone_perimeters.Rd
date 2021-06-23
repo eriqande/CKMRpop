@@ -6,6 +6,23 @@
 \usage{
 relationship_zone_perimeters()
 }
+\value{
+Returns a tibble with the following columns:
+\itemize{
+\item \code{which_matrix}: a column of values \code{M1} or \code{M2}.  M1 denotes that the row's values
+are for the relationship zone found in or below the lower diagonal of the ancestry match matrix
+and M2 denotes that the row's value are of the zone found in the upper part of the
+ancestry match matrix.  Symmetrical relationships are considered to be M1.
+\item \code{zone}: The abbreviation for the relationship (e.g., Se, PO, Si, etc.)
+\item \code{xmin}: The left-hand x value of the zone.
+\item \code{xmax}: The right-hand x value of the zone.
+\item \code{ymin}: The bottom y value of the zone.
+\item \code{ymax}: The top y value of the zone.
+\item \code{area}: The area in unit squares of the zone.
+\item \code{xmid}: The x midpoint of the zone.
+\item \code{ymid}: The y midpoint of the zone.
+}
+}
 \description{
 This is primarily for plotting a figure in the paper about this package,
 showing where all the relationship zones are.  It merely cycles over the

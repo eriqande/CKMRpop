@@ -18,9 +18,19 @@
 #' these are put on the histogram plots.
 #' @param nbins number of bins for the histograms
 #' @return A list with components:
-#' - `survival_tibble`  A tibble with all the survival fractions
-#' - `plot_histos_by_age_and_sex` A histogram of observed survival fractions by age for male and females
-#' across all years of the simulation.
+#' - `survival_tibble`:  A tibble with the following columns:
+#'    - `year`: The year
+#'    - `pop`: The population whose census is being counted
+#'    - `age`: The age of individuals
+#'    - `sex`: The sex of individuals
+#'    - `n`: The number of individuals alive and present of sex `sex` and age `age` in year
+#'      `year` in pop `pop`.
+#'    - `cohort`: The birth year of these individuals
+#'    - `surv_fract`: The fraction of the n individuals that survive to have age `age + 1` in
+#'      year `year + 1`.
+#' - `plot_histos_by_age_and_sex`: A ggplot object of histograms of observed survival fractions
+#'   facet-wrapped by age and sex.  Blue vertical lines are the observed means and dashed vertical
+#'   red lines are the expected values given the simulation parameters.
 #' @export
 #' @examples
 #' result <- summarize_survival_from_census(

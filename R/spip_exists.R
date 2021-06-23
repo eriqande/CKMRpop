@@ -6,6 +6,7 @@
 #' written using saved results when spip is not installed (i.e.,
 #' at CRAN, etc.)
 #' @export
+#' @return A single logical scalar, either TRUE or FALSE.
 #' @examples
 #' # will be FALSE unless spip has been externally installed
 #' spip_exists()

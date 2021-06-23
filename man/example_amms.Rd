@@ -8,6 +8,9 @@
 I just made these for some illustrative figures in the manuscript about this
 R package.
 }
+\usage{
+example_amms
+}
 \description{
 This is a list of matrices with names that describe what they
 represent. The names are Relationship_Number-of-Generations, like:

@@ -28,6 +28,26 @@ Currently no known reverse dependencies
 
 ## User Notices
 
+* 3rd-revised, first submission to CRAN:
+
+    1. making changes requested by Julia Haider
+        - Shortened title to 65 characters
+        - Used on.exit() to ensure working directory is returned to
+          correct directory in run_spip()
+          even if the function fails.
+        - Left only three uses of `\dontrun`. I inspected the four previous
+          uses of `\dontrun{}` in the examples.  In three cases it
+          is used because the examples will not run without further installation that
+          cannot be done during CRAN checks:
+            * `install_spip()` installs software that is easy to do on a user's machine,
+            but not on CRAN's test servers.
+            * `spip_help()` and `spip_help_full()` require that `spip` be installed.
+          In the fourth case it was used only for the final step that prints several plots
+          and which takes > 5 seconds to run, but I removed those printing steps.
+        - Added `\value` tags (via the `@return` Roxygen tag) for all exported functions.
+    2. Additionally, added an example for t `uncooked_spaghetti()`.
+    
+        
 * 2nd-Revised first submission to CRAN.
     * Fix 1 NOTE: Modified example for `summarize_offspring_and_mate_numbers()` to be under 10 seconds. Thanks!
     * Other remaining NOTE = first submission to CRAN

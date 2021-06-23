@@ -21,6 +21,44 @@ count_and_plot_ancestry_matrices(
 \item{white_ball_size}{the size of the white dot plotted on top of the
 primary shared ancestors' cells.}
 }
+\value{
+Returns a list with the following components:
+\itemize{
+\item \code{highly_summarised}: a tibble reporting counts of different types of relationships with
+the columns:
+\itemize{
+\item \code{dom_relat}: The name of the dominant relationship (e.g. Si, PO, A, etc).
+\item \code{max_hit}: The number of primary shared ancestors.
+\item \code{n}: The number of occurrences of this type of relationship.
+}
+\item \code{dr_counts}: A tibble with the counts of all the different, unique ancestry match matrices
+observed, with the following columns:
+\itemize{
+\item \code{dom_relat}: The dominant relationship type
+\item \code{dr_hits}: list column with the number of primary shared ancestors in the upper and lower quadrants
+of the ancestry match matrix (values are repeated for symmetrical relationships).
+\item \code{max_hit}: the number of primary shared ancestors.
+\item \code{anc_match_matrix}: a list column of ancestry match matrices.
+\item \code{n}: The number of pairs with this type of ancestry match matrix
+\item \code{tot_dom}: The total number of pairs within the given dominant relationship category.
+\item \code{ID}: A unique, properly sorting name for this category for placing a title on
+facets of plots of these ancestry match matrices.
+}
+\item \code{dr_plots}: a list named by the dominant relationship. Each component is a ggplot
+object which is a plot of the ancestry match matrices, faceted by their \code{ID}'s as
+given in \code{dr_counts}.
+\item \code{anc_mat_counts}: A tibble summarizing the counts of different ancestry match matrices
+without regard to dominant relationship type, etc. Rows are arranged in descending order
+of number of pairs observed with each ancestry match matrix. It has the columns:
+\itemize{
+\item \code{anc_match_matrix}: a list column of ancestry match matrices.
+\item \code{n}:  the number of such matrices observed.
+}
+\item \code{anc_mat_plots}: a list of ggplot pages.  These are plots faceted by ancestry match
+matrix of all ancestry match matrices observed, ordered by number of occurrences (as
+given in \code{anc_mat_counts}).
+}
+}
 \description{
 This counts up all the different types of pairwise relationships and
 makes a plot (or multiple pages of them). For an example, see

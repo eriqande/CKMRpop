@@ -11,7 +11,51 @@
 #' that each individual is related to.
 #' @return a tibble with columns `id_1` and `id_2` for each pair.  Any additional
 #' columns outside of `relatives` will be joined with `_1` and
-#' `_2` suffixes.
+#' `_2` suffixes.  In a typical run slurped up from spip this leads to the following
+#' columns:
+#'    - `id_1`: the id of the first sample of the pair,
+#'    - `id_2`: the id of the 2nd sample of the pair,
+#'    - `conn_comp`: the index of the connected component to which the pair belongs,
+#'    - `dom_relat`: the dominant reltionship that the pair shares,
+#'    - `max_hit`: the number of shared ancestors at the level of the dominant relationship
+#'    - `dr_hits`: a list column of two-vectors---the number of shared ancestors at the level
+#'      of the dominant relationship in the upper and lower quadrants, respectively of the
+#'      ancestry match matrix. If the relationship is symmetrical, the two values are the same.
+#'    - `upper_member`: for non-symmetrical relationships, a 1 or a 2 indicating which member of the
+#'      pair is the one that is typically older (i.e. the uncle in an uncle-nephew relationship), or
+#'      NA if the relationship is symmetrical.
+#'    - `times_encountered`: the number of times this pair was encountered when processing the
+#'      output of the depth first search algorithm that found these pairs.  Not typically used for
+#'      downstream analyses.
+#'    - `primary_shared_ancestors`: a list columns of two-vectors.  The first element of each is the
+#'      the position in the ancestry vector of id_1's primary shared ancestor.  The second element is
+#'      the same for id_2.
+#'    - `psa_tibs`: like `primary_shared_ancestor` but a list column of tibbles.
+#'    - `pop_pre_1`, `pop_post_1`, `pop_dur_1`: the population from which the id_1 individual
+#'      was sampled during the prekill, postikill, or during-reproduction sampling episodes,
+#'      respectively.  NA for episodes in which the individual was not sampled
+#'    - `pop_pre_2`, `pop_post_2`, `pop_dur_2`: same as above for the id_2 individual.
+#'    - `sex_1`: sex of the id_1 individual,
+#'    - `sex_2`: sex of the id_2 individual,
+#'    - `born_year_1`: birth year of the id_1 individual,
+#'    - `born_year_2`: birth year of the id_2 individual,
+#'    - `samp_years_list_pre_1`: list column of years during which the id_1 individual was sampled
+#'      during the prekill episode.
+#'    - `samp_years_list_dur_1`: list column of years during which the id_1 individual was sampled
+#'      during reproduction.
+#'    - `samp_years_list_post_1`: list column of years during which the id_1 individual was sampled
+#'      during the postkill episode.
+#'    - `samp_years_list_1`: by default this column is identical to `samp_years_list_post_1` and is the
+#'      column used in downstream plotting by some functions.  If you want to use a different column,
+#'      for example `samp_years_list_pre_1` for the downstream plotting, then set the value of
+#'      `samp_years_list_1` to the same values,
+#'    - `samp_years_list_pre_2`, `samp_years_list_dur_2`, `samp_years_list_post_2`, `samp_years_list_2`: same
+#'      as above but for individual with id_2,
+#'    - `born_pop_1`: index of population in which id_1 was born,
+#'    - `ancestors_1`: ancestry vector of id_1,
+#'    - `born_pop_2`: index of population in which id_2 was born,
+#'    - `ancestors_2`: ancestry vector of id_2,
+#'    - `anc_match_matrix`: the ancestry match matrix (a logical matrix) for the pair.
 #' @export
 #' @examples
 #' C <- compile_related_pairs(three_pops_with_mig_slurped_results$samples)

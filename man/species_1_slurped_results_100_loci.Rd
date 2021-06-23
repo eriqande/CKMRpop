@@ -7,7 +7,12 @@
 \source{
 Simulation results
 }
+\usage{
+species_1_slurped_results_100_loci
+}
 \description{
 This is stored as package data so that the vignette can be written
-even if spip is not installed on the system.
+even if spip is not installed on the system. This particular version
+stores the results of running \code{run_spip()} calling for 100 loci segregating
+in the population, then slurping the results up with \code{slurp_spip()}.
 }

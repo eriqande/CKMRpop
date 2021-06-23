@@ -34,7 +34,24 @@
 #' @param Samples The tibble of samples that comes out of `slurp_spip()`.
 #' @param jitter_age half the width of the uniform jitter window around age
 #' @param jitter_year half the width of the uniform jitter window around sampling year
+#' @return `uncooked_spaghetti()` returns a list with two components: `input_data` and `plot`.
+#' `plot` is a ggplot object of the plot described above in "Description."  `input_data` is,
+#' itself, another list with the following named components:
+#'    - `P5`: A tibble that is a processed version of the `Pairs` input.  This is what
+#'      goes into makeing the ggplot.
+#'    - `age_grid`: A tibble giving the coordinates for placing the alternating pink and white
+#'      horizontal background rectangles on the plot.
+#'    - `year_grid`: A tibble giving the coordinates for placing the alternating pink and white
+#'      vertical background rectangles on the plot.
 #' @export
+#' @examples
+#' # get the input variables
+#' Samples <- species_1_slurped_results$samples
+#' Pairs <- compile_related_pairs(Samples)
+#' result <- uncooked_spaghetti(Pairs, Samples)
+#'
+#' # produce the plot with:
+#' # result$plot
 uncooked_spaghetti <- function(
   Pairs,
   Samples,

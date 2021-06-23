@@ -15,12 +15,17 @@ leslie_from_spip(P, C)
 This function returns a list with the following components:
 \itemize{
 \item \code{stable_age_distro_fem}: a vector of the expected number of females in each age
-group of 0 up to MaxAge once the stable age distribution has been reached.  Note that
-this corresponds to the PREKILL_CENSUS from spip.  If you remove the first element and
-consider the stable age distribution of ages 1 to MaxAge, that would correspond to the
-POSTKILL_CENSUS from spip.  Note that spip's values are random and those reported here
-are expectations.
+group of 0 up to MaxAge-1 once the stable age distribution has been reached.  Note that
+this corresponds to the PREKILL_CENSUS from spip. In this vector, the size of the
+MaxAge group is left out because this is how it is needed to be to insert into
+the \code{--initial-males} and \code{--initial-females} options in spip().  If you want the
+size of all age classes, use the output list component
+\code{stable_age_distro_fem_with_max_age_class}, described below.
 \item \code{stable_age_distro_male}: same as above, but for males.
+\item \code{stable_age_distro_fem_with_max_age_class}: The expected number of females from age 0 to
+MaxAge once the stable age distribution has been reached.
+\item \code{stable_age_distro_male_with_max_age_class}: same as above, but for females.
+\item \code{female_leslie_matrix}: The Leslie matrix implied by the spip parameters in P.
 }
 }
 \description{

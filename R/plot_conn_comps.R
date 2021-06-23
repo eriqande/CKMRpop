@@ -17,7 +17,8 @@
 #'     - `cluster`: the index of the connected component the sample belongs to
 #'     - `cluster_size`: the number of samples belonging
 #'        to that cluster
-#' - `plot`: a ggraph/ggplot plot object
+#' - `plot`: a ggraph/ggplot plot object showing the connected components as vertices with
+#'   edges between them.
 #' @export
 #' @examples
 #' # get a Pairs tibble from the stored data

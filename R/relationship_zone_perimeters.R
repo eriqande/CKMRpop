@@ -8,6 +8,20 @@
 #' zone in the columns xmin, xmax, ymin, and ymax.  It is designed to be overlaid
 #' upon the ancestry_match_matrix plots. There are some additional columns that give
 #' us the midpoint of the area, etc.
+#' @return Returns a tibble with the following columns:
+#'    - `which_matrix`: a column of values `M1` or `M2`.  M1 denotes that the row's values
+#'      are for the relationship zone found in or below the lower diagonal of the ancestry match matrix
+#'      and M2 denotes that the row's value are of the zone found in the upper part of the
+#'      ancestry match matrix.  Symmetrical relationships are considered to be M1.
+#'    - `zone`: The abbreviation for the relationship (e.g., Se, PO, Si, etc.)
+#'    - `xmin`: The left-hand x value of the zone.
+#'    - `xmax`: The right-hand x value of the zone.
+#'    - `ymin`: The bottom y value of the zone.
+#'    - `ymax`: The top y value of the zone.
+#'    - `area`: The area in unit squares of the zone.
+#'    - `xmid`: The x midpoint of the zone.
+#'    - `ymid`: The y midpoint of the zone.
+#'
 #' @export
 #' @examples
 #' relationship_zone_perimeters()

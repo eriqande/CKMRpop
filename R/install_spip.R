@@ -11,6 +11,7 @@
 #' to a temporary directory.  But to really use this function to install spip,
 #' this parameter must be set to `system.file(package = "CKMRpop")`.
 #' @export
+#' @return No return value.  Called for side effect of installing the 'spip' binary.
 #' @examples
 #' \dontrun{
 #' install_spip(Dir = system.file(package = "CKMRpop"))
@@ -73,6 +74,8 @@ install_spip <- function(
     Dest_file <- stringr::str_replace(Dest_file, "\\.zip$", ".exe")
     Sys.chmod(Dest_file, mode = "0774", use_umask = FALSE)
   }
+
+
 }
 
 

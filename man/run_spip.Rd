@@ -40,6 +40,10 @@ For examples for three loci with 2, 3, and 4 equifrequent alleles, respectively,
 you would provide \code{list(c(0.5, 0.5), c(0.3333, 0.3333, 0.3333), c(0.25, 0.25, 0.25, 0.25))}.
 Note that allele frequencies will be normalized to sum to one within each locus.}
 }
+\value{
+Returns the path to the temporary directory were \code{spip} was run and where the
+processed output files can be found to be read in using \code{slurp_spip()}.
+}
 \description{
 This runs it in a directory and the output from stdout
 goes into a big file spip_out.txt in that directory. Currently

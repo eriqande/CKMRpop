@@ -7,6 +7,9 @@
 \source{
 Just values that might be typical of a fish.
 }
+\usage{
+species_1_life_history
+}
 \description{
 species_1 for examples.
 }

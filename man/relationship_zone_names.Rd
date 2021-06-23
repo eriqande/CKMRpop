@@ -12,7 +12,3 @@ A simple character vector of 15 relationship zones in the order they
 are encountered when traversing an ancestry match matrix out to four
 generations
 }
-\examples{
-data(relationship_zone_names)
-relationship_zone_names
-}

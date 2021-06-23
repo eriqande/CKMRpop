@@ -11,12 +11,17 @@
 #' @return
 #' This function returns a list with the following components:
 #' * `stable_age_distro_fem`: a vector of the expected number of females in each age
-#' group of 0 up to MaxAge once the stable age distribution has been reached.  Note that
-#' this corresponds to the PREKILL_CENSUS from spip.  If you remove the first element and
-#' consider the stable age distribution of ages 1 to MaxAge, that would correspond to the
-#' POSTKILL_CENSUS from spip.  Note that spip's values are random and those reported here
-#' are expectations.
+#' group of 0 up to MaxAge-1 once the stable age distribution has been reached.  Note that
+#' this corresponds to the PREKILL_CENSUS from spip. In this vector, the size of the
+#' MaxAge group is left out because this is how it is needed to be to insert into
+#' the `--initial-males` and `--initial-females` options in spip().  If you want the
+#' size of all age classes, use the output list component
+#' `stable_age_distro_fem_with_max_age_class`, described below.
 #' * `stable_age_distro_male`: same as above, but for males.
+#' * `stable_age_distro_fem_with_max_age_class`: The expected number of females from age 0 to
+#' MaxAge once the stable age distribution has been reached.
+#' * `stable_age_distro_male_with_max_age_class`: same as above, but for females.
+#' * `female_leslie_matrix`: The Leslie matrix implied by the spip parameters in P.
 #' @export
 #' @examples
 #' result <- leslie_from_spip(species_1_life_history, 300)
