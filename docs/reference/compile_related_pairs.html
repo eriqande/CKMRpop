@@ -153,7 +153,53 @@ that each individual is related to.</p></li>
 
     <p>a tibble with columns <code>id_1</code> and <code>id_2</code> for each pair.  Any additional
 columns outside of <code>relatives</code> will be joined with <code>_1</code> and
-<code>_2</code> suffixes.</p>
+<code>_2</code> suffixes.  In a typical run slurped up from spip this leads to the following
+columns:</p><ul>
+<li><p><code>id_1</code>: the id of the first sample of the pair,</p></li>
+<li><p><code>id_2</code>: the id of the 2nd sample of the pair,</p></li>
+<li><p><code>conn_comp</code>: the index of the connected component to which the pair belongs,</p></li>
+<li><p><code>dom_relat</code>: the dominant reltionship that the pair shares,</p></li>
+<li><p><code>max_hit</code>: the number of shared ancestors at the level of the dominant relationship</p></li>
+<li><p><code>dr_hits</code>: a list column of two-vectors---the number of shared ancestors at the level
+of the dominant relationship in the upper and lower quadrants, respectively of the
+ancestry match matrix. If the relationship is symmetrical, the two values are the same.</p></li>
+<li><p><code>upper_member</code>: for non-symmetrical relationships, a 1 or a 2 indicating which member of the
+pair is the one that is typically older (i.e. the uncle in an uncle-nephew relationship), or
+NA if the relationship is symmetrical.</p></li>
+<li><p><code>times_encountered</code>: the number of times this pair was encountered when processing the
+output of the depth first search algorithm that found these pairs.  Not typically used for
+downstream analyses.</p></li>
+<li><p><code>primary_shared_ancestors</code>: a list columns of two-vectors.  The first element of each is the
+the position in the ancestry vector of id_1's primary shared ancestor.  The second element is
+the same for id_2.</p></li>
+<li><p><code>psa_tibs</code>: like <code>primary_shared_ancestor</code> but a list column of tibbles.</p></li>
+<li><p><code>pop_pre_1</code>, <code>pop_post_1</code>, <code>pop_dur_1</code>: the population from which the id_1 individual
+was sampled during the prekill, postikill, or during-reproduction sampling episodes,
+respectively.  NA for episodes in which the individual was not sampled</p></li>
+<li><p><code>pop_pre_2</code>, <code>pop_post_2</code>, <code>pop_dur_2</code>: same as above for the id_2 individual.</p></li>
+<li><p><code>sex_1</code>: sex of the id_1 individual,</p></li>
+<li><p><code>sex_2</code>: sex of the id_2 individual,</p></li>
+<li><p><code>born_year_1</code>: birth year of the id_1 individual,</p></li>
+<li><p><code>born_year_2</code>: birth year of the id_2 individual,</p></li>
+<li><p><code>samp_years_list_pre_1</code>: list column of years during which the id_1 individual was sampled
+during the prekill episode.</p></li>
+<li><p><code>samp_years_list_dur_1</code>: list column of years during which the id_1 individual was sampled
+during reproduction.</p></li>
+<li><p><code>samp_years_list_post_1</code>: list column of years during which the id_1 individual was sampled
+during the postkill episode.</p></li>
+<li><p><code>samp_years_list_1</code>: by default this column is identical to <code>samp_years_list_post_1</code> and is the
+column used in downstream plotting by some functions.  If you want to use a different column,
+for example <code>samp_years_list_pre_1</code> for the downstream plotting, then set the value of
+<code>samp_years_list_1</code> to the same values,</p></li>
+<li><p><code>samp_years_list_pre_2</code>, <code>samp_years_list_dur_2</code>, <code>samp_years_list_post_2</code>, <code>samp_years_list_2</code>: same
+as above but for individual with id_2,</p></li>
+<li><p><code>born_pop_1</code>: index of population in which id_1 was born,</p></li>
+<li><p><code>ancestors_1</code>: ancestry vector of id_1,</p></li>
+<li><p><code>born_pop_2</code>: index of population in which id_2 was born,</p></li>
+<li><p><code>ancestors_2</code>: ancestry vector of id_2,</p></li>
+<li><p><code>anc_match_matrix</code>: the ancestry match matrix (a logical matrix) for the pair.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'>compile_related_pairs</span><span class='op'>(</span><span class='va'>three_pops_with_mig_slurped_results</span><span class='op'>$</span><span class='va'>samples</span><span class='op'>)</span>

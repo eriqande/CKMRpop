@@ -144,6 +144,24 @@ of the list returned by <code><a href='slurp_spip.html'>slurp_spip()</a></code>.
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list with two components with names:</p><ul>
+<li><p><code>mate_counts</code>: A tibble with information about the number of mates with which
+a parent produced offspring each year.  It has the columns:</p><ul>
+<li><p><code>sex</code>: the sex of this parent</p></li>
+<li><p><code>year</code>: the year during which the mating occurred</p></li>
+<li><p><code>pop</code>: the population this parent was in</p></li>
+<li><p><code>parent</code>: the ID of the parent</p></li>
+<li><p><code>num_offs</code>: the number of offspring this parent had in total</p></li>
+<li><p><code>num_mates</code>: the number of mates this parent had</p></li>
+</ul></li>
+<li><p><code>plot_mate_counts</code>: a ggplot object, faceted on a grid by population in columns
+and sex in rows. The x-axis is the number of offspring (in a season), the y-axis is the
+number of mates in a season, and the fill color of the grid gives the number of parents
+with that number of offspring and mates.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>count_and_plot_mate_distribution</span><span class='op'>(</span><span class='va'>three_pops_no_mig_slurped_results</span><span class='op'>$</span><span class='va'>pedigree</span><span class='op'>)</span>

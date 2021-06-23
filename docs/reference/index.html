@@ -134,8 +134,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-using-spip-and-summarizing-its-output" class="hasAnchor"><a href="#section-using-spip-and-summarizing-its-output" class="anchor"></a>Using spip and summarizing its output</h2>
+          <p class="section-desc"><p>Functions for running a spip simulation, reading its output back into R, and processing the output into pairs of related samples</p></p>
         </th>
       </tr>
       
@@ -146,87 +146,9 @@
       <tr>
         
         <td>
-          <p><code><a href="amm2tibble.html">amm2tibble()</a></code> </p>
-        </td>
-        <td><p>convert an ancestry-matching matrix to a ggplot-able tibble</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compile_related_pairs.html">compile_related_pairs()</a></code> </p>
-        </td>
-        <td><p>compile pairwise relationships from the samples</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="count_and_plot_ancestry_matrices.html">count_and_plot_ancestry_matrices()</a></code> </p>
-        </td>
-        <td><p>Count up the number of different kinds of related pairs and make a plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="count_and_plot_mate_distribution.html">count_and_plot_mate_distribution()</a></code> </p>
-        </td>
-        <td><p>Count and plot the number of mates each individuals has produced offspring with</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="downsample_pairs.html">downsample_pairs()</a></code> </p>
-        </td>
-        <td><p>downsample the number of individuals sampled</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="example_amms.html">example_amms</a></code> </p>
-        </td>
-        <td><p>a list of examples of ancestry-match matrices</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ggplot_census_by_year_age_sex.html">ggplot_census_by_year_age_sex()</a></code> </p>
-        </td>
-        <td><p>Just a simple plot function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="half_first_cousin_amm.html">half_first_cousin_amm</a></code> </p>
-        </td>
-        <td><p>A half-first cousin ancestry match matrix</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="install_spip.html">install_spip()</a></code> </p>
         </td>
         <td><p>Download the spip binary and install it where CKMRpop expects it</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="leslie_from_spip.html">leslie_from_spip()</a></code> </p>
-        </td>
-        <td><p>Return a Leslie-like matrix from the spip parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_amm_from_matrix.html">plot_amm_from_matrix()</a></code> </p>
-        </td>
-        <td><p>plot an ancestry matrix (or multiple such matrices) from its (their) matrix form</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_conn_comps.html">plot_conn_comps()</a></code> </p>
-        </td>
-        <td><p>plot the graph showing the connected components</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="relationship_zone_names.html">relationship_zone_names</a></code> </p>
-        </td>
-        <td><p>relationship zone names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="relationship_zone_perimeters.html">relationship_zone_perimeters()</a></code> </p>
-        </td>
-        <td><p>Return the perimeters of all the relationship zones</p></td>
       </tr><tr>
         
         <td>
@@ -242,33 +164,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="species_1_life_history.html">species_1_life_history</a></code> </p>
+          <p><code><a href="compile_related_pairs.html">compile_related_pairs()</a></code> </p>
         </td>
-        <td><p>a list of life-history / life-table data for a hypothetical species</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="species_1_slurped_results.html">species_1_slurped_results</a></code> </p>
-        </td>
-        <td><p>The result of running spip in the species_1_simulation vignette.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="species_1_slurped_results_100_loci.html">species_1_slurped_results_100_loci</a></code> </p>
-        </td>
-        <td><p>The result of running spip in the species_1_simulation vignette with 100 loci.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="species_1_slurped_results_1gen.html">species_1_slurped_results_1gen</a></code> </p>
-        </td>
-        <td><p>The result of running spip in the species_1_simulation vignette and slurping out with num_generations = 1.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="species_2_life_history.html">species_2_life_history</a></code> </p>
-        </td>
-        <td><p>a list of life-history / life-table data for another hypothetical species</p></td>
+        <td><p>compile pairwise relationships from the samples</p></td>
       </tr><tr>
         
         <td>
@@ -290,6 +188,68 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="downsample_pairs.html">downsample_pairs()</a></code> </p>
+        </td>
+        <td><p>downsample the number of individuals sampled</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-designing-spip-parameters" class="hasAnchor"><a href="#section-designing-spip-parameters" class="anchor"></a>Designing spip parameters</h2>
+          <p class="section-desc"><p>Functions for obtaining spip parameters desired for simulating given situations</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="leslie_from_spip.html">leslie_from_spip()</a></code> </p>
+        </td>
+        <td><p>Return a Leslie-like matrix from the spip parameters</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-visualizing-simulation-results" class="hasAnchor"><a href="#section-visualizing-simulation-results" class="anchor"></a>Visualizing simulation results</h2>
+          <p class="section-desc"><p>High-level functions for visualizing the results of spip simulations</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="count_and_plot_ancestry_matrices.html">count_and_plot_ancestry_matrices()</a></code> </p>
+        </td>
+        <td><p>Count up the number of different kinds of related pairs and make a plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="count_and_plot_mate_distribution.html">count_and_plot_mate_distribution()</a></code> </p>
+        </td>
+        <td><p>Count and plot the number of mates each individuals has produced offspring with</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ggplot_census_by_year_age_sex.html">ggplot_census_by_year_age_sex()</a></code> </p>
+        </td>
+        <td><p>Just a simple plot function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_conn_comps.html">plot_conn_comps()</a></code> </p>
+        </td>
+        <td><p>plot the graph showing the connected components</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="summarize_offspring_and_mate_numbers.html">summarize_offspring_and_mate_numbers()</a></code> </p>
         </td>
         <td><p>Summarize the distribution of number of offspring and number of mates</p></td>
@@ -302,6 +262,86 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="uncooked_spaghetti.html">uncooked_spaghetti()</a></code> </p>
+        </td>
+        <td><p>Summarise kin-pair information and use it to create uncooked spaghetti plots</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper functions</h2>
+          <p class="section-desc"><p>Low-level functions used in some of the above functions. Most users will typically not interact with these functions directly.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="plot_amm_from_matrix.html">plot_amm_from_matrix()</a></code> </p>
+        </td>
+        <td><p>plot an ancestry matrix (or multiple such matrices) from its (their) matrix form</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="amm2tibble.html">amm2tibble()</a></code> </p>
+        </td>
+        <td><p>convert an ancestry-matching matrix to a ggplot-able tibble</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="relationship_zone_perimeters.html">relationship_zone_perimeters()</a></code> </p>
+        </td>
+        <td><p>Return the perimeters of all the relationship zones</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-example-package-data" class="hasAnchor"><a href="#section-example-package-data" class="anchor"></a>Example package data</h2>
+          <p class="section-desc"><p>Package data sets that are used in the examples: either parameter values or examples of spip output.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="species_1_life_history.html">species_1_life_history</a></code> </p>
+        </td>
+        <td><p>a list of life-history / life-table data for a hypothetical species</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="species_2_life_history.html">species_2_life_history</a></code> </p>
+        </td>
+        <td><p>a list of life-history / life-table data for another hypothetical species</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="species_1_slurped_results.html">species_1_slurped_results</a></code> </p>
+        </td>
+        <td><p>The result of running spip in the species_1_simulation vignette.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="species_1_slurped_results_100_loci.html">species_1_slurped_results_100_loci</a></code> </p>
+        </td>
+        <td><p>The result of running spip in the species_1_simulation vignette with 100 loci.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="species_1_slurped_results_1gen.html">species_1_slurped_results_1gen</a></code> </p>
+        </td>
+        <td><p>The result of running spip in the species_1_simulation vignette and slurping out with num_generations = 1.</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="three_pops_no_mig_slurped_results.html">three_pops_no_mig_slurped_results</a></code> </p>
         </td>
         <td><p>The result of running spip and slurping the output in the three population case with no migration</p></td>
@@ -311,12 +351,37 @@
           <p><code><a href="three_pops_with_mig_slurped_results.html">three_pops_with_mig_slurped_results</a></code> </p>
         </td>
         <td><p>The result of running spip and slurping the output in the three population case with migration</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-helper-package-data" class="hasAnchor"><a href="#section-helper-package-data" class="anchor"></a>Helper package data</h2>
+          <p class="section-desc"><p>Package data sets that define values used primarily internally in functions or for some external examples</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="example_amms.html">example_amms</a></code> </p>
+        </td>
+        <td><p>a list of examples of ancestry-match matrices</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="uncooked_spaghetti.html">uncooked_spaghetti()</a></code> </p>
+          <p><code><a href="half_first_cousin_amm.html">half_first_cousin_amm</a></code> </p>
         </td>
-        <td><p>Summarise kin-pair information and use it to create uncooked spaghetti plots</p></td>
+        <td><p>A half-first cousin ancestry match matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="relationship_zone_names.html">relationship_zone_names</a></code> </p>
+        </td>
+        <td><p>relationship zone names</p></td>
       </tr>
     </tbody>
     </table>

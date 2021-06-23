@@ -163,6 +163,41 @@ primary shared ancestors' cells.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns a list with the following components:</p><ul>
+<li><p><code>highly_summarised</code>: a tibble reporting counts of different types of relationships with
+the columns:</p><ul>
+<li><p><code>dom_relat</code>: The name of the dominant relationship (e.g. Si, PO, A, etc).</p></li>
+<li><p><code>max_hit</code>: The number of primary shared ancestors.</p></li>
+<li><p><code>n</code>: The number of occurrences of this type of relationship.</p></li>
+</ul></li>
+<li><p><code>dr_counts</code>: A tibble with the counts of all the different, unique ancestry match matrices
+observed, with the following columns:</p><ul>
+<li><p><code>dom_relat</code>: The dominant relationship type</p></li>
+<li><p><code>dr_hits</code>: list column with the number of primary shared ancestors in the upper and lower quadrants
+of the ancestry match matrix (values are repeated for symmetrical relationships).</p></li>
+<li><p><code>max_hit</code>: the number of primary shared ancestors.</p></li>
+<li><p><code>anc_match_matrix</code>: a list column of ancestry match matrices.</p></li>
+<li><p><code>n</code>: The number of pairs with this type of ancestry match matrix</p></li>
+<li><p><code>tot_dom</code>: The total number of pairs within the given dominant relationship category.</p></li>
+<li><p><code>ID</code>: A unique, properly sorting name for this category for placing a title on
+facets of plots of these ancestry match matrices.</p></li>
+</ul></li>
+<li><p><code>dr_plots</code>: a list named by the dominant relationship. Each component is a ggplot
+object which is a plot of the ancestry match matrices, faceted by their <code>ID</code>'s as
+given in <code>dr_counts</code>.</p></li>
+<li><p><code>anc_mat_counts</code>: A tibble summarizing the counts of different ancestry match matrices
+without regard to dominant relationship type, etc. Rows are arranged in descending order
+of number of pairs observed with each ancestry match matrix. It has the columns:</p><ul>
+<li><p><code>anc_match_matrix</code>: a list column of ancestry match matrices.</p></li>
+<li><p><code>n</code>:  the number of such matrices observed.</p></li>
+</ul></li>
+<li><p><code>anc_mat_plots</code>: a list of ggplot pages.  These are plots faceted by ancestry match
+matrix of all ancestry match matrices observed, ordered by number of occurrences (as
+given in <code>anc_mat_counts</code>).</p></li>
+</ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

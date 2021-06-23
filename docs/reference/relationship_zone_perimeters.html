@@ -145,6 +145,23 @@ us the midpoint of the area, etc.</p>
     <pre class="usage"><span class='fu'>relationship_zone_perimeters</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns a tibble with the following columns:</p><ul>
+<li><p><code>which_matrix</code>: a column of values <code>M1</code> or <code>M2</code>.  M1 denotes that the row's values
+are for the relationship zone found in or below the lower diagonal of the ancestry match matrix
+and M2 denotes that the row's value are of the zone found in the upper part of the
+ancestry match matrix.  Symmetrical relationships are considered to be M1.</p></li>
+<li><p><code>zone</code>: The abbreviation for the relationship (e.g., Se, PO, Si, etc.)</p></li>
+<li><p><code>xmin</code>: The left-hand x value of the zone.</p></li>
+<li><p><code>xmax</code>: The right-hand x value of the zone.</p></li>
+<li><p><code>ymin</code>: The bottom y value of the zone.</p></li>
+<li><p><code>ymax</code>: The top y value of the zone.</p></li>
+<li><p><code>area</code>: The area in unit squares of the zone.</p></li>
+<li><p><code>xmid</code>: The x midpoint of the zone.</p></li>
+<li><p><code>ymid</code>: The y midpoint of the zone.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>relationship_zone_perimeters</span><span class='op'>(</span><span class='op'>)</span>

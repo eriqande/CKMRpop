@@ -217,7 +217,29 @@ of the dominant relationship. This is how you can distinguish full-sibs from hal
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p><code>uncooked_spaghetti()</code> returns a list with two components: <code>input_data</code> and <code>plot</code>.
+<code>plot</code> is a ggplot object of the plot described above in "Description."  <code>input_data</code> is,
+itself, another list with the following named components:</p><ul>
+<li><p><code>P5</code>: A tibble that is a processed version of the <code>Pairs</code> input.  This is what
+goes into makeing the ggplot.</p></li>
+<li><p><code>age_grid</code>: A tibble giving the coordinates for placing the alternating pink and white
+horizontal background rectangles on the plot.</p></li>
+<li><p><code>year_grid</code>: A tibble giving the coordinates for placing the alternating pink and white
+vertical background rectangles on the plot.</p></li>
+</ul>
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># get the input variables</span>
+<span class='va'>Samples</span> <span class='op'>&lt;-</span> <span class='va'>species_1_slurped_results</span><span class='op'>$</span><span class='va'>samples</span>
+<span class='va'>Pairs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compile_related_pairs.html'>compile_related_pairs</a></span><span class='op'>(</span><span class='va'>Samples</span><span class='op'>)</span>
+<span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>uncooked_spaghetti</span><span class='op'>(</span><span class='va'>Pairs</span>, <span class='va'>Samples</span><span class='op'>)</span>
+
+<span class='co'># produce the plot with:</span>
+<span class='co'># result$plot</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

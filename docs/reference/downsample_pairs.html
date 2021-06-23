@@ -160,8 +160,13 @@ retain in the sample.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble like <code>P</code> except having removed any pairs that include individuals that
-were not retained in the sample.</p>
+    <p>This returns a list with two components as follows:</p><ul>
+<li><p><code>ds_samples</code>: A tibble like <code>S</code> except having randomly removed individuals
+so as to only have n left.</p></li>
+<li><p><code>ds_pairs</code>: A tibble like <code>P</code> except having removed any pairs that
+include individuals that were not retained in the sample.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># prepare some input</span>

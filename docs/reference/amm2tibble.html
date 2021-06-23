@@ -143,6 +143,14 @@ easily using ggplot.</p>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>amm2tibble()</code> returns a tibble with three columns:</p><ul>
+<li><p><code>x</code>: the 1-based index of the row of input matrix,</p></li>
+<li><p><code>y</code>: the 1-based index of the column of the input matrix,</p></li>
+<li><p><code>amm</code>: the logical value (TRUE/FALSE) of the (x,y)-th cell of the input matrix.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># convert one of the simple example AMMs to a tibble</span>

@@ -173,9 +173,20 @@ these are put on the histogram plots.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list with components:</p><ul>
-<li><p><code>survival_tibble</code>  A tibble with all the survival fractions</p></li>
-<li><p><code>plot_histos_by_age_and_sex</code> A histogram of observed survival fractions by age for male and females
-across all years of the simulation.</p></li>
+<li><p><code>survival_tibble</code>:  A tibble with the following columns:</p><ul>
+<li><p><code>year</code>: The year</p></li>
+<li><p><code>pop</code>: The population whose census is being counted</p></li>
+<li><p><code>age</code>: The age of individuals</p></li>
+<li><p><code>sex</code>: The sex of individuals</p></li>
+<li><p><code>n</code>: The number of individuals alive and present of sex <code>sex</code> and age <code>age</code> in year
+<code>year</code> in pop <code>pop</code>.</p></li>
+<li><p><code>cohort</code>: The birth year of these individuals</p></li>
+<li><p><code>surv_fract</code>: The fraction of the n individuals that survive to have age <code>age + 1</code> in
+year <code>year + 1</code>.</p></li>
+</ul></li>
+<li><p><code>plot_histos_by_age_and_sex</code>: A ggplot object of histograms of observed survival fractions
+facet-wrapped by age and sex.  Blue vertical lines are the observed means and dashed vertical
+red lines are the expected values given the simulation parameters.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
