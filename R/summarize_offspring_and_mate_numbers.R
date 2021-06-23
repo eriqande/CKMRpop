@@ -20,7 +20,7 @@
 #'      The x-axis are the ages of the individuals; the y-axis shows the number of offspring. Summarized
 #'      over the entire spip simulation. This is faceted by sex.
 #'    - `plot_lifetime_output_vs_age_at_death`: a ggplot object.  This is a hexbin plot. The x-axis
-#'      are age-at-death bins, the y axis ar bins of total number of offspring produced in a lifetime.
+#'      are age-at-death bins, the y axis are bins of total number of offspring produced in a lifetime.
 #'      The fill color of each bin gives the number of individuals with that age at death and number
 #'      of offspring encountered over the whole simulation.  Plot is faceted by sex.
 #'    - `plot_fraction_of_offspring_from_each_age_class`: a ggplot object. This shows the distribution

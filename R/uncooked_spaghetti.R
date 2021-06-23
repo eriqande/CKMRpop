@@ -38,7 +38,7 @@
 #' `plot` is a ggplot object of the plot described above in "Description."  `input_data` is,
 #' itself, another list with the following named components:
 #'    - `P5`: A tibble that is a processed version of the `Pairs` input.  This is what
-#'      goes into makeing the ggplot.
+#'      goes into making the ggplot.
 #'    - `age_grid`: A tibble giving the coordinates for placing the alternating pink and white
 #'      horizontal background rectangles on the plot.
 #'    - `year_grid`: A tibble giving the coordinates for placing the alternating pink and white
