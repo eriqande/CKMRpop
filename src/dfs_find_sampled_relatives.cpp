@@ -217,7 +217,7 @@ List ancestor_vectors_cpp(
   int n
 ) {
   int i, j, A1, A2, T;
-  int OutL = pow(2, n + 1) - 1;
+  int OutL = (int)(pow(2.0, (double)(n + 1)) - 1.0 + 0.1);  // silly casting rigamoral so it compiles on Solaris
   int SV_length = sv.size();
 
   List ret;
@@ -235,7 +235,7 @@ List ancestor_vectors_cpp(
 
     // cycle over individuals in all but the last generation,
     // filling forward in pairs from these.
-    for(j=0;j<=pow(2, n)-2;j++) {
+    for(j=0;j<=(int)(pow(2.0, (double)n)-2.0 + 0.1);j++) {  // more sillyness to get it to compile on Solaris.
       T = AncIdxs(j);
       if(T == -1 || Ped->nodes[T].n_up == 0) {
         A1 = -1;
