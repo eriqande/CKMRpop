@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CKMRpop</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -515,7 +515,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or h
   P <span class="op">=</span> <span class="va">crel</span>,
   n <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span></code></pre></div>
-<p>Now there are only 202 pairs instead of 3035.</p>
+<p>Now there are only 175 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that the number of pairs to decrease by a quadratic factor of the number of samples:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># num samples before downsampling</span>
@@ -538,7 +538,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or h
 
 <span class="co"># compare these two things</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.06711590 0.06655684</span></code></pre></div>
+<span class="co">#&gt; [1] 0.06711590 0.05766063</span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div id="uncooked-spaghetti-plots" class="section level2">
