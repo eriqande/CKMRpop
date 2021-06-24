@@ -13,6 +13,8 @@ simulated population.
 
 [![Travis build
 status](https://travis-ci.com/eriqande/CKMRpop.svg?branch=main)](https://travis-ci.com/eriqande/CKMRpop)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/CKMRpop)](https://CRAN.R-project.org/package=CKMRpop)
 <!-- badges: end -->
 
 ## Installation
