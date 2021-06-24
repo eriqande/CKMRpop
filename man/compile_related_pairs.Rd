@@ -27,7 +27,7 @@ columns:
 \item \code{id_1}: the id of the first sample of the pair,
 \item \code{id_2}: the id of the 2nd sample of the pair,
 \item \code{conn_comp}: the index of the connected component to which the pair belongs,
-\item \code{dom_relat}: the dominant reltionship that the pair shares,
+\item \code{dom_relat}: the dominant relationship that the pair shares,
 \item \code{max_hit}: the number of shared ancestors at the level of the dominant relationship
 \item \code{dr_hits}: a list column of two-vectors---the number of shared ancestors at the level
 of the dominant relationship in the upper and lower quadrants, respectively of the
@@ -43,7 +43,7 @@ the position in the ancestry vector of id_1's primary shared ancestor.  The seco
 the same for id_2.
 \item \code{psa_tibs}: like \code{primary_shared_ancestor} but a list column of tibbles.
 \item \code{pop_pre_1}, \code{pop_post_1}, \code{pop_dur_1}: the population from which the id_1 individual
-was sampled during the prekill, postikill, or during-reproduction sampling episodes,
+was sampled during the prekill, postkill, or during-reproduction sampling episodes,
 respectively.  NA for episodes in which the individual was not sampled
 \item \code{pop_pre_2}, \code{pop_post_2}, \code{pop_dur_2}: same as above for the id_2 individual.
 \item \code{sex_1}: sex of the id_1 individual,
