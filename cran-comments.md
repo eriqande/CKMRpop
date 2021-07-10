@@ -14,6 +14,10 @@ WINDOWS RELEASE, 4.1.0, win-builder: 0 errors | 0 warnings | 1 notes
   1 note = checking CRAN incoming feasibility
 WINDOWS DEVEL, (2021-06-14 r80502), win-builder: 0 errors | 0 warnings | 1 notes
   1 note = checking CRAN incoming feasibility
+WINDOWS DEVEL, (2021-07-07 r80695), win-builder: 1 errors | 0 warnings | 1 notes
+  1 note = checking CRAN incoming feasibility (package archived)
+  1 error = in example for find_ancestors_and_relatives_of_samples(). This doesn't
+    occur on any of my other test platforms. I don't know what the problem is here.
 MAC, local: 0 errors | 0 warnings | 1 notes
   1 note =  installed size is 6.0Mb. sub-directories of 1 Mb or more: data 1.1 Mb, doc 3.5 Mb
 LINUX, travis-ci: 0 errors | 0 warnings | 1 notes
@@ -28,28 +32,15 @@ Currently no known reverse dependencies
 
 ## User Notices
 
-* 3rd-revised, first submission to CRAN:
+* Hello CRAN maintainers.  This was accepted to CRAN in late June, but then
+I was notified by Prof. Brian Ripley that there were compiler errors on Solaris.
+I discovered the cause of that was an ambiguous cast situation in the C++ code that
+is not problematic on other compilers.  I fixed that quickly 
+by making a few explicit casts. I was letting all the other checks and things
+happen before resubmitting this, and unfortunately that ran into my vacation, so this
+did not get resubmitted before it was archived on CRAN.  Anyway, I hope it can be
+re-instated somehow.  Sorry for the hassle. Thank you and best wishes.
 
-    1. making changes requested by Julia Haider:
-        - Shortened title to 65 characters
-        - Used on.exit() to ensure working directory is returned to
-          correct directory in run_spip() even if the function fails.
-        - Left only three uses of `\dontrun`. I inspected the four previous
-          uses of `\dontrun{}` in the examples.  In three cases it
-          is used because the examples will not run without further installation that
-          cannot be done during CRAN checks:
-            * `install_spip()` installs software that is easy to do on a user's machine,
-            but not on CRAN's test servers.
-            * `spip_help()` and `spip_help_full()` require that `spip` be installed.
-          In the fourth case it was used only for the final step that prints several plots
-          and which takes > 5 seconds to run, but I removed those printing steps.
-        - Added `\value` tags (via the `@return` Roxygen tag) for all exported functions.
-    2. Additionally, added an example for `uncooked_spaghetti()`.
-    
-        
-* 2nd-Revised first submission to CRAN.
-    * Fix 1 NOTE: Modified example for `summarize_offspring_and_mate_numbers()` to be under 10 seconds. Thanks!
-    * Other remaining NOTE = first submission to CRAN
-* First-revised first submission to CRAN:
-    * Upon Uwe's recommendation, wrapped URLs in < and > in DESCRIPTION, and described 'spip' further.  Thanks!
-* Large installed size driven mostly by vignettes with plotted figures, and, on Linux, the compiled C++ libs.
+
+
+
