@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // rcpp_ancestors_and_relatives
 List rcpp_ancestors_and_relatives(List L, int n);
 RcppExport SEXP _CKMRpop_rcpp_ancestors_and_relatives(SEXP LSEXP, SEXP nSEXP) {

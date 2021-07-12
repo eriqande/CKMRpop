@@ -26,7 +26,6 @@ struct pedigree { // struct to hold all the nodes and info of a pedigree
   int N;               // the number of nodes
   int S;               // the number of samples
   struct node* nodes;  // the array of nodes, 1 for each indiv in the pedigree
-  IntegerVector samples;        // 0-based integer array of idxs of the samples
 };
 
 
@@ -168,7 +167,6 @@ struct pedigree *init_ped_graph(
   P->N = N;
   P->S = S;
   P->nodes = (struct node *)calloc(N, sizeof(node));
-  P->samples = clone(sample_vec);
 
   // cycle over the nodes and set default and initial values
   for(i=0;i<N;i++) {
@@ -212,12 +210,6 @@ struct pedigree *init_ped_graph(
     kid = down_matrix(r, 2);
     P->nodes[i].down[cn] = kid;
   }
-
-
-  // just checking here
-  //for(i=0;i<S;i++) {
-  //  Rcout << "i: " <<  i << " P->samples[i]: " << P->samples(i) << "\n";
-  //}
 
   return(P);
 }
