@@ -30,6 +30,32 @@ struct pedigree { // struct to hold all the nodes and info of a pedigree
 };
 
 
+
+
+
+
+//' Exponentiation function for integer arguments
+//'
+//' Solaris' compiler freaked hard on the pow function---couldn't figure
+//' out whether it should return an int or a float or something, when
+//' I used it to get very small powers of two. So I
+//' am going to write a silly, simple function (that only gets used a couple
+//' of times in an entire execution, and only with very
+//' small arguments, so the fact that it is not super efficient
+//' should not be a big problem).
+//' @param x the integer to raise 2 to.
+//' @name int_pow2
+//' @keywords internal
+int int_pow2(int x) {
+  int i;
+  int ret = 1;
+  for(i=0;i<x;i++) {
+    ret *= 2;
+  }
+  return(ret);
+}
+
+
 //' Depth first search down the pedigree to N generations.
 //'
 //' When you call this
@@ -217,10 +243,12 @@ List ancestor_vectors_cpp(
   int n
 ) {
   int i, j, A1, A2, T;
-  int OutL = (int)(pow(2.0, (double)(n + 1)) - 1.0 + 0.1);  // silly casting rigamoral so it compiles on Solaris
+  int OutL, TopJ;
   int SV_length = sv.size();
-
   List ret;
+
+  OutL = int_pow2(n + 1) -  1;  // int_pow2 is my own function 'cuz Solaris couldn't handle an overloaded pow function
+  TopJ = int_pow2(n) - 2;
 
   for(i=0;i<SV_length;i++) {
 
@@ -235,7 +263,7 @@ List ancestor_vectors_cpp(
 
     // cycle over individuals in all but the last generation,
     // filling forward in pairs from these.
-    for(j=0;j<=(int)(pow(2.0, (double)n)-2.0 + 0.1);j++) {  // more sillyness to get it to compile on Solaris.
+    for(j=0;j<=TopJ;j++) {  // more sillyness to get it to compile on Solaris.
       T = AncIdxs(j);
       if(T == -1 || Ped->nodes[T].n_up == 0) {
         A1 = -1;
