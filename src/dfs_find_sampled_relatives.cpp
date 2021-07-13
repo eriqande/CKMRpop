@@ -216,6 +216,26 @@ struct pedigree *init_ped_graph(
 
 
 
+// Function to free memory allocated to a pedigree struct
+//
+// Gets called after the pedigree struct has been all used.
+void free_ped_graph(pedigree *P) {
+  int N = P->N;
+  int i;
+
+  for(i=0;i<N;i++) {
+    if(P->nodes[i].n_down > 0) {
+      free(P->nodes[i].down);
+    }
+  }
+
+  free(P->nodes);
+
+  free(P);
+
+  return;
+}
+
 
 //' Function to make a vector of all the ancestors of an individual out to n generations.
 //'
@@ -321,6 +341,9 @@ List rcpp_ancestors_and_relatives(List L, int n) {
 
   // now, test anestor vectors function
   AV = ancestor_vectors_cpp(sv, nv, Ped, n);
+
+  // free the pedigree structure.  Otherwise memory leaks.
+  free_ped_graph(Ped);
 
   return(
     List::create(
