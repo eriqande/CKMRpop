@@ -67,7 +67,8 @@ of the dominant relationship. This is how you can distinguish full-sibs from hal
 }
 \examples{
 # get the input variables
-Samples <- species_1_slurped_results$samples
+# only take the first 50 samples to reduce time for example
+Samples <- species_1_slurped_results$samples[1:50, ]
 Pairs <- compile_related_pairs(Samples)
 result <- uncooked_spaghetti(Pairs, Samples)
 

@@ -137,6 +137,9 @@ of the dominant relationship. This is how you can distinguish full-sibs from hal
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -233,7 +236,8 @@ vertical background rectangles on the plot.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># get the input variables</span>
-<span class='va'>Samples</span> <span class='op'>&lt;-</span> <span class='va'>species_1_slurped_results</span><span class='op'>$</span><span class='va'>samples</span>
+<span class='co'># only take the first 50 samples to reduce time for example</span>
+<span class='va'>Samples</span> <span class='op'>&lt;-</span> <span class='va'>species_1_slurped_results</span><span class='op'>$</span><span class='va'>samples</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>50</span>, <span class='op'>]</span>
 <span class='va'>Pairs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compile_related_pairs.html'>compile_related_pairs</a></span><span class='op'>(</span><span class='va'>Samples</span><span class='op'>)</span>
 <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>uncooked_spaghetti</span><span class='op'>(</span><span class='va'>Pairs</span>, <span class='va'>Samples</span><span class='op'>)</span>
 

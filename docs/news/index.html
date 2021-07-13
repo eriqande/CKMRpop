@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Exponentiation function for integer arguments — int_pow2 • CKMRpop</title>
+<title>Changelog • CKMRpop</title>
 
 
 <!-- jquery -->
@@ -39,14 +39,7 @@
 
 
 
-<meta property="og:title" content="Exponentiation function for integer arguments — int_pow2" />
-<meta property="og:description" content="Solaris' compiler freaked hard on the pow function---couldn't figure
-out whether it should return an int or a float or something, when
-I used it to get very small powers of two. So I
-am going to write a silly, simple function (that only gets used a couple
-of times in an entire execution, and only with very
-small arguments, so the fact that it is not super efficient
-should not be a big problem)." />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -65,7 +58,7 @@ should not be a big problem)." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -130,38 +123,35 @@ should not be a big problem)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Exponentiation function for integer arguments</h1>
-    
-    <div class="hidden name"><code>int_pow2.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    <p>Solaris' compiler freaked hard on the pow function---couldn't figure
-out whether it should return an int or a float or something, when
-I used it to get very small powers of two. So I
-am going to write a silly, simple function (that only gets used a couple
-of times in an entire execution, and only with very
-small arguments, so the fact that it is not super efficient
-should not be a big problem).</p>
-    </div>
-
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the integer to raise 2 to.</p></td>
-    </tr>
-    </table>
-
-
+    <div id="ckmrpop-013" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.3">
+<a href="#ckmrpop-013" class="anchor"></a>CKMRpop 0.1.3<small> Unreleased </small>
+</h1>
+<ul>
+<li>Compiles on Solaris.</li>
+<li>Compatible with Rcpp 1.0.7. (0.1.2 suffered a segfault with the new Rcpp).</li>
+</ul>
+</div>
+    <div id="ckmrpop-012" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.2">
+<a href="#ckmrpop-012" class="anchor"></a>CKMRpop 0.1.2<small> 2021-06-24 </small>
+</h1>
+<ul>
+<li>This was on CRAN for a short while until a compiler issue on Solaris caused it to be archived.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

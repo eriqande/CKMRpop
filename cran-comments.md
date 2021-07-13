@@ -35,18 +35,27 @@ Currently no known reverse dependencies
 
 ## User Notices
 
-* Hello CRAN maintainers.  This was accepted to CRAN in late June, but then
-I was notified by Prof. Brian Ripley that there were compiler errors on Solaris.
-I discovered the cause of that was an ambiguous cast situation in the C++ code that
-is not problematic on other compilers.  I fixed that and was waiting as long as
-possible before resubmitting to allow all the other checks and build steps
-you might have been doing
-before resubmitting this.  When I went to test it again before final submission,
-I found one of the examples causing an Error on some platforms.  I finally
-tracked it down to an interaction between my code and some changes in RCpp 1.0.7,
-which went up on CRAN just recently.  I managed to figure that issue out using valgrind,
-and it was fairly easy to fix.   In the meantime, however, CKMRpop got archived on CRAN,
-so this now looks like a new submission.  Sorry about all of that.
+* 7/13/21. 
+    - Following Uwe's request, I ran with valgrind to find memory leaks. I fixed
+    them all by properly freeing one of the structures I had allocated to in
+    dfs_find_sampled_relatives.cpp.  Subsequently, valgrind reported no leaks/errors.
+    - I also reduced the amount of data in `uncooked_spaghetti_plot()` to shorten
+    its example run time.  (On win-devel and win-oldrelease checks it ran > 10 s before
+    I reduced it).
+
+* 7/12/21. 
+    - Hello CRAN maintainers.  This was accepted to CRAN in late June, but then
+    I was notified by Prof. Brian Ripley that there were compiler errors on Solaris.
+    I discovered the cause of that was an ambiguous cast situation in the C++ code that
+    is not problematic on other compilers.  I fixed that and was waiting as long as
+    possible before resubmitting to allow all the other checks and build steps
+    you might have been doing
+    before resubmitting this.  When I went to test it again before final submission,
+    I found one of the examples causing an Error on some platforms.  I finally
+    tracked it down to an interaction between my code and some changes in RCpp 1.0.7,
+    which went up on CRAN just recently.  I managed to figure that issue out using valgrind,
+    and it was fairly easy to fix.   In the meantime, however, CKMRpop got archived on CRAN,
+    so this now looks like a new submission.  Sorry about all of that.
 
 Thanks again for all that you do in support of the R community.
 
