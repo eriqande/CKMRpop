@@ -86,12 +86,12 @@ void search_down(
   }
 
 
-  //Rcout << "SearchingDown: i= " << i << " c= " << c << " n= " << n << " name= " << P->nodes[i].name << " C= " << C << " n_down= " << P->nodes[i].n_down << "\n";
+  Rcout << "SearchingDown: i= " << i << " c= " << c << " n= " << n << " name= " << P->nodes[i].name << " C= " << C << " n_down= " << P->nodes[i].n_down << "\n";
 
   if(c < n) {
     for(j=0;j<P->nodes[i].n_down;j++) {
       search_down(P->nodes[i].down[j], c + 1, n, P, C);
-      //Rcout << "  Would proceed down to j: " << j << " i: " << P->nodes[i].down[j] << " c: " << c + 1 <<  " n: " << n << "\n";
+      Rcout << "  Would proceed down to j: " << j << " i: " << P->nodes[i].down[j] << " c: " << c + 1 <<  " n: " << n << "\n";
     }
   }
 
@@ -126,7 +126,7 @@ void search_up(
 
   int j;
 
-  //Rcout << "SearchingUp: i= " << i << " c= " << c << " n= " << n << " name= " << P->nodes[i].name << " C= " << C << "\n";
+  Rcout << "SearchingUp: i= " << i << " c= " << c << " n= " << n << " name= " << P->nodes[i].name << " C= " << C << "\n";
 
   search_down(i, 0, n, P, C);
 
