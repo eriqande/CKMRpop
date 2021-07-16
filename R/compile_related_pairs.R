@@ -98,7 +98,11 @@ compile_related_pairs <- function(S) {
       anc_match_matrix = map2(
         .x = ancestors_1,
         .y = ancestors_2,
-        .f = function(x, y) outer(x, y, "==")
+        .f = function(x, y) {
+          z = outer(x, y, "==")
+          z[is.na(z)] <- FALSE
+          z
+        }
       )
     )  %>%
     mutate(no_relat = map_lgl(.x = anc_match_matrix, .f = function(x) all(x == FALSE))) %>%
