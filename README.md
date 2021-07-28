@@ -29,8 +29,8 @@ Installing this requires that you have your build environment set up for
 compiling RCpp code.
 
 After it is installed, load the library and download and install the
-spip binary appropriate for your system (Mac and Linux currently
-supported. Not Windows…yet):
+spip binary appropriate for your system (Mac, Linux, and Windows
+currently supported).
 
 ``` r
 library(CKMRpop)
