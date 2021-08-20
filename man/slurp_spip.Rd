@@ -4,7 +4,7 @@
 \alias{slurp_spip}
 \title{Read in the pedigree, census, and sampling information from the spip run}
 \usage{
-slurp_spip(dir, num_generations)
+slurp_spip(dir, num_generations, find_ancestors_and_relatives = TRUE)
 }
 \arguments{
 \item{dir}{the path to the directory where spip was run.  This is

@@ -1,0 +1,194 @@
+---
+title: "Using Other Simulation Programs with CKMRpop"
+resource_files:
+  - ../man/figures/spip-periods.svg
+author: "Eric C. Anderson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{using-other-simulation-programs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+CKMRpop was developed to crunch and slurp the output of the simulation
+package `spip`; however other programs can be configured to produce the output
+needed for CKMRpop to create the summaries that it does.
+
+Currently, the files of massaged spip output that CKMRpop uses look like the following
+(each file's name is listed between `==> XXX <==` markers, and then the first 10 lines of
+the file are shown).
+```
+% head spip*.tsv
+==> spip_deaths.tsv <==
+ID	year	age
+M3_0_0	5	2
+M3_0_4	5	2
+M3_0_5	5	2
+M3_0_10	5	2
+M3_0_13	5	2
+M3_0_16	5	2
+M3_0_18	5	2
+M3_0_20	5	2
+M3_0_21	5	2
+
+==> spip_genotypes.tsv <==
+F5_0_100	2/2
+M5_0_84	1/1
+M7_0_1	1/1
+M7_0_92	1/1
+F8_0_85	1/2
+F8_0_95	2/2
+M8_0_51	1/1
+M8_0_56	2/2
+M8_0_91	2/1
+F9_0_17	1/1
+
+==> spip_migrants.tsv <==
+year	age	event
+5	1	M4_0_6 0 -> 2
+5	1	M4_0_11 0 -> 1
+5	1	M4_0_12 0 -> 1
+5	1	M4_0_19 0 -> 1
+5	1	M4_0_20 0 -> 1
+5	1	M4_0_28 0 -> 1
+5	1	M4_0_29 0 -> 1
+5	1	M4_0_43 0 -> 1
+5	1	M4_0_44 0 -> 1
+
+==> spip_pedigree.tsv <==
+year	pop	kid	pa	ma
+0	0	M0_0_0	0	0
+0	0	M0_0_1	0	0
+0	0	M0_0_2	0	0
+0	0	M0_0_3	0	0
+0	0	M0_0_4	0	0
+0	0	M0_0_5	0	0
+0	0	M0_0_6	0	0
+0	0	M0_0_7	0	0
+0	0	M0_0_8	0	0
+
+==> spip_postkill_census.tsv <==
+year	pop	age	male	female
+5	0	1	99	101
+5	0	2	78	90
+5	0	3	66	73
+5	0	4	52	55
+5	0	5	49	50
+5	1	1	142	136
+5	1	2	94	87
+5	1	3	70	70
+5	1	4	54	57
+
+==> spip_prekill_census.tsv <==
+year	pop	age	male	female
+5	0	1	99	101
+5	0	2	125	125
+5	0	3	87	87
+5	0	4	70	70
+5	0	5	56	56
+5	1	1	142	136
+5	1	2	125	125
+5	1	3	87	87
+5	1	4	70	70
+
+==> spip_samples.tsv <==
+ID	syears_pre	pop_pre	syears_post	pop_post	syears_dur	pop_dur
+F5_0_100			10	0
+M5_0_84			10	0
+M7_0_1			12	0
+M7_0_92			11	0
+F8_0_85			11	0
+F8_0_95			10	0
+M8_0_51			10	0
+M8_0_56			13	0
+M8_0_91			10	0
+```
+The structure of the files is largely self-explanatory, but here are a
+few pertinent notes:
+
+1. The IDs of the individuals are of the form:
+`Sex + BornYear + "_" + Subpop_Index + "_" + AnInteger`.  So, for example,
+`F8_0_85` is a female (with ID 85) born in year 8.  Some functions within
+CKMRpop parse these IDs to retrieve the sex and birth year of the individual.
+
+2. The files are TAB-delimited.
+
+3. Migration events are recorded as space-delimited phrases like: `M4_0_6 0 -> 2`,
+which says that `M4_0_6` migrated from subpopulation `0` to subpopulation `2`.
+
+4. The pedigree must be the complete pedigree of the population.
+
+In order to use a different simulation program, one approach is to simply
+write out output files like the above from the simulation output of your
+simulation engine of choice.
+
+## Writing SLiM output to files
+
+By way of example, here I devise a simulation in SLiM (Version 3.6) (CITATION)
+that approximates the `species_1_simulation` in the other vignette. This SLiM script
+can be found in the package extras at:
+```{r, eval=FALSE}
+system.file("SLiM/slim-example-1.slim", package = "CKMRpop")
+```
+It looks like this:
+```cpp
+`r paste(readLines(system.file("SLiM/slim-example-1.slim", package = "CKMRpop")), collapse = "\n")`
+```
+
+
+
+If you have `SLiM` on your path, this SLiM simulation script can be run within R
+like this (using seed 1001, and also ensuring that the output files are written
+to an R temporary directory):
+```{r, eval=FALSE}
+slim_script <- normalizePath("../inst/SLiM/slim-example-1.slim")
+slim_script <-  system.file("SLiM/slim-example-1.slim", package = "CKMRpop")
+tdir = tempfile()
+dir.create(tdir, recursive = TRUE, showWarnings = FALSE)
+
+call <- paste0("cd ", tdir, "; ", "SLiM -s 1001 ", slim_script, collapse = "")
+
+system(call)
+
+```
+
+Once that is complete, the output from the simulation can be slurped up like this:
+```{r, eval=FALSE}
+library(CKMRpop)
+
+slurped <- slurp_spip(tdir, 2)
+```
+
+If you do that with SLiM (not done here, because SLiM is not installed on
+CRAN's servers) you can take the resulting `slurped` variable and run it through
+all the other functions in the `species_1_simulation` vignette and see how
+everything turns out. 
+
+For example, if we look at the offspring number of males and females we
+see that the way I set this SLiM simulation up there is at most one offspring
+per female each year.  That's a little silly, but it was my first real stab at
+using SLiM (which, by the way, is completely **AWESOME**).
+```{r, eval = FALSE}
+offs_and_mates = summarize_offspring_and_mate_numbers(
+  census_postkill = slurped$census_postkill,
+  pedigree = slurped$pedigree,
+  deaths = slurped$deaths,
+  lifetime_hexbin_width = c(1,2)
+)
+
+num_offs_plot = offs_and_mates$plot_age_specific_number_of_offspring
+
+num_offs_plot
+```
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("../man/figures/slim1_num_offs_plot.png")
+```
+At any rate, this shows the utility of inspecting the outputs of one's simulation

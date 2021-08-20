@@ -64,7 +64,7 @@ summarize_offspring_and_mate_numbers <- function(
     extract(
       pa_id,
       into = "pa_year",
-      regex = "M([0-9]+)_",
+      regex = "M([-0-9]+)_",
       remove = FALSE,
       convert = TRUE
     ) %>%
@@ -159,6 +159,11 @@ summarize_offspring_and_mate_numbers <- function(
       ),
     .id = "sex"
   )
+
+  if(any(is.na(num_offs$age))) {
+    message("NA ages in num_offs. Just filtering them out...")
+    num_offs <- num_offs %>% filter(!is.na(age))
+  }
 
   # we need to add explicit 0s in there for some ages to get the colors
   # consistent with the census plots

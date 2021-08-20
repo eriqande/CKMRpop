@@ -34,7 +34,8 @@
 #' # see Vignette: vignette("species_1_simulation", package = "CKMRpop")
 slurp_spip <- function(
   dir,
-  num_generations
+  num_generations,
+  find_ancestors_and_relatives = TRUE
 ) {
 
   ped_file <- file.path(dir, "spip_pedigree.tsv")
@@ -95,10 +96,22 @@ slurp_spip <- function(
       samp_years_list_dur = map(.x = samp_years_list_dur, .f = function(x) as.integer(x))
     ) %>%
     select(-syears_pre, -syears_post, -syears_dur) %>%
+    group_by(ID) %>%   # the next few lines are for collapsing multiply sampled individuals
+                       # for example from SLiM, into lists of years, as well.  But note that
+                       # the populations these individuals are sampled in really should be in
+                       # lists as well.  But I haven't dealt with that yet
+    summarise(
+      samp_years_list = list(c(unlist(samp_years_list))),
+      samp_years_list_pre = list(c(unlist(samp_years_list_pre))),
+      samp_years_list_dur = list(c(unlist(samp_years_list_dur))),
+      pop_pre = pop_pre[1],
+      pop_post = pop_post[1],
+      pop_dur = pop_dur[1]
+    ) %>%
     extract(
       ID,
       into = c("sex", "born_year", "born_pop"),
-      regex = "^([MF])([0-9]+)_([0-9]+)",
+      regex = "^([MF])([-0-9]+)_([0-9]+)",
       remove = FALSE,
       convert = TRUE
     ) %>%
@@ -107,21 +120,12 @@ slurp_spip <- function(
                                                     # so I make that the samp_years_list that gets used downstream.
 
 
-  #%>%  # now, here we add a list column with the ancestors over num_generations
-    #  mutate(
-    #    ancestor_list = ancestor_vectors(
-    #      indivs = ID,
-    #      ped = ped,
-    #      num_generations = num_generations + 1
-    #    )
-    #  )
-    # The above implementation is too slow for millions of individuals
-
-
   # Now, get a data frame of the samples' ancestor and relatives and
   # join it to samples.
-  SAR <- find_ancestors_and_relatives_of_samples(P = ped, S = samples$ID, num_generations)
-
+  if(find_ancestors_and_relatives == TRUE) {
+    SAR <- find_ancestors_and_relatives_of_samples(P = ped, S = samples$ID, num_generations)
+    samples = left_join(samples, SAR, by = c("ID" = "sample_id"))
+  }
 
   # finally, read in the genotypes
   genos <- readr::read_tsv(
@@ -135,7 +139,7 @@ slurp_spip <- function(
     pedigree = ped,
     census_prekill = census,
     census_postkill = post_census,
-    samples = left_join(samples, SAR, by = c("ID" = "sample_id")),
+    samples = samples,
     deaths = death_reports,
     genotypes = genos,
     migrants = migrants
