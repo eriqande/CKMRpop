@@ -7,7 +7,13 @@
 relatives_from_ancestry_vectors(A)
 }
 \arguments{
-\item{A}{a tibble that has columns of \code{ID} and \code{ancestors}.}
+\item{A}{a tibble that has columns of \code{ID} and \code{ancestors}. \code{ID} is the ID of the
+individual and \code{ancestors} is a list column that holds ancestry vectors.}
+}
+\value{
+This function returns the original input, \code{A}, with an additional
+list column called \code{relatives}, that includes vectors of the samples that
+each sample is related to.
 }
 \description{
 Given the ancestry vectors of a collection of individuals
@@ -17,6 +23,7 @@ Relatives are defined as individuals that share at least
 one ID within their ancestry vectors.  The way this function
 works is by, for each ID, making a vector of all the other IDs
 that include that original ID in its ancestry vectors.  Then,
-for each individuals, these vectors are catenated (one for each
-anestor) then they are uniqued and sorted.
+for each individual, these vectors are catenated (one for each
+ancestor) then values are made unique and sorted, and returned in
+a list column of relatives.
 }
