@@ -4,7 +4,12 @@
 \alias{slurp_spip}
 \title{Read in the pedigree, census, and sampling information from the spip run}
 \usage{
-slurp_spip(dir, num_generations, find_ancestors_and_relatives = TRUE)
+slurp_spip(
+  dir,
+  num_generations,
+  read_pedigree_file = TRUE,
+  find_ancestors_and_relatives = TRUE
+)
 }
 \arguments{
 \item{dir}{the path to the directory where spip was run.  This is
@@ -16,6 +21,20 @@ each sampled individual.  0 means just the individual themselves (so, not very
 interesting, and you likely wouldn't ever use it. 1 means up to
 and including the parents; 2 means up to and including the grandparents; 3 means up to
 and including the great grandparents; and so forth.}
+
+\item{read_pedigree_file}{A logical.  If TRUE, this function reads the pedgigree file
+and returns the pedigree in the output.  If FALSE the function does not read the pedigree
+file and merely returns an empty tibble for the \code{pedigree} component of the return
+object.  Note that if this is FALSE, the output will not have the information required
+for some functions like \code{count_and_plot_mate_distribution()}, which might fail.
+This option is intended for the case where the pedigree file is not written out
+by the simulation software.}
+
+\item{find_ancestors_and_relatives}{A logical indicating whether this function should
+read in the complete pedigree of the population and process it to find ancestors and
+relatives amongst the sampled individuals using the pedigree file (TRUE). Or whether it
+should not do that (FALSE).  If option \code{read_pedigree_file} is FALSE, then this must also
+be FALSE.}
 }
 \value{
 A list of tibbles.  Each tibble is a named component of

@@ -17,6 +17,18 @@
 #' interesting, and you likely wouldn't ever use it. 1 means up to
 #' and including the parents; 2 means up to and including the grandparents; 3 means up to
 #' and including the great grandparents; and so forth.
+#' @param read_pedigree_file A logical.  If TRUE, this function reads the pedgigree file
+#' and returns the pedigree in the output.  If FALSE the function does not read the pedigree
+#' file and merely returns an empty tibble for the `pedigree` component of the return
+#' object.  Note that if this is FALSE, the output will not have the information required
+#' for some functions like `count_and_plot_mate_distribution()`, which might fail.
+#' This option is intended for the case where the pedigree file is not written out
+#' by the simulation software.
+#' @param find_ancestors_and_relatives A logical indicating whether this function should
+#' read in the complete pedigree of the population and process it to find ancestors and
+#' relatives amongst the sampled individuals using the pedigree file (TRUE). Or whether it
+#' should not do that (FALSE).  If option `read_pedigree_file` is FALSE, then this must also
+#' be FALSE.
 #' @return A list of tibbles.  Each tibble is a named component of
 #' the return list.  The names are as follows:
 #' - `pedigree`
@@ -35,8 +47,13 @@
 slurp_spip <- function(
   dir,
   num_generations,
+  read_pedigree_file = TRUE,
   find_ancestors_and_relatives = TRUE
 ) {
+
+  if(read_pedigree_file == FALSE && find_ancestors_and_relatives == TRUE) {
+    stop("read_pedigree_file must by TRUE if find_ancestors_and_relatives is TRUE")
+  }
 
   ped_file <- file.path(dir, "spip_pedigree.tsv")
   census_file <- file.path(dir, "spip_prekill_census.tsv")
@@ -48,11 +65,15 @@ slurp_spip <- function(
 
 
   # read in the files, and do any necessary processing
-  ped <- vroom::vroom(
-    file = ped_file,
-    delim = "\t",
-    col_types = "iiccc"
-  )
+  if(find_ancestors_and_relatives == TRUE) {
+    ped <- vroom::vroom(
+      file = ped_file,
+      delim = "\t",
+      col_types = "iiccc"
+    )
+  } else {
+    ped <- tibble::tibble()
+  }
   census <- vroom::vroom(
     file = census_file,
     delim = "\t",
