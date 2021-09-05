@@ -194,6 +194,7 @@ Once that is complete, the output from the simulation can be slurped up like thi
 slurped <- slurp_spip(tdir, 2)
 ```
 
+
 If you do that with SLiM (not done here, because SLiM is not installed on
 CRAN's servers) you can take the resulting `slurped` variable and run it through
 all the other functions in the `species_1_simulation` vignette and see how
@@ -360,13 +361,14 @@ crel_from_full_pedigree <- compile_related_pairs(s2_old$samples)
 ```
 
 Now we simply need to compare those two results:
-```{r}
+```{r, eval=eval_slim_dep}
 methods_joined <- full_join(
   crel_from_full_pedigree,
   crel_from_pedIDs, 
   by = c("id_1", "id_2"),
   suffix = c("_full", "pedID")
 )
+
 
 # and check that the inferred pairwise relationships
 # between all pairs are the same, regardless of the method
@@ -376,6 +378,8 @@ methods_joined %>%
   count(comp_dom_relat)
 ```
 
+The above block is not evaluated, because SLiM cannot be installed on CRAN's servers that run
+checks on packages, but the both methods yielded the same results.
 
 ## Some notes
 
