@@ -376,7 +376,7 @@ tabulating just the `dom_relat` and `max_hit` over all the pairs.
 ```{r}
 relat_counts$highly_summarised
 ```
-This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with niece/nephew) pairs,
+This is telling us there are 1456 half-first-cousin pairs, 912 half-avuncular (aunt/uncle with niece/nephew) pairs,
 and so forth. 
 
 
@@ -399,19 +399,20 @@ Within each dominant relationship, the distinct ancestry matrices in each
 separate panel are named according to their number
 (`001`, `002`, `003`, etc), relationship and the
 `dr_hits` vector, (`FC[1,2]`) and the number of times this ancestry match matrix
-was observed amongst pairs in the sample (like ` - 4`).  So `006-FC[1,1] - 24` was
-observed in 24 of the sampled pairs.
+was observed amongst pairs in the sample (like ` - 4`).  So `006-FC[1,1] - 129` was
+observed in 129 of the sampled pairs.
 
-It is worth pointing out that the `014-FC[2,2] - 2` plot shows two pairwise relationships
-in which individual 2 is inbred, because its father's father (pp) and mother's father
-(mp) are the same individual. 
+It is worth pointing out that inbred individuals can be easily seen in these plots.
+For example, the `013-FC[2,2] - 5` plot shows five pairwise relationships
+in which individual 2 is inbred, because its father's mother (pm) and mother's mother
+(mm) are the same individual. 
 
 Let's look at the distinct ancestry match matrices from the siblings:
 ```{r, fig.width=7, fig.height=7}
 relat_counts$dr_plots$Si
 ```
-Here in `005` we see an interesting case where ind_1 and ind_2 are maternal half sibs,
-put also individual 2's father is also his/her uncle.
+Here in `004`--`008` we see some interesting case where ind_1 and ind_2 are half siblings,
+through one parent, but are also half-first cousins through the other..
 
 ### Tallying all the ancestry match matrices
 

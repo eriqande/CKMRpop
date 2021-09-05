@@ -91,6 +91,7 @@ if (getRversion() >= "2.15.1")  {
       "mean_fract",
       "mean_surv",
       "name",
+      "necessary_generations",
       "no_relat",
       "nodes",
       "nojit_age1",

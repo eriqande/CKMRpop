@@ -37,7 +37,7 @@ cat_dom_relat <- function(AMM) {
   stopifnot(Ng %% 1 == 0)
 
   # cycle over the relationships in order until we get one that is non-zero
-  Relats <- relationship_zone_names
+  Relats <- relationship_zone_names[necessary_generations <= Ng]
 
   for(r in Relats) {
     masks <- anc_match_masks(num_generations = Ng, R = r)

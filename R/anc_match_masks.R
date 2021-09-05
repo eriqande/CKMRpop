@@ -46,22 +46,22 @@ anc_match_masks <- function(
   # catch errors
   stopifnot(R %in% relationship_zone_names)
 
-  Ridx = which(R == relationship_zone_names)
+  #Ridx = which(R == relationship_zone_names)
   # here is the highest possible index for each number of generations, counting from
   # zero (so we have to bump it up when we test it)
-  maxis <- c(1, 3, 6, 10, 15)
-  if(Ridx > maxis[num_generations + 1]) {
-    stop(
-      paste(
-        "Requested relationship, ",
-        R,
-        ", is too distant for num_generations = ",
-        num_generations,
-        collapse = "",
-        sep = ""
-      )
-    )
-  }
+  # maxis <- c(1, 3, 6, 10, 15)
+  # if(Ridx > maxis[num_generations + 1]) {
+  #   stop(
+  #     paste(
+  #       "Requested relationship, ",
+  #       R,
+  #       ", is too distant for num_generations = ",
+  #       num_generations,
+  #       collapse = "",
+  #       sep = ""
+  #     )
+  #   )
+  # }
 
   L <- 2 ^ (num_generations + 1) - 1  # number of rows and columns in matrix
 

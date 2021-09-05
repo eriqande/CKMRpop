@@ -10,5 +10,7 @@ I simply defined these
 \description{
 A simple character vector of 15 relationship zones in the order they
 are encountered when traversing an ancestry match matrix out to four
-generations
+generations, ordered by contribution of a single ancestor in the zone
+to kinship and, within that, increasing in the maximum number of meioses
+between the shared ancestor and either of the two pair members.
 }

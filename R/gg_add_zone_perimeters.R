@@ -17,9 +17,9 @@ gg_add_zone_perimeters <- function(
   # now get the relationships to include
   num_relat <- c(1, 3, 6, 10, 15)[GenP1]
 
-  # get a tibble or perimeter endpoints
+  # get a tibble of perimeter endpoints
   rzp <- relationship_zone_perimeters() %>%
-    filter(zone %in% relationship_zone_names[1:num_relat])
+    filter(zone %in% relationship_zone_names[necessary_generations < GenP1])
 
 
   g2 <- g + annotate(

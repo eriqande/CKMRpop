@@ -41,12 +41,25 @@ NULL
 #'
 #' A simple character vector of 15 relationship zones in the order they
 #' are encountered when traversing an ancestry match matrix out to four
-#' generations
+#' generations, ordered by contribution of a single ancestor in the zone
+#' to kinship and, within that, increasing in the maximum number of meioses
+#' between the shared ancestor and either of the two pair members.
 #' @source I simply defined these
 #' @docType data
 #' @name relationship_zone_names
 NULL
 
+
+#' Minimum number of generations for the ancestry match matrix to include relationship types
+#'
+#' This is an integer vector of the `num_generations` required in the ancestry vectors
+#' in order to observe each type of relationship in the ancestry match matrix.  For example,
+#' if num_generations < 1 you can't see `PO` or `Si`.  This is named according to the
+#' relationship zone names.
+#' @source I simply defined these
+#' @docType data
+#' @name necessary_generations
+NULL
 
 #' The result of running spip in the species_1_simulation vignette.
 #'
