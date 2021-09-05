@@ -61,6 +61,9 @@
     <loc>https://eriqande.github.io/CKMRpop/reference/leslie_from_spip.html</loc>
   </url>
   <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/necessary_generations.html</loc>
+  </url>
+  <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/pipe.html</loc>
   </url>
   <url>
@@ -86,6 +89,9 @@
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/relationship_zone_perimeters.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/relatives_from_ancestry_vectors.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/relpair_conn_comps.html</loc>
@@ -155,5 +161,8 @@
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/articles/species_1_simulation.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/articles/using-other-simulation-programs.html</loc>
   </url>
 </urlset>

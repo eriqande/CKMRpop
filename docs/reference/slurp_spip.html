@@ -107,6 +107,9 @@ inside the directory where run_spip() was run." />
     <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
+    <li>
+      <a href="../articles/using-other-simulation-programs.html">Using Other Simulation Programs with CKMRpop</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -141,7 +144,12 @@ has left the files: <code>spip_pedigree.tsv</code>, <code>spip_prekill_census.ts
 inside the directory where <code><a href='run_spip.html'>run_spip()</a></code> was run.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slurp_spip</span><span class='op'>(</span><span class='va'>dir</span>, <span class='va'>num_generations</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>slurp_spip</span><span class='op'>(</span>
+  <span class='va'>dir</span>,
+  <span class='va'>num_generations</span>,
+  read_pedigree_file <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  find_ancestors_and_relatives <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +167,24 @@ each sampled individual.  0 means just the individual themselves (so, not very
 interesting, and you likely wouldn't ever use it. 1 means up to
 and including the parents; 2 means up to and including the grandparents; 3 means up to
 and including the great grandparents; and so forth.</p></td>
+    </tr>
+    <tr>
+      <th>read_pedigree_file</th>
+      <td><p>A logical.  If TRUE, this function reads the pedgigree file
+and returns the pedigree in the output.  If FALSE the function does not read the pedigree
+file and merely returns an empty tibble for the <code>pedigree</code> component of the return
+object.  Note that if this is FALSE, the output will not have the information required
+for some functions like <code><a href='count_and_plot_mate_distribution.html'>count_and_plot_mate_distribution()</a></code>, which might fail.
+This option is intended for the case where the pedigree file is not written out
+by the simulation software.</p></td>
+    </tr>
+    <tr>
+      <th>find_ancestors_and_relatives</th>
+      <td><p>A logical indicating whether this function should
+read in the complete pedigree of the population and process it to find ancestors and
+relatives amongst the sampled individuals using the pedigree file (TRUE). Or whether it
+should not do that (FALSE).  If option <code>read_pedigree_file</code> is FALSE, then this must also
+be FALSE.</p></td>
     </tr>
     </table>
 

@@ -62,6 +62,9 @@
     <li>
       <a href="../articles/species_1_simulation.html">Simulation from species 1 life history</a>
     </li>
+    <li>
+      <a href="../articles/using-other-simulation-programs.html">Using Other Simulation Programs with CKMRpop</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -404,7 +407,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or h
 <span class="co">#&gt;  8 GP              1    19</span>
 <span class="co">#&gt;  9 FC              3     2</span>
 <span class="co">#&gt; 10 A               3     1</span></code></pre></div>
-<p>This is telling us there are 194 half-first-cousin pairs, 130 half-avuncular (aunt/uncle with niece/nephew) pairs, and so forth.</p>
+<p>This is telling us there are 1456 half-first-cousin pairs, 912 half-avuncular (aunt/uncle with niece/nephew) pairs, and so forth.</p>
 </div>
 <div id="a-closer-look-within-the-dominant-relationships" class="section level3">
 <h3 class="hasAnchor">
@@ -429,12 +432,12 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or h
 <p>Each of these distinct ancestry match matrices for each dominant relationship can be visualized in a series of faceted plots, which are also returned. For example, the ancestry match matrices seen amongst the FC relationships are:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_plots</span><span class="op">$</span><span class="va">FC</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-25-1.png" width="672"> Within each dominant relationship, the distinct ancestry matrices in each separate panel are named according to their number (<code>001</code>, <code>002</code>, <code>003</code>, etc), relationship and the <code>dr_hits</code> vector, (<code>FC[1,2]</code>) and the number of times this ancestry match matrix was observed amongst pairs in the sample (like <code>- 4</code>). So <code>006-FC[1,1] - 24</code> was observed in 24 of the sampled pairs.</p>
-<p>It is worth pointing out that the <code>014-FC[2,2] - 2</code> plot shows two pairwise relationships in which individual 2 is inbred, because its father’s father (pp) and mother’s father (mp) are the same individual.</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-25-1.png" width="672"> Within each dominant relationship, the distinct ancestry matrices in each separate panel are named according to their number (<code>001</code>, <code>002</code>, <code>003</code>, etc), relationship and the <code>dr_hits</code> vector, (<code>FC[1,2]</code>) and the number of times this ancestry match matrix was observed amongst pairs in the sample (like <code>- 4</code>). So <code>006-FC[1,1] - 129</code> was observed in 129 of the sampled pairs.</p>
+<p>It is worth pointing out that inbred individuals can be easily seen in these plots. For example, the <code>013-FC[2,2] - 5</code> plot shows five pairwise relationships in which individual 2 is inbred, because its father’s mother (pm) and mother’s mother (mm) are the same individual.</p>
 <p>Let’s look at the distinct ancestry match matrices from the siblings:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_plots</span><span class="op">$</span><span class="va">Si</span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-26-1.png" width="672"> Here in <code>005</code> we see an interesting case where ind_1 and ind_2 are maternal half sibs, put also individual 2’s father is also his/her uncle.</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-26-1.png" width="672"> Here in <code>004</code>–<code>008</code> we see some interesting case where ind_1 and ind_2 are half siblings, through one parent, but are also half-first cousins through the other..</p>
 </div>
 <div id="tallying-all-the-ancestry-match-matrices" class="section level3">
 <h3 class="hasAnchor">
@@ -518,7 +521,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or h
   P <span class="op">=</span> <span class="va">crel</span>,
   n <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span></code></pre></div>
-<p>Now there are only 194 pairs instead of 3035.</p>
+<p>Now there are only 169 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because the number of pairs varies roughly quadratically, we would expect that the number of pairs to decrease by a quadratic factor of the number of samples:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># num samples before downsampling</span>
@@ -541,7 +544,7 @@ Likewise, <code>A</code> with <code>max_hit = 1</code> is a half-aunt-niece or h
 
 <span class="co"># compare these two things</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.06711590 0.06392092</span></code></pre></div>
+<span class="co">#&gt; [1] 0.06711590 0.05568369</span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div id="uncooked-spaghetti-plots" class="section level2">

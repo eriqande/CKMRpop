@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>function to test and use DFS stuff — rcpp_ancestors_and_relatives • CKMRpop</title>
+<title>Find relatives amongst samples from their ancestor vectors — relatives_from_ancestry_vectors • CKMRpop</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,17 @@
 
 
 
-<meta property="og:title" content="function to test and use DFS stuff — rcpp_ancestors_and_relatives" />
-<meta property="og:description" content="function to test and use DFS stuff" />
+<meta property="og:title" content="Find relatives amongst samples from their ancestor vectors — relatives_from_ancestry_vectors" />
+<meta property="og:description" content="Given the ancestry vectors of a collection of individuals
+(like the set of all sampled individuals from a simulation)
+this function just figures out who is a relative of whom.
+Relatives are defined as individuals that share at least
+one ID within their ancestry vectors.  The way this function
+works is by, for each ID, making a vector of all the other IDs
+that include that original ID in its ancestry vectors.  Then,
+for each individual, these vectors are catenated (one for each
+ancestor) then values are made unique and sorted, and returned in
+a list column of relatives." />
 
 
 
@@ -127,31 +136,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>function to test and use DFS stuff</h1>
+    <h1>Find relatives amongst samples from their ancestor vectors</h1>
     
-    <div class="hidden name"><code>rcpp_ancestors_and_relatives.Rd</code></div>
+    <div class="hidden name"><code>relatives_from_ancestry_vectors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>function to test and use DFS stuff</p>
+    <p>Given the ancestry vectors of a collection of individuals
+(like the set of all sampled individuals from a simulation)
+this function just figures out who is a relative of whom.
+Relatives are defined as individuals that share at least
+one ID within their ancestry vectors.  The way this function
+works is by, for each ID, making a vector of all the other IDs
+that include that original ID in its ancestry vectors.  Then,
+for each individual, these vectors are catenated (one for each
+ancestor) then values are made unique and sorted, and returned in
+a list column of relatives.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rcpp_ancestors_and_relatives</span><span class='op'>(</span><span class='va'>L</span>, <span class='va'>n</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>relatives_from_ancestry_vectors</span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>L</th>
-      <td><p>list of inputs</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>the number of generations back to go when computing the ancestor vectors
-and finding relatives.</p></td>
+      <th>A</th>
+      <td><p>a tibble that has columns of <code>ID</code> and <code>ancestors</code>. <code>ID</code> is the ID of the
+individual and <code>ancestors</code> is a list column that holds ancestry vectors.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>This function returns the original input, <code>A</code>, with an additional
+list column called <code>relatives</code>, that includes vectors of the samples that
+each sample is related to.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

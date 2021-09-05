@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>function to test and use DFS stuff — rcpp_ancestors_and_relatives • CKMRpop</title>
+<title>Minimum number of generations for the ancestry match matrix to include relationship types — necessary_generations • CKMRpop</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="function to test and use DFS stuff — rcpp_ancestors_and_relatives" />
-<meta property="og:description" content="function to test and use DFS stuff" />
+<meta property="og:title" content="Minimum number of generations for the ancestry match matrix to include relationship types — necessary_generations" />
+<meta property="og:description" content="This is an integer vector of the num_generations required in the ancestry vectors
+in order to observe each type of relationship in the ancestry match matrix.  For example,
+if num_generations &amp;lt; 1 you can't see PO or Si.  This is named according to the
+relationship zone names." />
 
 
 
@@ -127,31 +130,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>function to test and use DFS stuff</h1>
+    <h1>Minimum number of generations for the ancestry match matrix to include relationship types</h1>
     
-    <div class="hidden name"><code>rcpp_ancestors_and_relatives.Rd</code></div>
+    <div class="hidden name"><code>necessary_generations.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>function to test and use DFS stuff</p>
+    <p>This is an integer vector of the <code>num_generations</code> required in the ancestry vectors
+in order to observe each type of relationship in the ancestry match matrix.  For example,
+if num_generations &lt; 1 you can't see <code>PO</code> or <code>Si</code>.  This is named according to the
+relationship zone names.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rcpp_ancestors_and_relatives</span><span class='op'>(</span><span class='va'>L</span>, <span class='va'>n</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>L</th>
-      <td><p>list of inputs</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>the number of generations back to go when computing the ancestor vectors
-and finding relatives.</p></td>
-    </tr>
-    </table>
 
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>I simply defined these</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
