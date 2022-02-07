@@ -9,3 +9,5 @@ src/*.dll
 .DS_Store
 cluster_runs_5K_samples
 cluster_runs*
+total_outputs.rds
+total_outputs_pop3M.rds

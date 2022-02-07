@@ -39,6 +39,9 @@ downsample_pairs <- function(S, P, n) {
   if(nrow(S2) < n) {
     stop(paste0("Sorry, you only have ", nrow(S2), " sampling instances. Not enough to downsample them to n = ", n))
   }
+  if(n <= 1) {
+    stop("Sorry, when downsampling related pairs you must sample at least 2 individuals.")
+  }
 
   # now we need to downsample them
   S3 <- S2 %>%
@@ -73,6 +76,16 @@ downsample_pairs <- function(S, P, n) {
 
   # now, get the columns in the same order
   P4 <- P3[, names(P)]
+
+  # if there are no pairs in the sample, just return the empty_crp tibble
+  if(nrow(P4) == 0) {
+    return(
+      list(
+        ds_samples = Sret,
+        ds_pairs = empty_crp
+      )
+    )
+  }
 
   # finally, reset the connected components
   P5 <- P4 %>%

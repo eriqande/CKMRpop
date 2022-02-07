@@ -65,6 +65,11 @@ compile_related_pairs <- function(S) {
   S2 <- S %>%
     filter(map_int(relatives, length) > 1)
 
+  if(nrow(S2) == 0) {
+    ret <- empty_crp
+    return(ret)
+  }
+
   # keep just the columns that we will join in later
   S2_joiner <- S2 %>%
     select(-relatives)
@@ -78,10 +83,24 @@ compile_related_pairs <- function(S) {
 
   pairs_tib_1 <- as_tibble(pairs_mat)
 
+
+
+
   # count how many times each pair occurs. I think that all those that
   # occur only once will not end up being relatives. They just happen to both
   # be related someone else, but they are not closely enough related to count.
   # So, I will just record that now and verify.  Ultimately, we can probably toss them
+  pairs_tib_1_no_singletons <- pairs_tib_1 %>%
+    count(id_1, id_2) %>%
+    filter(n > 1)
+
+  # return an empty tibble if there are no more pairs left
+  if(nrow(pairs_tib_1_no_singletons) == 0) {
+    ret <- empty_crp
+    return(ret)
+  }
+
+  # append _1 and _2 to the different individuals in the pairs
   S2_1 <- S2_joiner
   names(S2_1) <- paste0(names(S2_1), "_1")
   S2_2 <- S2_joiner
@@ -89,9 +108,7 @@ compile_related_pairs <- function(S) {
 
   # join those together and compute the ancestor-matching matrix (the anc_match_matrix).
   # and, at the end, determine the "primary shared ancestors" (see the paper for an explanation).
-  pairs_tib_2 <- pairs_tib_1 %>%
-    count(id_1, id_2) %>%
-    filter(n > 1) %>%  # toss out the ones only seen once because they are not true relationships
+  pairs_tib_2 <- pairs_tib_1_no_singletons %>%  # toss out the ones only seen once because they are not true relationships
     left_join(S2_1, by = c("id_1" = "ID_1")) %>%
     left_join(S2_2, by = c("id_2" = "ID_2")) %>%
     mutate(

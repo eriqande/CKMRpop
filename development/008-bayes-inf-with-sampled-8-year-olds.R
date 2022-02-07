@@ -447,14 +447,15 @@ total_outputs <- list()
 i <- 0
 for(D in c(
   "cluster_runs_pop3M_samp1-8_10K_and_7K_total/RDSs/pop3M_ds10000",
-  "cluster_runs_pop3M_samp1-8_10K_and_7K_total/RDSs/pop3M_ds7000/"
+  "cluster_runs_pop3M_samp1-8_10K_and_7K_total/RDSs/pop3M_ds7000",
+  "cluster_runs_pop3M_samp1-8_10K_and_7K_total/RDSs/pop3M_ds15000"
 )) {
   i <- i + 1
   print(D)
   total_outputs[[i]] <- infer_pop_sizes(D)
 }
 
-names(total_outputs) <- c("ssz10000", "ssz7000")
+names(total_outputs) <- c("ssz10000", "ssz7000", "ssz15000")
 
 #write_rds(total_outputs, file = "total_outputs_pop3M.rds", compress = "xz")
 

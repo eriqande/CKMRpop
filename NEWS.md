@@ -1,3 +1,11 @@
+# CKMRpop 0.1.4.9999
+
+* Fixed an error that occurs when no pairs are present, by returning a tibble
+with the columns expected from `compile_related_pairs()` but 0 rows. Made the
+same fix in `downsample_pairs()`.  Thanks to Martin Sköld for filing GitHub issue #2
+about this.
+
+
 # CKMRpop 0.1.3
 
 * Compiles on Solaris.

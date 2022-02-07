@@ -133,3 +133,15 @@ NULL
 NULL
 
 
+
+#' A tibble like that produced by `compile_related_pairs()`, but with zero rows
+#'
+#' This is included here so that it can be used as the return value for
+#' `compile_related_pairs()` when there are no relatives.
+#'
+#' @source Just created it from the example
+#' @docType data
+#' @name empty_crp
+#' @usage empty_crp
+NULL
+

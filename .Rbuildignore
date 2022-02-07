@@ -18,7 +18,9 @@
 ^cluster_runs_samp1-8_7000_total$
 ^cluster_runs_samp1-8_5000_total$
 ^cluster_runs_samp1-8_10000_total$
+^cluster_runs_pop3M_samp1-8_10K_and_7K_total$
 ^figure_creation$
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^total_outputs_pop3M\.rds$
