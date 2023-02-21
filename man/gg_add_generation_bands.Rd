@@ -24,8 +24,10 @@ is just rainbow order starting from red.}
 
 \item{add_impossibles}{pass TRUE if you want to blot out the cells that are not possible
 because they conflict with the sex of the individuals.  You set the fill of the
-impossibles with a \code{scale_fill_manual()} in the main ggplot call.  i.e.,\preformatted{scale_fill_manual(values = c(`FALSE` = NA, Impossible = "white", `TRUE` = "black"))
-}}
+impossibles with a \code{scale_fill_manual()} in the main ggplot call.  i.e.,
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{scale_fill_manual(values = c(`FALSE` = NA, Impossible = "white", `TRUE` = "black"))
+}\if{html}{\out{</div>}}}
 }
 \description{
 Pass it the original ggplot, and this will return it, with the bands added
