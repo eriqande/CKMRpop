@@ -97,7 +97,8 @@ is just rainbow order starting from red.</p></dd>
 <dt>add_impossibles</dt>
 <dd><p>pass TRUE if you want to blot out the cells that are not possible
 because they conflict with the sex of the individuals.  You set the fill of the
-impossibles with a <code>scale_fill_manual()</code> in the main ggplot call.  i.e.,</p><div class="sourceCode"><pre><code><span><span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`FALSE` <span class="op">=</span> <span class="cn">NA</span>, Impossible <span class="op">=</span> <span class="st">"white"</span>, `TRUE` <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div></dd>
+impossibles with a <code>scale_fill_manual()</code> in the main ggplot call.  i.e.,</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="cn">NA</span>, <span class="at">Impossible =</span> <span class="st">"white"</span>, <span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"black"</span>))</span></code></pre><p></p></div></dd>
 
 </dl></div>
 

@@ -266,9 +266,9 @@ functions in CKMRpop that make this quick and easy to do.</p>
 check to see what the population demographics look like:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggplot_census_by_year_age_sex.html">ggplot_census_by_year_age_sex</a></span><span class="op">(</span><span class="va">slurped</span><span class="op">$</span><span class="va">census_postkill</span><span class="op">)</span></span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-8-1.png" width="672">
-This shows that the function <code><a href="../reference/leslie_from_spip.html">leslie_from_spip()</a></code> does a good
-job of finding the initial population numbers that accord with the
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p>This shows that the function <code><a href="../reference/leslie_from_spip.html">leslie_from_spip()</a></code> does a
+good job of finding the initial population numbers that accord with the
 stable age distribution.</p>
 </div>
 <div class="section level3">
@@ -570,8 +570,8 @@ also returned. For example, the ancestry match matrices seen amongst the
 FC relationships are:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_plots</span><span class="op">$</span><span class="va">FC</span></span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-25-1.png" width="672">
-Within each dominant relationship, the distinct ancestry matrices in
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p>Within each dominant relationship, the distinct ancestry matrices in
 each separate panel are named according to their number
 (<code>001</code>, <code>002</code>, <code>003</code>, etc),
 relationship and the <code>dr_hits</code> vector, (<code>FC[1,2]</code>)
@@ -588,10 +588,10 @@ individual.</p>
 siblings:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">relat_counts</span><span class="op">$</span><span class="va">dr_plots</span><span class="op">$</span><span class="va">Si</span></span></code></pre></div>
-<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-26-1.png" width="672">
-Here in <code>004</code>–<code>008</code> we see some interesting case
-where ind_1 and ind_2 are half siblings, through one parent, but are
-also half-first cousins through the other..</p>
+<p><img src="species_1_simulation_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
+<p>Here in <code>004</code>–<code>008</code> we see some interesting
+case where ind_1 and ind_2 are half siblings, through one parent, but
+are also half-first cousins through the other..</p>
 </div>
 <div class="section level3">
 <h3 id="tallying-all-the-ancestry-match-matrices">Tallying all the ancestry match matrices<a class="anchor" aria-label="anchor" href="#tallying-all-the-ancestry-match-matrices"></a>
@@ -702,7 +702,7 @@ them were sampled in two different years). We do like so:</p>
 <span>  P <span class="op">=</span> <span class="va">crel</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Now there are only 206 pairs instead of 3035.</p>
+<p>Now there are only 218 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because
 the number of pairs varies roughly quadratically, we would expect that
 the number of pairs to decrease by a quadratic factor of the number of
@@ -728,7 +728,7 @@ samples:</p>
 <span></span>
 <span><span class="co"># compare these two things</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.06711590 0.06787479</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.06711590 0.07182867</span></span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div class="section level2">
