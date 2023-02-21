@@ -72,9 +72,12 @@ reference:
     Package data sets that define values used primarily internally in functions
     or for some external examples
 - contents:
+  - empty_crp
   - example_amms
   - half_first_cousin_amm
+  - necessary_generations
   - relationship_zone_names
+  - relatives_from_ancestry_vectors
 
 
 

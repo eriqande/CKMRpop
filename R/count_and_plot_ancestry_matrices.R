@@ -8,8 +8,9 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
   g <- ggplot() +
     geom_tile(
       data = ATP,
-      mapping = aes(x = ind_1, y = ind_2, fill = amm),
-      colour = "black"
+      mapping = aes(x = ind_1, y = ind_2),
+      colour = "black",
+      fill = NA
     ) # put this down to establish a discrete scale
 
   g <- gg_add_generation_bands(
@@ -17,27 +18,56 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
     L = max(ATP$x),
     add_impossibles = add_imps,
     alpha = 0.3
-  ) +
-    scale_fill_manual(values = c(`FALSE` = NA, Impossible = "white", `TRUE` = "black")) +
-    geom_tile(
-      data = ATP,
-      mapping = aes(x = ind_1, y = ind_2, fill = amm),
-      colour = "black"
-    ) +  # put it down again to have it on top
-    theme_bw() +
-    theme(
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
-      axis.text.x = element_text(angle = 90, hjust = 1.0, vjust = 0.5)
-    ) +
-    guides(fill = guide_legend(title = "Ancestry Match\nMatrix Element"))
-
-  # finally, add the zone perimeters
-  g <- gg_add_zone_perimeters(
-    g = g,
-    L = max(ATP$x),
-    perisize = perimeter_width
   )
+
+  if(add_imps == TRUE) {
+     ATP2 <- ATP %>%
+       filter(amm %in% c("TRUE", "Impossible"))
+     g <- g +
+       scale_fill_manual(values = c(Impossible = "white", `TRUE` = "black")) +
+       geom_tile(
+         data = ATP2,
+         mapping = aes(x = ind_1, y = ind_2, fill = amm),
+         colour = "black"
+       )
+   }
+   if(add_imps == FALSE) {
+     ATP2 <- ATP %>%
+       filter(amm == "TRUE")
+     g <- g +
+       #scale_fill_manual(values = c(`TRUE` = "black")) +
+       geom_tile(
+         data = ATP2,
+         mapping = aes(x = ind_1, y = ind_2),
+         colour = "black"
+       )
+   }
+
+   g <- g +
+     guides(
+       fill =
+         guide_legend(
+           title = "Ancestry Match\nMatrix Element",
+           override.aes = list(fill = c("white", "black"))
+         )
+       )
+
+   # finally, add the zone perimeters
+   g <- gg_add_zone_perimeters(
+     g = g,
+     L = max(ATP$x),
+     perisize = perimeter_width
+   )
+
+  # and then also add the cell perimeters again...
+   g <- g +
+     geom_tile(
+       data = ATP,
+       mapping = aes(x = ind_1, y = ind_2),
+       colour = "black",
+       fill = NA
+     )
+
 
   g
 }
