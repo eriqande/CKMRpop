@@ -11,10 +11,9 @@ simulated population.
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/eriqande/CKMRpop.svg?branch=main)](https://travis-ci.com/eriqande/CKMRpop)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/CKMRpop)](https://CRAN.R-project.org/package=CKMRpop)
+[![R-CMD-check](https://github.com/eriqande/CKMRpop/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eriqande/CKMRpop/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Installation
@@ -55,9 +54,9 @@ package website, or you can go directly to it
 
 ## Literature Cited
 
-<div id="refs" class="references">
+<div id="refs" class="references csl-bib-body hanging-indent">
 
-<div id="ref-anderson2005spip">
+<div id="ref-anderson2005spip" class="csl-entry">
 
 Anderson, Eric C, and Kevin K Dunham. 2005. “Spip 1.0: A Program for
 Simulating Pedigrees and Genetic Data in Age-Structured Populations.”

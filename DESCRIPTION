@@ -41,8 +41,8 @@ Imports:
     tidyr,
     vroom
 Suggests:
+    hexbin,
     knitr,
-    rmarkdown,
-    tidyverse
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2

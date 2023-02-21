@@ -28,8 +28,8 @@ individuals in samples taken
 from the simulated population.  
 
 <!-- badges: start -->
-[ ![Travis build status](https://travis-ci.com/eriqande/CKMRpop.svg?branch=main) ](https://travis-ci.com/eriqande/CKMRpop)
 [![CRAN status](https://www.r-pkg.org/badges/version/CKMRpop)](https://CRAN.R-project.org/package=CKMRpop)
+[![R-CMD-check](https://github.com/eriqande/CKMRpop/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eriqande/CKMRpop/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 

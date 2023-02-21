@@ -4,7 +4,7 @@ author: "Eric C. Anderson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{simple-example-with-migration}
+  %\VignetteIndexEntry{A Simple Example With Migration}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -29,9 +29,10 @@ etc.  We will make it simple.
 
 First load some packages:
 ```{r, message=FALSE}
-library(tidyverse)
+library(dplyr)
 library(CKMRpop)
 ```
+
 ## Basic Demography 
 
 The basic demography for each, is given below.  We assume no

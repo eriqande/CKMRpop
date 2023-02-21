@@ -9,7 +9,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{using-other-simulation-programs}
+  %\VignetteIndexEntry{Using Other Simulation Programs with CKMRpop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -147,11 +147,11 @@ population genetic simulation software, SLiM Version 3 [@haller2019slim].
 Before doing anything else here, let us load some useful libraries:
 ```{r}
 library(CKMRpop)
-library(tidyverse)
+library(dplyr)
 
 # also define a variable that says whether or not we should evaluate
 # code chunks that depend on having SLiM installed on the system.  
-eval_slim_dep <- file.exists("/usr/local/bin/slim")
+eval_slim_dep <- FALSE # file.exists("/usr/local/bin/slim")  # SLIM 4 has broken this a little.  Must fix
 ```
 
 By way of example, here I devise a simulation in SLiM, Version 3.6,

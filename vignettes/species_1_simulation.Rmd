@@ -4,7 +4,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{species_1_simulation}
+  %\VignetteIndexEntry{Simulation from species 1 life history}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,8 +17,13 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, message=FALSE}
-library(tidyverse)
+library(dplyr)
 library(CKMRpop)
+library(ggplot2)
+library(ggraph)
+library(hexbin)
+library(purrr)
+
 ```
 
 
@@ -653,8 +658,6 @@ There are some rather large connected components there.  Let's plot them.
 ```{r, fig.width=6, fig.height=6}
 # for some reason, the aes() function gets confused unless
 # ggraph library is loaded...
-library(ggraph)
-
 one_gen_graph <- plot_conn_comps(ssp_1gen$ds_pairs)
 one_gen_graph$plot
 
