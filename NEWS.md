@@ -6,6 +6,7 @@ same fix in `downsample_pairs()`.  Thanks to Martin Sköld for filing GitHub iss
 about this.
 * Removed tidyverse from the Suggests.
 * Added GitHub Actions for checking and pkgdown
+* Fixed color problems in plots occurring from ggplot2 updates
 
 
 # CKMRpop 0.1.3

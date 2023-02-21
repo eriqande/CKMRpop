@@ -176,6 +176,7 @@ see what the population demographics look like:
 ```{r, fig.width = 7, fig.height = 5.5}
 ggplot_census_by_year_age_sex(slurped$census_postkill)
 ```
+
 This shows that the function `leslie_from_spip()` does a good job of finding the
 initial population numbers that accord with the stable age distribution.
 
@@ -192,6 +193,7 @@ The first 40 rows look like this:
 surv_rates$survival_tibble %>%
   slice(1:40)
 ```
+
 The second part of the list holds a plot with histograms of age-specific,
 observed survival rates across all years.  The blue line is the mean over
 all years.
@@ -394,12 +396,14 @@ look at the `dr_counts` component of the output:
 ```{r}
 relat_counts$dr_counts
 ```
+
 Each of these distinct ancestry match matrices for each dominant relationship can
 be visualized in a series of faceted plots, which are also returned.  For example,
 the ancestry match matrices seen amongst the FC relationships are:
 ```{r, fig.width=7, fig.height=7}
 relat_counts$dr_plots$FC
 ```
+
 Within each dominant relationship, the distinct ancestry matrices in each
 separate panel are named according to their number
 (`001`, `002`, `003`, etc), relationship and the
@@ -416,6 +420,7 @@ Let's look at the distinct ancestry match matrices from the siblings:
 ```{r, fig.width=7, fig.height=7}
 relat_counts$dr_plots$Si
 ```
+
 Here in `004`--`008` we see some interesting case where ind_1 and ind_2 are half siblings,
 through one parent, but are also half-first cousins through the other..
 
@@ -654,6 +659,7 @@ ssp_1gen$ds_pairs %>%
   count(conn_comp) %>%
   arrange(desc(n))
 ```
+
 There are some rather large connected components there.  Let's plot them. 
 ```{r, fig.width=6, fig.height=6}
 # for some reason, the aes() function gets confused unless

@@ -59,7 +59,7 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
      perisize = perimeter_width
    )
 
-  # and then also add the cell perimeters again...
+   # and then also add the cell perimeters again...
    g <- g +
      geom_tile(
        data = ATP,
@@ -67,9 +67,7 @@ basic_amm_plot <- function(ATP, add_imps = FALSE, perimeter_width = 0.5) {
        colour = "black",
        fill = NA
      )
-
-
-  g
+   g
 }
 
 #' Count up the number of different kinds of related pairs and make a plot
@@ -165,6 +163,7 @@ count_and_plot_ancestry_matrices <- function(
         colour = "white",
         size = white_ball_size
       ) +
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
       ggforce::facet_wrap_paginate(~ ID, ncol = ncol, nrow = nrow, page = i)
 
     g
@@ -248,6 +247,7 @@ count_and_plot_ancestry_matrices <- function(
         size = white_ball_size
       ) +
       ggtitle(paste0("Dominant relationship: ", n)) +
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
       ggforce::facet_wrap_paginate(~ ID, ncol = dcols, nrow = drows, page = 1)
   })
   names(dr_plots) <- names(dr_list)
