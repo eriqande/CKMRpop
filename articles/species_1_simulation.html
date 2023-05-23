@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CKMRpop</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3.9999</span>
       </span>
     </div>
 
@@ -295,7 +295,7 @@ survival fractions. The first 40 rows look like this:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    21     0    18 female     2      3        1  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    22     0    19 female     2      3        1  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    23     0    20 female     2      3        0  </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 30 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span></code></pre></div>
 <p>The second part of the list holds a plot with histograms of
 age-specific, observed survival rates across all years. The blue line is
 the mean over all years.</p>
@@ -430,25 +430,25 @@ gene flow). Here we show the first 10 pairs in the samples:</p>
 <code class="sourceCode R"><span><span class="va">crel</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 31</span></span></span>
-<span><span class="co">#&gt;    id_1   id_2  conn_…¹ dom_r…² max_hit dr_hits upper…³ times…⁴ prima…⁵ psa_tibs</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> F47_0… M53_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       3 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> F47_0… M53_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       3 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> F47_0… F48_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>      11 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> F47_0… F50_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> F47_0… F50_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>      11 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> F47_0… F50_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> F47_0… F52_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> F47_0… F57_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>      11 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> F47_0… M49_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> F47_0… M51_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 21 more variables: pop_pre_1 &lt;chr&gt;, pop_post_1 &lt;chr&gt;, pop_dur_1 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   pop_pre_2 &lt;chr&gt;, pop_post_2 &lt;chr&gt;, pop_dur_2 &lt;chr&gt;, sex_1 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sex_2 &lt;chr&gt;, born_year_1 &lt;int&gt;, born_year_2 &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_pre_1 &lt;list&gt;, samp_years_list_1 &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt;    id_1     id_2      conn_comp dom_relat max_hit dr_hits   upper_member</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> F47_0_19 M53_0_109         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> F47_0_19 M53_0_11          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> F47_0_25 F48_0_4           1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> F47_0_25 F50_0_118         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> F47_0_25 F50_0_17          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> F47_0_25 F50_0_96          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> F47_0_25 F52_0_18          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> F47_0_25 F57_0_84          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> F47_0_25 M49_0_118         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> F47_0_25 M51_0_135         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: times_encountered &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   primary_shared_ancestors &lt;list&gt;, psa_tibs &lt;list&gt;, pop_pre_1 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   pop_post_1 &lt;chr&gt;, pop_dur_1 &lt;chr&gt;, pop_pre_2 &lt;chr&gt;, pop_post_2 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   pop_dur_2 &lt;chr&gt;, sex_1 &lt;chr&gt;, sex_2 &lt;chr&gt;, born_year_1 &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   born_year_2 &lt;int&gt;, samp_years_list_pre_1 &lt;list&gt;, samp_years_list_1 &lt;list&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_dur_1 &lt;list&gt;, samp_years_list_post_1 &lt;list&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_pre_2 &lt;list&gt;, samp_years_list_2 &lt;list&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_dur_2 &lt;list&gt;, samp_years_list_post_2 &lt;list&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_pre_2 &lt;list&gt;, samp_years_list_2 &lt;list&gt;, …</span></span></span></code></pre></div>
 <p>Because some pairs might be related in multiple ways (i.e., they
 might be paternal half-sibs, but, through their mother’s lineage, they
 might also be half-first cousins), things can get complicated. However,
@@ -563,7 +563,7 @@ can look at the <code>dr_counts</code> component of the output:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> FC        <span style="color: #949494;">&lt;int [2]&gt;</span>       1 <span style="color: #949494;">&lt;lgl [7 × 7]&gt;</span>      103    <span style="text-decoration: underline;">1</span>572 008-FC[1,1] - 103</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> FC        <span style="color: #949494;">&lt;int [2]&gt;</span>       2 <span style="color: #949494;">&lt;lgl [7 × 7]&gt;</span>       26    <span style="text-decoration: underline;">1</span>572 009-FC[2,2] - 26 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> FC        <span style="color: #949494;">&lt;int [2]&gt;</span>       2 <span style="color: #949494;">&lt;lgl [7 × 7]&gt;</span>       24    <span style="text-decoration: underline;">1</span>572 010-FC[2,2] - 24 </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 55 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 55 more rows</span></span></span></code></pre></div>
 <p>Each of these distinct ancestry match matrices for each dominant
 relationship can be visualized in a series of faceted plots, which are
 also returned. For example, the ancestry match matrices seen amongst the
@@ -616,7 +616,7 @@ accessed with:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;lgl [7 × 7]&gt;</span>      167</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;lgl [7 × 7]&gt;</span>      134</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;lgl [7 × 7]&gt;</span>      129</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 55 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 55 more rows</span></span></span></code></pre></div>
 <p>But more useful for visualizing things is
 <code>relat_counts$anc_mat_plots</code> which is a list that holds a
 series of pages/plots showing all the different ancestry matrices seen.
@@ -701,8 +701,18 @@ them were sampled in two different years). We do like so:</p>
 <span>  S <span class="op">=</span> <span class="va">slurped</span><span class="op">$</span><span class="va">samples</span>,</span>
 <span>  P <span class="op">=</span> <span class="va">crel</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>Now there are only 218 pairs instead of 3035.</p>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in</span></span>
+<span><span class="co">#&gt; dplyr 1.1.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `reframe()` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> When switching from `summarise()` to `reframe()`, remember that `reframe()`</span></span>
+<span><span class="co">#&gt;   always returns an ungrouped data frame and adjust accordingly.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">CKMRpop</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
+<p>Now there are only 184 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because
 the number of pairs varies roughly quadratically, we would expect that
 the number of pairs to decrease by a quadratic factor of the number of
@@ -728,7 +738,7 @@ samples:</p>
 <span></span>
 <span><span class="co"># compare these two things</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.06711590 0.07182867</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.06711590 0.06062603</span></span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div class="section level2">
@@ -816,25 +826,25 @@ connected component, 1.</p>
 <code class="sourceCode R"><span><span class="va">crel</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 31</span></span></span>
-<span><span class="co">#&gt;    id_1   id_2  conn_…¹ dom_r…² max_hit dr_hits upper…³ times…⁴ prima…⁵ psa_tibs</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> F47_0… M53_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       3 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> F47_0… M53_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       3 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> F47_0… F48_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>      11 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> F47_0… F50_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> F47_0… F50_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>      11 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> F47_0… F50_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> F47_0… F52_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> F47_0… F57_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>      11 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> F47_0… M49_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> F47_0… M51_…       1 FC            1 &lt;int&gt;        <span style="color: #BB0000;">NA</span>       4 &lt;list&gt;  &lt;tibble&gt;</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 21 more variables: pop_pre_1 &lt;chr&gt;, pop_post_1 &lt;chr&gt;, pop_dur_1 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   pop_pre_2 &lt;chr&gt;, pop_post_2 &lt;chr&gt;, pop_dur_2 &lt;chr&gt;, sex_1 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sex_2 &lt;chr&gt;, born_year_1 &lt;int&gt;, born_year_2 &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_pre_1 &lt;list&gt;, samp_years_list_1 &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt;    id_1     id_2      conn_comp dom_relat max_hit dr_hits   upper_member</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> F47_0_19 M53_0_109         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> F47_0_19 M53_0_11          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> F47_0_25 F48_0_4           1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> F47_0_25 F50_0_118         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> F47_0_25 F50_0_17          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> F47_0_25 F50_0_96          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> F47_0_25 F52_0_18          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> F47_0_25 F57_0_84          1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> F47_0_25 M49_0_118         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> F47_0_25 M51_0_135         1 FC              1 <span style="color: #949494;">&lt;int [2]&gt;</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: times_encountered &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   primary_shared_ancestors &lt;list&gt;, psa_tibs &lt;list&gt;, pop_pre_1 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   pop_post_1 &lt;chr&gt;, pop_dur_1 &lt;chr&gt;, pop_pre_2 &lt;chr&gt;, pop_post_2 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   pop_dur_2 &lt;chr&gt;, sex_1 &lt;chr&gt;, sex_2 &lt;chr&gt;, born_year_1 &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   born_year_2 &lt;int&gt;, samp_years_list_pre_1 &lt;list&gt;, samp_years_list_1 &lt;list&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_dur_1 &lt;list&gt;, samp_years_list_post_1 &lt;list&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_pre_2 &lt;list&gt;, samp_years_list_2 &lt;list&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_dur_2 &lt;list&gt;, samp_years_list_post_2 &lt;list&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   samp_years_list_pre_2 &lt;list&gt;, samp_years_list_2 &lt;list&gt;, …</span></span></span></code></pre></div>
 <p>It should clearly be noted that the size of the connected components
 will be affected by the size of the population (with smaller
 populations, more of the related pairs will share members) and the
@@ -867,14 +877,7 @@ that our figures are not overwhelmed by connected components.</p>
 <span>  S <span class="op">=</span> <span class="va">slurped_1gen</span><span class="op">$</span><span class="va">samples</span>,</span>
 <span>  P <span class="op">=</span> <span class="va">crel_1gen</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">150</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in</span></span>
-<span><span class="co">#&gt; dplyr 1.1.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `reframe()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> When switching from `summarise()` to `reframe()`, remember that `reframe()`</span></span>
-<span><span class="co">#&gt;   always returns an ungrouped data frame and adjust accordingly.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">CKMRpop</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue to the authors.</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>And also tally up the number of pairs in different connected
 components:</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
@@ -894,7 +897,7 @@ components:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        25     3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        24     2</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         1     1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 17 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 17 more rows</span></span></span></code></pre></div>
 <p>There are some rather large connected components there. Let’s plot
 them.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
