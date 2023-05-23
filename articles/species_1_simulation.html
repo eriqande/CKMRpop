@@ -701,18 +701,8 @@ them were sampled in two different years). We do like so:</p>
 <span>  S <span class="op">=</span> <span class="va">slurped</span><span class="op">$</span><span class="va">samples</span>,</span>
 <span>  P <span class="op">=</span> <span class="va">crel</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in</span></span>
-<span><span class="co">#&gt; dplyr 1.1.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `reframe()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> When switching from `summarise()` to `reframe()`, remember that `reframe()`</span></span>
-<span><span class="co">#&gt;   always returns an ungrouped data frame and adjust accordingly.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">CKMRpop</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<p>Now there are only 184 pairs instead of 3035.</p>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Now there are only 194 pairs instead of 3035.</p>
 <p>We can do a little calculation to see if that makes sense: because
 the number of pairs varies roughly quadratically, we would expect that
 the number of pairs to decrease by a quadratic factor of the number of
@@ -738,7 +728,7 @@ samples:</p>
 <span></span>
 <span><span class="co"># compare these two things</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sq_rat</span>, <span class="va">ratio</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.06711590 0.06062603</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.06711590 0.06392092</span></span></code></pre></div>
 <p>That checks out.</p>
 </div>
 <div class="section level2">
@@ -877,7 +867,17 @@ that our figures are not overwhelmed by connected components.</p>
 <span>  S <span class="op">=</span> <span class="va">slurped_1gen</span><span class="op">$</span><span class="va">samples</span>,</span>
 <span>  P <span class="op">=</span> <span class="va">crel_1gen</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">150</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in</span></span>
+<span><span class="co">#&gt; dplyr 1.1.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `reframe()` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> When switching from `summarise()` to `reframe()`, remember that `reframe()`</span></span>
+<span><span class="co">#&gt;   always returns an ungrouped data frame and adjust accordingly.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">CKMRpop</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p>And also tally up the number of pairs in different connected
 components:</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
