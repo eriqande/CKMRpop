@@ -4,12 +4,20 @@
 \alias{leslie_from_spip}
 \title{Return a Leslie-like matrix from the spip parameters}
 \usage{
-leslie_from_spip(P, C)
+leslie_from_spip(P, C, growth_rates = NULL, T = NA)
 }
 \arguments{
 \item{P}{a named list of the spip parameters.}
 
 \item{C}{the constant size of the newborn cohort each year}
+
+\item{growth_rates}{If not NULL, a vector of desired growth rates.
+For each one of these the function will return a leslie matrix, the stable
+age distribution, the initial number of males and females at that
+age distribution, and also the cohort sizes until time T (if T is not NA)}
+
+\item{T}{the number of years to compute the cohort sizes for in the growing
+(or shrinking) populations.}
 }
 \value{
 This function returns a list with the following components:
@@ -34,9 +42,22 @@ as well as the annual new cohort size (assumed constant),
 and we make a leslie-like matrix
 to compute the stable age distribution.
 }
+\details{
+For growing or shrinking populations, this is currently correct only when
+the male and female survival rates are the same, and hence the stable
+age distributions of the two sexes are the same as well.
+}
 \examples{
 result <- leslie_from_spip(species_1_life_history, 300)
 
 # print the result list:
-result
+result2 <- leslie_from_spip(
+  species_1_life_history,
+  300,
+  growth_rates = c(-.02, 0, 0.04),
+  T = 60
+ )
+
+# With several growth rates, including 0.
+
 }

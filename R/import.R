@@ -16,7 +16,7 @@ NULL
 #' @importFrom ggplot2 aes annotate element_blank element_text facet_grid facet_wrap geom_boxplot geom_col geom_hex geom_histogram geom_hline geom_jitter geom_point geom_rect geom_segment geom_tile geom_vline ggplot ggtitle guide_legend guides scale_colour_manual scale_fill_manual scale_fill_viridis_c theme theme_bw xlab ylab
 #' @importFrom purrr map map2 map2_int map_chr map_int map_lgl
 #' @importFrom readr cols read_delim read_lines read_table2
-#' @importFrom stats runif
+#' @importFrom stats optim runif
 #' @importFrom stringr str_c str_detect str_replace str_split str_split_fixed
 #' @importFrom tibble as_tibble enframe tibble
 #' @importFrom tidyr extract gather nest pivot_longer pivot_wider replace_na separate unnest

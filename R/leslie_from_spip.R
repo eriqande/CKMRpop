@@ -6,8 +6,18 @@
 #' as well as the annual new cohort size (assumed constant),
 #' and we make a leslie-like matrix
 #' to compute the stable age distribution.
+#'
+#' For growing or shrinking populations, this is currently correct only when
+#' the male and female survival rates are the same, and hence the stable
+#' age distributions of the two sexes are the same as well.
 #' @param P a named list of the spip parameters.
 #' @param C the constant size of the newborn cohort each year
+#' @param growth_rates If not NULL, a vector of desired growth rates.
+#' For each one of these the function will return a leslie matrix, the stable
+#' age distribution, the initial number of males and females at that
+#' age distribution, and also the cohort sizes until time T (if T is not NA)
+#' @param T the number of years to compute the cohort sizes for in the growing
+#' (or shrinking) populations.
 #' @return
 #' This function returns a list with the following components:
 #' * `stable_age_distro_fem`: a vector of the expected number of females in each age
@@ -27,8 +37,16 @@
 #' result <- leslie_from_spip(species_1_life_history, 300)
 #'
 #' # print the result list:
-#' result
-leslie_from_spip <- function(P, C) {
+#' result2 <- leslie_from_spip(
+#'   species_1_life_history,
+#'   300,
+#'   growth_rates = c(-.02, 0, 0.04),
+#'   T = 60
+#'  )
+#'
+#' # With several growth rates, including 0.
+#'
+leslie_from_spip <- function(P, C, growth_rates = NULL, T = NA) {
 
   # prepare a return list
   ret <- list()
@@ -105,7 +123,7 @@ leslie_from_spip <- function(P, C) {
 
 
 
-  # finally, for the females, we want to return a what
+  # finally, for the females, we want to return what
   # a proper Leslie matrix would look like for a non-growing population
   # of this size. (i.e, we want to compute the fecundities that would go in the
   # top row of the actual leslie matrix).  This could be used to later fiddle with
@@ -120,8 +138,91 @@ leslie_from_spip <- function(P, C) {
 
   f_leslie <- MF
   f_leslie[1, ] <- c(f, 0.0)
+  eig <- eigen(f_leslie)
+  sad <- eig$vectors[,1] / eig$vectors[1,1]
 
+  # we will return that proper leslie matrix of a constant sized population
   ret$female_leslie_matrix <- f_leslie
+
+  # Now, if the user also requested leslie matrices, stable age distributions,
+  # and cohort sizes for other growth rates, we can fulfill them here.
+  # I expect that this could be solved more directly with some linear algebra,
+  # but I am going to do it numerically.
+  # In short, if the desired increase rate is r, then we want to find
+  # a multiplier for all the fecundities in f_leslie that give an eigenvalue
+  # of 1 + r.
+
+  # So, first, here is a function of that multiplier, m, and f_leslie, and r, which returns
+  # the absolute difference between r and the dominant eigenvalue.
+  dom_eig_diff <- function(m, r) {
+    M <- f_leslie
+    M[1, ] <- M[1, ] * m
+    e <- eigen(M)
+    d <- as.numeric(e$values[1])
+    abs(d - (1 + r))
+  }
+
+  # find the multiplier for each growth_rate and return them in a list
+  if(!is.null(growth_rates)) {
+
+    if(is.na(T)) stop("When growth_rates is not NULL, you must supply a value for T (number of years) ")
+
+    optim_list <- lapply(growth_rates, function(x) optim(1, dom_eig_diff, r = x, method = "Brent", lower = 0.00001, upper = 1e5)$par)
+    names(optim_list) <- growth_rates
+
+    # now we cycle over thase fecundity fractions and we:
+    # 1. find the stable age distribution
+    # 2. find the cohort sizes for times MA + 1 to T + MA + 1
+    # 3. format those cohort sizes for spip
+    # then we return all that in a list.
+    ret$growth_rate_results <- lapply(optim_list, function(x) {
+      rrr <- list()  # for returning values
+      f_leslie2 <- f_leslie
+      f_leslie2[1,] <- f_leslie[1, ] * x
+      eig2 <- eigen(f_leslie2)
+      leading_eig2 <- eig2$values[1]
+      sad2 <- as.numeric(eig2$vectors[,1] / eig2$vectors[1,1])
+      #sad2 <- as.numeric(sad2 / sum(sad2))
+
+      # at this point, sad2_f is the initial number of females of each age, assuming
+      # that there are 300 newborns total
+      sad2_f <- (1 - sr) * C * sad2
+      sad2_m <- sr * C * sad2
+
+
+      # We get set up to return these
+      rrr$stable_age_distro_fem <- sad2_f[-length(sad2_f)]
+      rrr$stable_age_distro_male <- sad2_m[-length(sad2_m)]
+
+      # also return what the full stable age distro is
+      rrr$stable_age_distro_fem_with_max_age_class <- sad2_f
+      rrr$stable_age_distro_male_with_max_age_class <- sad2_m
+
+      # that gives us the starting population sizes for the beginning
+      # of the simulation, but now we need the number of males and females
+      # entering the population in the ensuing T years. We do that by iterating
+      # the Leslie matrix T years forward.
+      N_mat <- matrix(NA, nrow = length(sad2_f), ncol = T)   # this is for holding the results
+      N_mat[,1] <- f_leslie2 %*% sad2_f
+      for(t in 2:T) {
+        N_mat[,t] <- f_leslie2 %*% N_mat[, t - 1]
+      }
+      # the first row of N_mat now gives us the number of females entering the population
+      # each year. So the total number of individuals entering the population will
+      # be that value divided by the fraction of females.
+      cohorts <- N_mat[1, ] / (1 - sr)
+      cohorts_i <- round(cohorts)
+      # now, we just return that, both as a numeric, as an int, and as a string
+      # that can be used for the cohort size param
+      rrr$cohorts_numeric <- cohorts
+      rrr$cohorts_integer <- cohorts_i
+      tmp <- paste(cohorts_i, collapse = " ")
+      rrr$cohort_size_param_string <- paste("var", tmp, collapse = " ")
+
+      rrr
+    })
+
+  }
 
   ret
 }

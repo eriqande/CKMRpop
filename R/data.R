@@ -73,6 +73,32 @@ NULL
 NULL
 
 
+
+#' The result of running spip with growth 0.01 in the population-growth-with-spip vignette
+#'
+#' This is stored as package data so that the vignette can be written
+#' even if spip is not installed on the system.
+#'
+#' @source Simulation results
+#' @docType data
+#' @name growth_0.01_results
+#' @usage growth_0.01_results
+NULL
+
+
+#' The result of running spip with growth -0.005 in the population-growth-with-spip vignette
+#'
+#' This is stored as package data so that the vignette can be written
+#' even if spip is not installed on the system.
+#'
+#' @source Simulation results
+#' @docType data
+#' @name growth_n0.005_results
+#' @usage growth_n0.005_results
+NULL
+
+
+
 #' The result of running spip in the species_1_simulation vignette and slurping out with num_generations = 1.
 #'
 #' This is stored as package data so that the vignette can be written
