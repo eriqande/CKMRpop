@@ -38,6 +38,9 @@ to compute the stable age distribution."><!-- mathjax --><script src="https://cd
       <a href="../articles/about_spip.html">About spip</a>
     </li>
     <li>
+      <a href="../articles/population-growth-with-spip.html">population-growth-with-spip</a>
+    </li>
+    <li>
       <a href="../articles/simple-example-with-migration.html">A Simple Example With Migration</a>
     </li>
     <li>
@@ -72,7 +75,7 @@ to compute the stable age distribution.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">leslie_from_spip</span><span class="op">(</span><span class="va">P</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">leslie_from_spip</span><span class="op">(</span><span class="va">P</span>, <span class="va">C</span>, growth_rates <span class="op">=</span> <span class="cn">NULL</span>, T <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,6 +86,18 @@ to compute the stable age distribution.</p>
 
 <dt>C</dt>
 <dd><p>the constant size of the newborn cohort each year</p></dd>
+
+
+<dt>growth_rates</dt>
+<dd><p>If not NULL, a vector of desired growth rates.
+For each one of these the function will return a leslie matrix, the stable
+age distribution, the initial number of males and females at that
+age distribution, and also the cohort sizes until time T (if T is not NA)</p></dd>
+
+
+<dt>T</dt>
+<dd><p>the number of years to compute the cohort sizes for in the growing
+(or shrinking) populations.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -102,105 +117,27 @@ MaxAge once the stable age distribution has been reached.</p></li>
 <li><p><code>stable_age_distro_male_with_max_age_class</code>: same as above, but for females.</p></li>
 <li><p><code>female_leslie_matrix</code>: The Leslie matrix implied by the spip parameters in P.</p></li>
 </ul></div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>For growing or shrinking populations, this is currently correct only when
+the male and female survival rates are the same, and hence the stable
+age distributions of the two sexes are the same as well.</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">leslie_from_spip</span><span class="op">(</span><span class="va">species_1_life_history</span>, <span class="fl">300</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># print the result list:</span></span></span>
-<span class="r-in"><span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $stable_age_distro_fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 150.000000 112.500000  85.500000  64.980000  50.034600  38.526642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  30.050781  23.439609  18.517291  14.628660  11.702928   9.362342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13]   7.489874   6.066798   4.914106   4.029567   3.304245   2.709481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19]   2.221774   1.821855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $stable_age_distro_male</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 150.000000 112.500000  85.500000  64.980000  50.034600  38.526642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  30.050781  23.439609  18.517291  14.628660  11.702928   9.362342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13]   7.489874   6.066798   4.914106   4.029567   3.304245   2.709481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19]   2.221774   1.821855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $stable_age_distro_fem_with_max_age_class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 150.000000 112.500000  85.500000  64.980000  50.034600  38.526642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  30.050781  23.439609  18.517291  14.628660  11.702928   9.362342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13]   7.489874   6.066798   4.914106   4.029567   3.304245   2.709481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19]   2.221774   1.821855   1.493921</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $stable_age_distro_male_with_max_age_class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 150.000000 112.500000  85.500000  64.980000  50.034600  38.526642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  30.050781  23.439609  18.517291  14.628660  11.702928   9.362342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13]   7.489874   6.066798   4.914106   4.029567   3.304245   2.709481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19]   2.221774   1.821855   1.493921</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $female_leslie_matrix</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3]       [,4]      [,5]      [,6]      [,7]      [,8]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.00 0.00 0.00 0.01517058 0.0713358 0.3014811 0.6539862 0.8630492</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.75 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.00 0.76 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.00 0.00 0.76 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.00 0.00 0.00 0.77000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.00 0.00 0.00 0.00000000 0.7700000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.00 0.00 0.00 0.00000000 0.0000000 0.7800000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.7800000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.7900000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [14,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21,] 0.00 0.00 0.00 0.00000000 0.0000000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           [,9]    [,10]    [,11]    [,12]    [,13]    [,14]    [,15]    [,16]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.943583 1.000598 1.036018 1.071437 1.120692 1.156554 1.207138 1.243443</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.790000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11,] 0.000000 0.800000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12,] 0.000000 0.000000 0.800000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13,] 0.000000 0.000000 0.000000 0.800000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [14,] 0.000000 0.000000 0.000000 0.000000 0.810000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.810000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.820000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.820000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21,] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          [,17]    [,18]    [,19]    [,20] [,21]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 1.279747 1.316052 1.352357 1.388662     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [14,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17,] 0.000000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18,] 0.820000 0.000000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19,] 0.000000 0.820000 0.000000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20,] 0.000000 0.000000 0.820000 0.000000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21,] 0.000000 0.000000 0.000000 0.820000     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">result2</span> <span class="op">&lt;-</span> <span class="fu">leslie_from_spip</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">species_1_life_history</span>,</span></span>
+<span class="r-in"><span>  <span class="fl">300</span>,</span></span>
+<span class="r-in"><span>  growth_rates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.02</span>, <span class="fl">0</span>, <span class="fl">0.04</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  T <span class="op">=</span> <span class="fl">60</span></span></span>
+<span class="r-in"><span> <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># With several growth rates, including 0.</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

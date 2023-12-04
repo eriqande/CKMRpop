@@ -16,6 +16,9 @@
     <loc>https://eriqande.github.io/CKMRpop/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://eriqande.github.io/CKMRpop/articles/population-growth-with-spip.html</loc>
+  </url>
+  <url>
     <loc>https://eriqande.github.io/CKMRpop/articles/simple-example-with-migration.html</loc>
   </url>
   <url>
@@ -80,6 +83,12 @@
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/ggplot_census_by_year_age_sex.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/growth_0.01_results.html</loc>
+  </url>
+  <url>
+    <loc>https://eriqande.github.io/CKMRpop/reference/growth_n0.005_results.html</loc>
   </url>
   <url>
     <loc>https://eriqande.github.io/CKMRpop/reference/half_first_cousin_amm.html</loc>
