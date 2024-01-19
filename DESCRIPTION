@@ -49,4 +49,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://eriqande.github.io/CKMRpop/, https://github.com/eriqande/CKMRpop
+BugReports: https://github.com/eriqande/CKMRpop/issues
 RoxygenNote: 7.2.3
