@@ -9,6 +9,11 @@
 #' - `ancestors`: a list column of the ancestor vectors of each individual
 #' - `relatives`: a list column of the vectors of individual samples (including self)
 #' that each individual is related to.
+#' @param replaceNA_with_false_in_AMM logical.  If TRUE, then NAs in the ancestry match matrix
+#' are replace by FALSE.  This is useful when you are looking for related pairs amongst
+#' individuals that are near the founders, or are founders themselves.  This is untested
+#' and not yet used in CKMRpop, but it was introduced for handling the short pedigrees
+#' of chunkyG simulations.
 #' @return a tibble with columns `id_1` and `id_2` for each pair.  Any additional
 #' columns outside of `relatives` will be joined with `_1` and
 #' `_2` suffixes.  In a typical run slurped up from spip this leads to the following
@@ -59,7 +64,7 @@
 #' @export
 #' @examples
 #' C <- compile_related_pairs(three_pops_with_mig_slurped_results$samples)
-compile_related_pairs <- function(S) {
+compile_related_pairs <- function(S, replaceNA_with_false_in_AMM = FALSE) {
 
   # toss the sampled indivs with no relatives
   S2 <- S %>%
@@ -133,6 +138,17 @@ compile_related_pairs <- function(S) {
         )
       }
     ))
+
+
+    # if the ancestry match matrices have NA's it will typically be because the
+    # ancestors at those positions are non-founders, and, under the assumption that
+    # all the founders are unrelated, we can safely change those NAs into FALSEs
+    if(replaceNA_with_false_in_AMM) {
+      pairs_tib_2 <- pairs_tib_2 %>%
+        mutate(
+          anc_match_matrix = map(anc_match_matrix, function(x) {x[is.na(x)] <- FALSE; x})
+        )
+    }
 
     # now, we want categorize the "dominant relationship" of each pair.  This is done by
     # cycling over (within a function) relationships from Self to PO to Sib to Aunt, etc
