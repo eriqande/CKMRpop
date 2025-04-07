@@ -1,5 +1,5 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   about_spip: about_spip.html
@@ -7,8 +7,7 @@ articles:
   simple-example-with-migration: simple-example-with-migration.html
   species_1_simulation: species_1_simulation.html
   using-other-simulation-programs: using-other-simulation-programs.html
-last_built: 2023-12-04T16:37Z
+last_built: 2025-04-07T23:54Z
 urls:
   reference: https://eriqande.github.io/CKMRpop/reference
   article: https://eriqande.github.io/CKMRpop/articles
-
