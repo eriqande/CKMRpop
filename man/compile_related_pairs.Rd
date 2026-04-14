@@ -4,7 +4,7 @@
 \alias{compile_related_pairs}
 \title{compile pairwise relationships from the samples}
 \usage{
-compile_related_pairs(S)
+compile_related_pairs(S, replaceNA_with_false_in_AMM = FALSE)
 }
 \arguments{
 \item{S}{a tibble. In the context of this package this tibble is
@@ -17,6 +17,12 @@ More generally, it is a tibble that must have the columns:
 \item \code{relatives}: a list column of the vectors of individual samples (including self)
 that each individual is related to.
 }}
+
+\item{replaceNA_with_false_in_AMM}{logical.  If TRUE, then NAs in the ancestry match matrix
+are replace by FALSE.  This is useful when you are looking for related pairs amongst
+individuals that are near the founders, or are founders themselves.  This is untested
+and not yet used in CKMRpop, but it was introduced for handling the short pedigrees
+of chunkyG simulations.}
 }
 \value{
 a tibble with columns \code{id_1} and \code{id_2} for each pair.  Any additional
