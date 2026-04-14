@@ -25,3 +25,4 @@
 ^CRAN-RELEASE$
 ^total_outputs_pop3M\.rds$
 ^\.github$
+^inst/bin/spip-Darwin$
